@@ -38,7 +38,7 @@ Manual Di management is complicated. A container is one solution
 
 # Singletons vs DI Containter [(Kohana Thread)](http://forum.kohanaframework.org/discussion/10468/singletons-vs-dependency-injection-container/p1)
 
-Frameworks like and Symfony have DI/IoC containers at their core, and to be honest this is sort of inevitable too for Kohana, I think, along with namespaces, dumping the empty class definitions, etc. But then, all frameworks start looking the same ...
+Frameworks like Laravel and Symfony have DI/IoC containers at their core, and to be honest this is sort of inevitable too for Kohana, I think, along with namespaces, dumping the empty class definitions, etc. But then, all frameworks start looking the same ...
 
 Silex [extends](https://github.com/fabpot/Silex/blob/master/src/Silex/Application.php#L54) Pimple (A very simple DIC, see below).
 
