@@ -1,0 +1,270 @@
+# Preparation
+- Burn latest install iso on usb with `dd`
+
+# Installation
+- Establish internet connection
+- Prepare the storage drive (MBR)
+  - fdisk /dev/sda
+  - o
+  - n, p, 1, default first, +72G
+  - n, p, 2, default first, default last
+  - t, 2, 82
+  - a, 1
+  - p
+  - w
+- Create filesystems
+  - mkfs.ext4 /dev/sda1
+  - mkswap /dev/sda2
+  - swapon /dev/sda2
+- Mount the partitions
+  - lsblk /dev/sda
+  - mount /dev/sda1 /mnt
+- Install the base system
+  - pacstrap /mnt base
+- Generate an fstab
+  - genfstab -U -p /mnt >> /mnt/etc/fstab
+  - nano /mnt/etc/fstab
+- Chroot and configure the base system
+  - arch-chroot /mnt
+  - Locale
+    - nano /etc/locale.gen
+      - en_US.UTF-8 UTF-8
+      - he_IL.UTF-8 UTF-8
+    - locale-gen
+    - echo LANG=en_US.UTF-8 > /etc/locale.conf
+    - export LANG=en_US.UTF-8
+  - Console font and keymap
+    - setfont Lat2-Terminus16
+    - echo "FONT=Lat2-Terminus16" > /etc/vconsole.conf
+  - Time zone
+    - ln -s /usr/share/zoneinfo/Asia/Jerusalem /etc/localtime
+  - Hardware clock
+    - hwclock --systohc --utc
+  - Hostname
+    - echo rafi-desk > /etc/hostname
+  - Configure the network
+    - systemctl enable dhcpcd.service
+  - Set the root password
+    - passwd
+  - Install and configure a bootloader (Syslinux)
+    - pacman -S syslinux
+    - syslinux-install_update -i -a -m
+    - Configure syslinux.cfg to point to the right root partition
+      - nano /boot/syslinux/syslinux.cfg
+  - exit
+  - umount -R /mnt
+  - reboot
+  - Be sure to remove the installation media
+
+# Post-installation
+- pacman -Syu
+- useradd -m -g users -s /bin/bash rafi
+- chfn rafi
+- passwd rafi
+- pacman -S sudo
+- nano /etc/sudoers
+  - rafi ALL=(ALL) ALL
+- pacman -S alsa-utils
+- see your sound devices: aplay -l
+- nano /etc/modprobe.d/alsa-base.conf
+  - options snd slots=snd_hda_intel
+  - options snd_hda_intel index=0
+  - options snd_usb_audio index=-2
+- alsamixer (unmute with 'm')
+- speaker-test -c 2
+- Catalyst
+  - /etc/pacman.conf
+    - [catalyst]
+    - Server = http://catalyst.wirephire.com/repo/catalyst/$arch
+  - pacman-key --keyserver pgp.mit.edu --recv-keys 0xabed422d653c3094
+  - pacman-key --lsign-key 0xabed422d653c3094
+  - linux-headers (for generator)
+  - base-devel (for generator)
+  - catalyst-generator
+  - nano /boot/syslinux/syslinux.cfg
+    - Add 'nomodeset' in the APPEND line, eg:
+    - APPEND root=/dev/sda1 rw nomodeset
+  - aticonfig --initial=dual-head --screen-layout=left
+  - nano /etc/modprobe.d/modprobe.conf
+    - blacklist radeon
+  - reboot
+- pacman -S xorg-server xorg-server-utils xorg-xinit xorg-xrdb xorg-xev xorg-xclock xorg-xprop xorg-xwininfo xterm
+- exit
+- login as user
+- startx
+- Check datetime, sync if needed:
+  - pacman -S ntp
+    - ntpd -qg
+    - hwclock -w
+
+# Software
+- wget
+- rsync
+- curl
+- gvim
+- rxvt-unicode
+- xcb-util-cursor-git (aur)
+- i3-git (aur)
+  - i3lock-git (aur)
+  - i3status-git (aur)
+  - perl-json-xs
+  - perl-anyevent-i3 (aur)
+- ntfs-3g
+- qt4 (amdcccle depends on it)
+- gksu (pulls loads of depends. incl. gtk2/3)
+- gksu amdcccle
+  - setup monitors
+- ranger (pulls python 3)
+  - libcaca
+  - highlight
+  - atool
+  - mediainfo
+  - poppler
+- dunst
+- dmenu2 (git)
+- git
+- tk (for gitk)
+- openssh
+- keychain
+- xsel
+- xcape-git (aur)
+- autocutsel
+- unclutter
+- htop
+- dstat
+- colordiff
+- bash-completion
+- terminus-font ttf-bitstream-vera ttf-dejavu ttf-inconsolata ttf-liberation ttf-ubuntu-font-family
+- envypn-font (aur)
+- tmux-git (aur)
+- gnome-doc-utils (gmpc needs it)
+- gnome-icon-theme
+- gnome-themes-standard
+- pacman -S --needed base-devel
+- expac for pacaur and cower (all from aur)
+- mimeo (aur)
+- xdg-utils-mimeo (aur)
+- perl-file-mimeinfo
+- google-chrome (aur)
+  - gpasswd -a rafi video
+- firefox (pulls libnotify)
+  - flashplugin
+  - Make sure to disable it in Chrome's about:plugins and just leave pepper enabled.
+- python2
+- weechat
+  - bitlbee
+  - libotr3
+  - pyfribidi (aur)
+    - Change PKGBUILD:
+      - Change python to python2
+      - Add 'x86_64' in arch
+- hwdetect
+- icu
+- tree
+- multitail
+- hipchat (instructions in www.hipchat.com/linux)
+- jre (aur)
+- phpstorm (from jetbrains)
+- virtualbox virtualbox-guest-iso 
+  - gpasswd -a rafi vboxusers
+  - echo "vboxdrv" > /etc/modules-load.d/virtualbox.conf
+  - modprobe vboxdrv
+- mpd
+  - edit .mpdconf
+- mpc
+- gmpc-git (aur)
+  - libmpd-git (aur)
+  - glyr-git (aur)
+- ncmpcpp
+- copyq (aur)
+- meld
+- pygtksourceview2
+- rainbarf-git (aur)
+- keepassx2-git (aur)
+- feh
+- rtorrent-color (aur)
+  - configure ~/.rtorrent.rc
+  - create ~/bin/rtorrent-magnet
+- xcursor-neutral
+- xcursor-premium
+- xcursor-simpleandsoft
+- mplayer
+- puddletag
+  - libdiscid
+- libgphoto2 (for usb camera)
+  - gphoto2
+- gitg
+- ruby
+- gem install sass compass gu--no-ri --no-rdoc
+- nfs for vagrant:
+  - nfs-utils
+  - net-tools
+  - systemctl start rpc-idmapd rpc-mountd
+  - modprobe -a vboxnetadp vboxnetflt
+- urlview (for tmux)
+- unrar
+- zip
+- ghex
+- xdotool
+- redshift
+- teiler (manually)
+  - dzen2-git (aur)
+  - bc
+  - xclip
+  - byzanz-git (aur)
+    - gnome-common
+    - gst-plugins-base
+- spacefm
+- dwb-gtk3-git (aur)
+- reptyr
+- mad (aur)
+- gimp
+
+# LAMP
+- sudo pacman -S mariadb apache
+- sudo usermod -aG http rafi
+- sudo pacman -S php php-apache php-gd php-geoip php-mcrypt php-pgsql php-pear php-tidy php-intl xdebug
+- sudo mkdir /srv/http/test
+- sudo chown rafi:http /srv/http/test
+- cat > /srv/http/test/test.php
+- <?php phpinfo();
+- ^C
+- sudo pacman -S postgresql
+  - sudo su
+  - systemd-tmpfiles --create postgresql.conf
+  - mkdir /var/lib/postgres/data
+  - chown -c -R postgres:postgres /var/lib/postgres
+  - sudo su - postgres -c "initdb --locale en_US.UTF-8 -E UTF8 -D '/var/lib/postgres/data'"
+  - systemctl start postgresql
+  - createuser -s -U postgres --interactive
+    - name it same as your user
+  - createdb somedbname
+  - Restore dbs if needed:
+  - pg_restore -i -h localhost -p 5432 -U postgres -d old_db -v "/usr/local/backup/10.70.0.61.backup"
+- sudo pacman -Sdd apache-ant (Completely ignoring deps because of jre/open-jre conflict)
+
+# WEBDEV
+- nodejs
+- sudo npm install -g bower grunt-cli requirejs
+
+
+# To do
+- sudo auto-completion,
+- Colored_man_pages,
+- sudoers, urxvt, 
+
+## Check out:
+- cope-git (AUR), 
+
+# Configurations
+- edit ~/.xinitrc
+- edit ~/.Xresources and xrdb -merge ~/.Xresources
+- edit ~/.bashrc and ~/.bash_aliases
+- edit ~/.config/i3/config and ~/.config/i3status/config
+- edit ~/.config/dunst/dunstrc
+- edit ~/.gitconfig
+- copy keys to ~/.ssh
+- edit ~/.gtkrc-2.0
+- edit ~/.tmux.conf
+- edit ~/.vimrc ~/.vim
+- edit ~/.Xmodmap
