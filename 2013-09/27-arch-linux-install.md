@@ -80,7 +80,7 @@
   - pacman-key --lsign-key 0xabed422d653c3094
   - linux-headers (for generator)
   - base-devel (for generator)
-  - catalyst-generator
+  - catalyst-libgl catalyst-utils catalyst-generator
   - nano /boot/syslinux/syslinux.cfg
     - Add 'nomodeset' in the APPEND line, eg:
     - APPEND root=/dev/sda1 rw nomodeset
@@ -99,10 +99,12 @@
 
 # Software
 - wget
+- ack
+- the_silver_searcher
 - rsync
 - curl
-- gvim
-- rxvt-unicode
+- vim-spell-en gvim
+- rxvt-unicode-patched (aur)
 - xcb-util-cursor-git (aur)
 - i3-git (aur)
   - i3lock-git (aur)
@@ -121,7 +123,7 @@
   - mediainfo
   - poppler
 - dunst
-- dmenu2 (git)
+- dmenu2 (aur)
 - git
 - tk (for gitk)
 - openssh
@@ -137,7 +139,6 @@
 - terminus-font ttf-bitstream-vera ttf-dejavu ttf-inconsolata ttf-liberation ttf-ubuntu-font-family
 - envypn-font (aur)
 - tmux-git (aur)
-- gnome-doc-utils (gmpc needs it)
 - gnome-icon-theme
 - gnome-themes-standard
 - pacman -S --needed base-devel
@@ -148,12 +149,11 @@
 - google-chrome (aur)
   - gpasswd -a rafi video
 - firefox (pulls libnotify)
-  - flashplugin
-  - Make sure to disable it in Chrome's about:plugins and just leave pepper enabled.
 - python2
 - weechat
-  - bitlbee
+  - bitlbee (custom PKGBUILD with patch for hipchat)
   - libotr3
+  - python2-notify (for notify.py plugin)
   - pyfribidi (aur)
     - Change PKGBUILD:
       - Change python to python2
@@ -172,25 +172,17 @@
 - mpd
   - edit .mpdconf
 - mpc
-- gmpc-git (aur)
-  - libmpd-git (aur)
-  - glyr-git (aur)
-- ncmpcpp
+- ncmpcpp (aur)
+  - fftw
 - copyq (aur)
 - meld
 - pygtksourceview2
 - rainbarf-git (aur)
 - keepassx2-git (aur)
-- feh
-- rtorrent-color (aur)
-  - configure ~/.rtorrent.rc
-  - create ~/bin/rtorrent-magnet
 - xcursor-neutral
 - xcursor-premium
 - xcursor-simpleandsoft
 - mplayer
-- puddletag
-  - libdiscid
 - libgphoto2 (for usb camera)
   - gphoto2
 - gitg
@@ -207,18 +199,60 @@
 - ghex
 - xdotool
 - redshift
-- teiler (manually)
-  - dzen2-git (aur)
-  - bc
-  - xclip
-  - byzanz-git (aur)
-    - gnome-common
-    - gst-plugins-base
+- fb-client
+- teiler-git (aur)
 - spacefm
 - dwb-gtk3-git (aur)
+  - gst-plugins-base
 - reptyr
 - mad (aur)
 - gimp
+- beets
+  - python2-pyacoustid
+  - python2-pylast
+  - mp3gain
+  - python2-pyechonest (aur)
+- python2-mpd (for mpdMenu)
+- perl-image-exiftool
+- artwiz-fonts
+- ohsnap (aur)
+- python2-mpd
+- surfraw
+- tarsnap
+- packer-io (aur)
+- etckeeper (aur)
+- ncmpc-git (aur)
+- id3ted (aur)
+- z-git (aur)
+- glances
+- gifsicle
+- rtorrent
+- go
+- libmtp (for android)
+- simple-mtpfs (for android)
+- syncthing-git (aur)
+- python2-requests (for beets-lastimport)
+- python-i3-git (aur)
+- zeal-git (aur)
+- git-extras-git (aur)
+- sxiv-git (aur)
+  - exiv2
+  - imagemagick
+- zathura
+  - zathura-pdf-poppler
+- gloobus-preview
+- gtk-theme-flatstudio (aur)
+- mpv-git (aur)
+- vdpau/vaapi:
+  - ati-dri
+  - vdpauinfo
+  - xvba-video
+  - libvdpau-va-gl
+  - libva-vdpau-driver
+- tcpdump
+- hdparm
+- task
+- nmh-git (aur)
 
 # LAMP
 - sudo pacman -S mariadb apache
@@ -246,6 +280,7 @@
 # WEBDEV
 - nodejs
 - sudo npm install -g bower grunt-cli requirejs
+- beanstalkd (aur)
 
 
 # To do
