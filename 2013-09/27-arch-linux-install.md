@@ -122,7 +122,7 @@
   - atool
   - mediainfo
   - poppler
-- dunst
+- dunst-git (aur)
 - dmenu2 (aur)
 - git
 - tk (for gitk)
@@ -165,7 +165,7 @@
 - hipchat (instructions in www.hipchat.com/linux)
 - jre (aur)
 - phpstorm (from jetbrains)
-- virtualbox virtualbox-guest-iso 
+- virtualbox virtualbox-guest-iso
   - gpasswd -a rafi vboxusers
   - echo "vboxdrv" > /etc/modules-load.d/virtualbox.conf
   - modprobe vboxdrv
@@ -174,7 +174,6 @@
 - mpc
 - ncmpcpp (aur)
   - fftw
-- copyq (aur)
 - meld
 - pygtksourceview2
 - rainbarf-git (aur)
@@ -201,6 +200,8 @@
 - redshift
 - fb-client
 - teiler-git (aur)
+  - maim (aur)
+  - slop (aur)
 - spacefm
 - dwb-gtk3-git (aur)
   - gst-plugins-base
@@ -212,7 +213,8 @@
   - python2-pylast
   - mp3gain
   - python2-pyechonest (aur)
-- python2-mpd (for mpdMenu)
+- python2-mpd (for clerk)
+- python-mpd2 (aur)
 - perl-image-exiftool
 - artwiz-fonts
 - ohsnap (aur)
@@ -230,7 +232,8 @@
 - go
 - libmtp (for android)
 - simple-mtpfs (for android)
-- syncthing-git (aur)
+- syncthing
+- sysstat
 - python2-requests (for beets-lastimport)
 - python-i3-git (aur)
 - zeal-git (aur)
@@ -241,7 +244,6 @@
 - zathura
   - zathura-pdf-poppler
 - gloobus-preview
-- gtk-theme-flatstudio (aur)
 - mpv-git (aur)
 - vdpau/vaapi:
   - ati-dri
@@ -253,6 +255,66 @@
 - hdparm
 - task
 - nmh-git (aur)
+- nginx
+  - php-fpm
+- iotop
+- memcached
+- php-memcache
+- gnu-netcat
+- compton-git (aur)
+- aria2
+- diana-git (aur)
+- tidy-html5-git (aur)
+- libotr
+- python-pafy-git (aur)
+- mps-youtube-git (aur)
+- python-mpd2 (aur)
+- rofi-git (aur)
+- antiword
+- id3v2
+- mppc-git
+- clerk-git
+- ttf-pragmatapro (my own)
+- pngcrush (aur)
+- termite-git (aur)
+- bc
+- ctags-php-git (aur)
+- sshfs
+- pkgbuild-introspection
+- httpie
+- grc
+- archey3-git (aur)
+- par (aur)
+- gtk2-theme-dust (aur)
+- gtk2-theme-dyne (aur)
+- faience-icon-theme
+- asciiquarium (aur)
+- erusfont (aur)
+- gohufont (aur)
+- sshpass
+- jsctags-tern-git (aur)
+- graphviz
+- neovim-git (aur)
+- calc
+- mercurial
+- wmctrl
+- keymon (aur)
+- fontforge
+- gpaste-daemon (aur)
+- ponymix
+- pulseaudio-alsa
+- pavucontrol
+- byzanz-git (aur)
+- ttyrec, ttygif, termrec (aur)
+- flake8
+- p7zip
+- gdrive-cli-git (aur)
+- sassc (aur)
+- dnsutils
+- python2-pygments
+- python-ansi2html
+- qrencode
+- perl-text-markdown
 
 # LAMP
 - sudo pacman -S mariadb apache
@@ -260,9 +322,6 @@
 - sudo pacman -S php php-apache php-gd php-geoip php-mcrypt php-pgsql php-pear php-tidy php-intl xdebug
 - sudo mkdir /srv/http/test
 - sudo chown rafi:http /srv/http/test
-- cat > /srv/http/test/test.php
-- <?php phpinfo();
-- ^C
 - sudo pacman -S postgresql
   - sudo su
   - systemd-tmpfiles --create postgresql.conf
@@ -286,10 +345,10 @@
 # To do
 - sudo auto-completion,
 - Colored_man_pages,
-- sudoers, urxvt, 
+- sudoers, urxvt,
 
 ## Check out:
-- cope-git (AUR), 
+- cope-git (AUR),
 
 # Configurations
 - edit ~/.xinitrc
