@@ -130,7 +130,6 @@
 - keychain
 - xsel
 - xcape-git (aur)
-- autocutsel
 - unclutter
 - htop
 - dstat
@@ -143,9 +142,7 @@
 - gnome-themes-standard
 - pacman -S --needed base-devel
 - expac for pacaur and cower (all from aur)
-- mimeo (aur)
-- xdg-utils-mimeo (aur)
-- perl-file-mimeinfo
+- mimi-git (aur)
 - google-chrome (aur)
   - gpasswd -a rafi video
 - firefox (pulls libnotify)
@@ -279,6 +276,7 @@
 - termite-git (aur)
 - bc
 - ctags-php-git (aur)
+- jsctags-tern-git (aur)
 - sshfs
 - pkgbuild-introspection
 - httpie
@@ -292,7 +290,6 @@
 - erusfont (aur)
 - gohufont (aur)
 - sshpass
-- jsctags-tern-git (aur)
 - graphviz
 - neovim-git (aur)
 - calc
@@ -333,32 +330,10 @@
     - name it same as your user
   - createdb somedbname
   - Restore dbs if needed:
-  - pg_restore -i -h localhost -p 5432 -U postgres -d old_db -v "/usr/local/backup/10.70.0.61.backup"
+  - `pg_restore -i -h localhost -p 5432 -U postgres -d old_db -v "/usr/local/backup/10.70.0.61.backup"`
 - sudo pacman -Sdd apache-ant (Completely ignoring deps because of jre/open-jre conflict)
 
 # WEBDEV
 - nodejs
 - sudo npm install -g bower grunt-cli requirejs
 - beanstalkd (aur)
-
-
-# To do
-- sudo auto-completion,
-- Colored_man_pages,
-- sudoers, urxvt,
-
-## Check out:
-- cope-git (AUR),
-
-# Configurations
-- edit ~/.xinitrc
-- edit ~/.Xresources and xrdb -merge ~/.Xresources
-- edit ~/.bashrc and ~/.bash_aliases
-- edit ~/.config/i3/config and ~/.config/i3status/config
-- edit ~/.config/dunst/dunstrc
-- edit ~/.gitconfig
-- copy keys to ~/.ssh
-- edit ~/.gtkrc-2.0
-- edit ~/.tmux.conf
-- edit ~/.vimrc ~/.vim
-- edit ~/.Xmodmap
