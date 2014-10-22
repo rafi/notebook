@@ -98,210 +98,77 @@
     - hwclock -w
 
 # Software
+## Console
 - wget
 - ack
 - the_silver_searcher
 - rsync
 - curl
 - vim-spell-en gvim
-- rxvt-unicode-patched (aur)
-- xcb-util-cursor-git (aur)
-- i3-git (aur)
-  - i3lock-git (aur)
-  - i3status-git (aur)
-  - perl-json-xs
-  - perl-anyevent-i3 (aur)
+- expac for pacaur and cower (all from aur)
 - ntfs-3g
-- qt4 (amdcccle depends on it)
-- gksu (pulls loads of depends. incl. gtk2/3)
-- gksu amdcccle
-  - setup monitors
+- python2
 - ranger (pulls python 3)
   - libcaca
   - highlight
   - atool
   - mediainfo
   - poppler
-- dunst-git (aur)
-- dmenu2 (aur)
 - git
-- tk (for gitk)
+- git-extras-git (aur)
 - openssh
 - keychain
 - xsel
-- xcape-git (aur)
-- unclutter
+- bc
 - htop
 - dstat
+- sysstat
+- tcpdump
+- hdparm
+- iotop
 - colordiff
 - bash-completion
-- terminus-font ttf-bitstream-vera ttf-dejavu ttf-inconsolata ttf-liberation ttf-ubuntu-font-family
-- envypn-font (aur)
 - tmux-git (aur)
-- gnome-icon-theme
-- gnome-themes-standard
 - pacman -S --needed base-devel
-- expac for pacaur and cower (all from aur)
-- mimi-git (aur)
-- google-chrome (aur)
-  - gpasswd -a rafi video
-- firefox (pulls libnotify)
-- python2
 - weechat
   - bitlbee (custom PKGBUILD with patch for hipchat)
   - libotr3
   - python2-notify (for notify.py plugin)
   - pyfribidi (aur)
-    - Change PKGBUILD:
-      - Change python to python2
-      - Add 'x86_64' in arch
 - hwdetect
-- icu
 - tree
 - multitail
-- hipchat (instructions in www.hipchat.com/linux)
 - jre (aur)
-- phpstorm (from jetbrains)
 - virtualbox virtualbox-guest-iso
   - gpasswd -a rafi vboxusers
   - echo "vboxdrv" > /etc/modules-load.d/virtualbox.conf
   - modprobe vboxdrv
-- mpd
-  - edit .mpdconf
-- mpc
-- ncmpcpp (aur)
-  - fftw
-- meld
-- pygtksourceview2
-- rainbarf-git (aur)
-- keepassx2-git (aur)
-- xcursor-neutral
-- xcursor-premium
-- xcursor-simpleandsoft
-- mplayer
-- libgphoto2 (for usb camera)
-  - gphoto2
-- gitg
-- ruby
-- gem install sass compass gu--no-ri --no-rdoc
-- nfs for vagrant:
-  - nfs-utils
+- nfs-utils
   - net-tools
   - systemctl start rpc-idmapd rpc-mountd
   - modprobe -a vboxnetadp vboxnetflt
+- rainbarf-git (aur)
 - urlview (for tmux)
 - unrar
 - zip
-- ghex
-- xdotool
-- redshift
 - fb-client
-- teiler-git (aur)
-  - maim (aur)
-  - slop (aur)
-- spacefm
-- dwb-gtk3-git (aur)
-  - gst-plugins-base
-- reptyr
 - mad (aur)
-- gimp
-- beets
-  - python2-pyacoustid
-  - python2-pylast
-  - mp3gain
-  - python2-pyechonest (aur)
-- python2-mpd (for clerk)
-- python-mpd2 (aur)
-- perl-image-exiftool
-- artwiz-fonts
-- ohsnap (aur)
-- python2-mpd
 - surfraw
 - tarsnap
 - packer-io (aur)
 - etckeeper (aur)
-- ncmpc-git (aur)
-- id3ted (aur)
 - z-git (aur)
 - glances
-- gifsicle
-- rtorrent
 - go
-- libmtp (for android)
-- simple-mtpfs (for android)
-- syncthing
-- sysstat
-- python2-requests (for beets-lastimport)
-- python-i3-git (aur)
-- zeal-git (aur)
-- git-extras-git (aur)
-- sxiv-git (aur)
-  - exiv2
-  - imagemagick
-- zathura
-  - zathura-pdf-poppler
-- gloobus-preview
-- mpv-git (aur)
-- vdpau/vaapi:
-  - ati-dri
-  - vdpauinfo
-  - xvba-video
-  - libvdpau-va-gl
-  - libva-vdpau-driver
-- tcpdump
-- hdparm
-- task
-- nmh-git (aur)
-- nginx
-  - php-fpm
-- iotop
-- memcached
-- php-memcache
 - gnu-netcat
-- compton-git (aur)
-- aria2
-- diana-git (aur)
-- tidy-html5-git (aur)
-- libotr
-- python-pafy-git (aur)
-- mps-youtube-git (aur)
-- python-mpd2 (aur)
-- rofi-git (aur)
-- antiword
-- id3v2
-- mppc-git
-- clerk-git
-- ttf-pragmatapro (my own)
-- pngcrush (aur)
-- termite-git (aur)
-- bc
 - ctags-php-git (aur)
 - jsctags-tern-git (aur)
 - sshfs
 - pkgbuild-introspection
 - httpie
 - grc
-- archey3-git (aur)
 - par (aur)
-- gtk2-theme-dust (aur)
-- gtk2-theme-dyne (aur)
-- faience-icon-theme
-- asciiquarium (aur)
-- erusfont (aur)
-- gohufont (aur)
-- sshpass
-- graphviz
-- neovim-git (aur)
-- calc
-- mercurial
-- wmctrl
-- keymon (aur)
-- fontforge
-- gpaste-daemon (aur)
-- ponymix
-- pulseaudio-alsa
-- pavucontrol
-- byzanz-git (aur)
+- archey3-git (aur)
 - ttyrec, ttygif, termrec (aur)
 - flake8
 - p7zip
@@ -310,10 +177,135 @@
 - dnsutils
 - python2-pygments
 - python-ansi2html
-- qrencode
 - perl-text-markdown
+- task
+- nmh-git (aur)
+- neovim-git (aur)
+- calc
+- mercurial
+- asciiquarium (aur)
+- aria2
+- diana-git (aur)
 
-# LAMP
+## Graphical
+- vdpau/vaapi:
+  - ati-dri
+  - vdpauinfo
+  - xvba-video
+  - libvdpau-va-gl
+  - libva-vdpau-driver
+- rxvt-unicode-patched (aur)
+- xcape-git (aur)
+- qt4 (amdcccle depends on it)
+- gksu (pulls loads of depends. incl. gtk2/3)
+- gksu amdcccle
+  - setup monitors
+- xcb-util-cursor-git (aur)
+- i3-git (aur)
+  - i3lock-git (aur)
+  - i3status-git (aur)
+  - perl-json-xs
+  - perl-anyevent-i3 (aur)
+- dunst-git (aur)
+- dmenu2 (aur)
+- tk (for gitk)
+- unclutter
+- mimi-git (aur)
+- google-chrome (aur)
+  - gpasswd -a rafi video
+- firefox (pulls libnotify)
+- icu
+- meld
+- pygtksourceview2
+- keepassx2-git (aur)
+- libgphoto2 (for usb camera)
+  - gphoto2
+- gitg
+- ghex
+- xdotool
+- redshift
+- teiler-git (aur)
+  - maim (aur)
+  - slop (aur)
+- spacefm
+- dwb-gtk3-git (aur)
+  - gst-plugins-base
+- libmtp (for android)
+- simple-mtpfs (for android)
+- syncthing
+- python-i3-git (aur)
+- zeal-git (aur)
+- compton-git (aur)
+- tidy-html5-git (aur)
+- libotr
+- python-pafy-git (aur)
+- rofi-git (aur)
+- antiword
+- termite-git (aur)
+- sshpass
+- graphviz
+- wmctrl
+- keymon (aur)
+- fontforge
+- gpaste-daemon (aur)
+- byzanz-git (aur)
+- qrencode
+
+## Fonts, Icons, Cursors, Themes
+- gnome-icon-theme
+- gnome-themes-standard
+- ttf-pragmatapro (personal PKGBUILD)
+- terminus-font
+- ttf-bitstream-vera ttf-dejavu ttf-inconsolata ttf-liberation ttf-ubuntu-font-family
+- envypn-font (aur)
+- erusfont (aur)
+- gohufont (aur)
+- artwiz-fonts
+- ohsnap (aur)
+- xcursor-neutral
+- xcursor-premium
+- xcursor-simpleandsoft
+- gtk2-theme-dust (aur)
+- gtk2-theme-dyne (aur)
+- faience-icon-theme
+
+## Media
+- pulseaudio-alsa
+- pavucontrol
+- mpd
+- mpc
+- ncmpcpp (aur)
+  - fftw
+- mplayer
+- beets
+  - python2-pyacoustid
+  - python2-pylast
+  - mp3gain
+  - python2-pyechonest (aur)
+  - python2-requests (for beets-lastimport)
+- python2-mpd (for clerk)
+- python-mpd2 (aur)
+- clerk-git
+- mppc-git
+- perl-image-exiftool
+- sxiv-git (aur)
+  - exiv2
+  - imagemagick
+- zathura
+  - zathura-pdf-poppler
+- gloobus-preview
+- mpv-git (aur)
+- gimp
+- ncmpc-git (aur)
+- id3ted (aur)
+- gifsicle
+- rtorrent
+- pngcrush (aur)
+- ponymix
+- id3v2
+- mps-youtube-git (aur)
+
+## LAMP
 - sudo pacman -S mariadb apache
 - sudo usermod -aG http rafi
 - sudo pacman -S php php-apache php-gd php-geoip php-mcrypt php-pgsql php-pear php-tidy php-intl xdebug
@@ -333,7 +325,17 @@
   - `pg_restore -i -h localhost -p 5432 -U postgres -d old_db -v "/usr/local/backup/10.70.0.61.backup"`
 - sudo pacman -Sdd apache-ant (Completely ignoring deps because of jre/open-jre conflict)
 
-# WEBDEV
+## Nginx, memcached, message-queue
+- nginx
+  - php-fpm
+- memcached
+- php-memcache
+- beanstalkd (aur)
+
+## Node.js
 - nodejs
 - sudo npm install -g bower grunt-cli requirejs
-- beanstalkd (aur)
+
+## Ruby
+- ruby
+- gem install sass compass gu--no-ri --no-rdoc
