@@ -11,8 +11,8 @@
 ```
 sudo scutil --set HostName rafi-mac
 ```
-Follow https://github.com/mathiasbynens/dotfiles/blob/master/.osx and use what ever you like
-Get rid of .DS_Store turds http://asepsis.binaryage.com/
+- Follow https://github.com/mathiasbynens/dotfiles/blob/master/.osx and use what ever you like
+- Get rid of `.DS_Store` turds with http://asepsis.binaryage.com/
 
 # Ports
 ```
@@ -66,10 +66,24 @@ sudo /opt/local/apache2/bin/apxs -a -e -n php5 /opt/local/apache2/modules/mod_ph
 sudo port load apache2
 ```
 
+# Python 3.3
+```
+sudo port install python33 py33-flake8
+port select --set python python33
+port select --set pep8 pep833
+port select --set pyflakes py33-pyflakes
+port select --set flake8 flake833
+```
+
 # MPD
 ```
 # Load on startup
 sudo port load mpd
+
+# Install mpdscribble manually
+git clone git://git.musicpd.org/master/mpdscribble.git
+./autogen.sh --prefix="/opt/local" --sysconfdir="/opt/local/etc"
+sudo make install
 ```
 
 # NPM utils
