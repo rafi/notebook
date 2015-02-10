@@ -13,12 +13,16 @@ sudo scutil --set HostName rafi-mac
 ```
 - Follow https://github.com/mathiasbynens/dotfiles/blob/master/.osx and use what ever you like
 - Get rid of `.DS_Store` turds with http://asepsis.binaryage.com/
+- Disable annoying animations:
+```
+defaults write com.apple.dock expose-animation-duration -float 0
+```
 
 # Ports
 ```
 sudo port install coreutils bash bash-completion htop wget tree colordiff
 sudo port install rxvt-unicode tmux tmux-pasteboard keychain the_silver_searcher
-sudo port install rainbarf urlview terminus-font p5-image-exiftool libcaca
+sudo port install id3lib urlview terminus-font p5-image-exiftool libcaca
 sudo port install git +svn +doc +bash_completion +credential_osxkeychain
 sudo port install vim +huge +cscope +perl +python27 +lua
 sudo port install mpd mpc ncmpcpp unrar MPlayer highlight xsel herbstluftwm
@@ -27,10 +31,25 @@ sudo port install nodejs npm
 defaults write org.macosforge.xquartz.X11 app_to_run ""
 ```
 
+# Defaults
+- The tools provided by GNU coreutils are prefixed with the character 'g'
+  by default to distinguish them from the BSD commands. If you want to use
+  the GNU tools by default, add this directory to the front of your PATH:
+  `/opt/local/libexec/gnubin/`
+- To use bash completion, add the following lines at the end of your .bash_profile:
+  ```
+    if [ -f /opt/local/etc/profile.d/bash_completion.sh ]; then
+        . /opt/local/etc/profile.d/bash_completion.sh
+    fi
+  ```
+  The port bash-completion >=2.0 requires bash >=4.1; please make sure
+  you are using /opt/local/bin/bash by changing the preferences of your
+  terminal accordingly.
+- To use the rsyncd server you must copy `/opt/local/etc/rsyncd.conf.example`
+  to `rsyncd.conf` and add your modules there. See `man rsyncd.conf` for more
+  information.
+
 ## Percona, Apache 2.2, and PHP 5.5
-Credits:
-- https://gist.github.com/jwcobb/4210358
-- https://documentation.cpanel.net/display/CKB/How+to+Update+a+Percona+Installation
 ```
 time sudo port install apr-util +percona percona +openssl percona-server intltool +perl5_16
 time sudo port install p5.16-dbd-mysql +percona percona-toolkit +perl5_16
@@ -65,6 +84,9 @@ You can get a list of the available configuration settings for xdebug with the f
 sudo /opt/local/apache2/bin/apxs -a -e -n php5 /opt/local/apache2/modules/mod_php55.so
 sudo port load apache2
 ```
+Credits:
+- https://gist.github.com/jwcobb/4210358
+- https://documentation.cpanel.net/display/CKB/How+to+Update+a+Percona+Installation
 
 # Python 3.3
 ```
@@ -87,7 +109,11 @@ sudo make install
 ```
 
 # NPM utils
+It is not recommended to install packages globally. But if you do so please
+be aware that they won't get cleaned up when you deactivate or uninstall npm.
+Globally installed packages will remain in `/opt/local/lib/node_modules/`
+until you manually delete them.
 ```
-sudo npm install -g mad
+sudo npm install -g mad bower grunt-cli
 ```
 

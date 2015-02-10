@@ -228,8 +228,6 @@
   - maim (aur)
   - slop (aur)
 - spacefm
-- dwb-gtk3-git (aur)
-  - gst-plugins-base
 - libmtp (for android)
 - simple-mtpfs (for android)
 - syncthing
@@ -339,3 +337,21 @@
 ## Ruby
 - ruby
 - gem install sass compass gu--no-ri --no-rdoc
+
+## bitlbee
+```
+acc add jabber justRafi@gmail.com
+acc gtalk set oauth on
+acc gtalk on
+# Perform oauth dance with 'jabber_oauth'
+account gtalk set nick_format %full_name
+# help nick_format
+# help nick_format2
+# help set nick_format
+
+account add hipchat your@email.com <password>
+account hipchat on
+
+set strip_html always
+save
+```
