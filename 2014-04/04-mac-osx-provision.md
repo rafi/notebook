@@ -1,13 +1,17 @@
-# Mac OSX provisioning
+Mac OSX provisioning
+===
 
-# Xcode
+Xcode
+---
 - Install Xcode and the Xcode Command Line Tools: https://www.macports.org/install.php
 - Agree to Xcode license in Terminal: `sudo xcodebuild -license`
 
-# Macports
+Macports
+---
 - Install MacPorts for your version of OS X: https://www.macports.org/install.php
 
-# Sensible hacker defaults
+Sensible hacker defaults
+---
 ```
 sudo scutil --set HostName rafi-mac
 ```
@@ -18,30 +22,34 @@ sudo scutil --set HostName rafi-mac
 defaults write com.apple.dock expose-animation-duration -float 0
 ```
 
-# Ports
+Base Ports
+---
 ```
-sudo port install coreutils bash bash-completion htop wget tree colordiff
+sudo port install coreutils bash bash-completion htop wget tree colordiff ctags
 sudo port install rxvt-unicode tmux tmux-pasteboard keychain the_silver_searcher
 sudo port install id3lib urlview terminus-font p5-image-exiftool libcaca
 sudo port install git +svn +doc +bash_completion +credential_osxkeychain
 sudo port install vim +huge +cscope +perl +python27 +lua
-sudo port install mpd mpc ncmpcpp unrar MPlayer highlight xsel herbstluftwm
+sudo port install ncmpcpp unrar MPlayer highlight xsel herbstluftwm
 sudo port install nodejs npm
 
+# Macports doesn't create python2 link
+ln -s /opt/local/Library/Frameworks/Python.framework/Versions/2.7/bin/python2.7 /opt/local/bin/python2
 defaults write org.macosforge.xquartz.X11 app_to_run ""
 ```
 
-# Defaults
+Defaults
+---
 - The tools provided by GNU coreutils are prefixed with the character 'g'
   by default to distinguish them from the BSD commands. If you want to use
   the GNU tools by default, add this directory to the front of your PATH:
   `/opt/local/libexec/gnubin/`
 - To use bash completion, add the following lines at the end of your .bash_profile:
-  ```
+
     if [ -f /opt/local/etc/profile.d/bash_completion.sh ]; then
         . /opt/local/etc/profile.d/bash_completion.sh
     fi
-  ```
+
   The port bash-completion >=2.0 requires bash >=4.1; please make sure
   you are using /opt/local/bin/bash by changing the preferences of your
   terminal accordingly.
@@ -49,7 +57,8 @@ defaults write org.macosforge.xquartz.X11 app_to_run ""
   to `rsyncd.conf` and add your modules there. See `man rsyncd.conf` for more
   information.
 
-## Percona, Apache 2.2, and PHP 5.5
+Percona, Apache 2.2, and PHP 5.5
+---
 ```
 time sudo port install apr-util +percona percona +openssl percona-server intltool +perl5_16
 time sudo port install p5.16-dbd-mysql +percona percona-toolkit +perl5_16
@@ -88,27 +97,74 @@ Credits:
 - https://gist.github.com/jwcobb/4210358
 - https://documentation.cpanel.net/display/CKB/How+to+Update+a+Percona+Installation
 
-# Python 3.3
+Python 3.3
+---
 ```
-sudo port install python33 py33-flake8
+sudo port install python33 py33-pip py33-flake8
 port select --set python python33
+port select --set pip pip33
 port select --set pep8 pep833
 port select --set pyflakes py33-pyflakes
 port select --set flake8 flake833
+
+# Macports doesn't create python3 link
+ln -s /opt/local/Library/Frameworks/Python.framework/Versions/3.3/bin/python3.3 /opt/local/bin/python3
 ```
 
-# MPD
+MPD
+---
+Instal via Macports or compile manually.
+
+### Macports
 ```
+sudo port install mpd mpc
+
 # Load on startup
 sudo port load mpd
-
-# Install mpdscribble manually
-git clone git://git.musicpd.org/master/mpdscribble.git
-./autogen.sh --prefix="/opt/local" --sysconfdir="/opt/local/etc"
-sudo make install
 ```
 
-# NPM utils
+### Compile mpd
+- Download `mpd` from http://www.musicpd.org/download.html
+```
+sudo port install boost icu sqlite3 yajl libmpdclient libsamplerate
+./configure \
+  --prefix=/opt/local \
+  --mandir=/opt/local/share/man \
+  --disable-debug \
+  --disable-dependency-tracking \
+  --disable-ffmpeg \
+  --disable-jack \
+  --disable-mpc \
+  --disable-mpg123 \
+  --disable-libwrap \
+  --enable-ao \
+  --enable-bzip2 \
+  --enable-mad \
+  --enable-vorbis-encoder
+make CFLAGS="-I/opt/local/include"
+make install
+```
+
+### Compile mpc
+- Download `mpc` from http://www.musicpd.org/clients/mpc/
+```
+./configure \
+  --prefix=/opt/local \
+  --mandir=/opt/local/share/man \
+  --disable-debug \
+  --disable-dependency-tracking
+make install
+```
+
+### Compile mpdscribble
+```
+git clone git://git.musicpd.org/master/mpdscribble.git
+./autogen.sh --prefix="/opt/local" --sysconfdir="/opt/local/etc"
+make install
+```
+
+NPM utils
+---
 It is not recommended to install packages globally. But if you do so please
 be aware that they won't get cleaned up when you deactivate or uninstall npm.
 Globally installed packages will remain in `/opt/local/lib/node_modules/`
