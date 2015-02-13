@@ -1,5 +1,7 @@
-# 2014 - Music Albums (No particular order)
-----
+2014 - Music Albums
+===
+No particular order.
+
 ## Best
 - Todd Terje - It’s Album Time
 - Future Islands - Singles

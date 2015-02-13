@@ -217,7 +217,7 @@
 - icu
 - meld
 - pygtksourceview2
-- keepassx2-git (aur)
+- keepassx-git (aur)
 - libgphoto2 (for usb camera)
   - gphoto2
 - gitg
