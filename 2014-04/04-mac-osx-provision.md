@@ -129,9 +129,15 @@ Development Environments
 ---
 
 ### Percona, Apache 2.2, and PHP 5.5
+First disable built-in Apache: _System Preferences_ **->** _Sharing_
+and uncheck the "Personal Web sharing". Or, from terminal:
 ```
-time sudo port install apr-util +percona percona +openssl percona-server intltool +perl5_16
-time sudo port install p5.16-dbd-mysql +percona percona-toolkit +perl5_16
+sudo launchctl unload -w /System/Library/LaunchDaemons/org.apache.httpd.plist
+```
+Now install the whole stack:
+```
+sudo port install apr-util +percona percona +openssl percona-server intltool +perl5_16
+sudo port install p5.16-dbd-mysql +percona percona-toolkit +perl5_16
 sudo port select mysql percona
 
 # 1. Add to environment: export PATH=/opt/local/lib/percona/bin:$PATH
@@ -147,14 +153,14 @@ cd /opt/local/lib/percona/mysql
 sudo ln -s libperconaserverclient.a libmysqlclient.a
 sudo ln -s libperconaserverclient.dylib libmysqlclient.dylib
 
-time sudo port install apr-util +percona php55 +apache2 php55-apache2handler php55-curl php55-exif php55-gd php55-geoip php55-gettext php55-http php55-iconv php55-mbstring php55-mcrypt php55-mysql +percona php55-openssl php55-pdflib php55-pear php55-posix php55-soap php55-sockets php55-solr php55-ssh2 php55-sqlite php55-xmlrpc php55-xsl php55-zip
-time sudo port install php55-xdebug
-time sudo port install cronolog
+sudo port install apr-util +percona php55 +apache2 php55-apache2handler php55-curl php55-exif php55-gd php55-geoip php55-gettext php55-http php55-iconv php55-mbstring php55-mcrypt php55-mysql +percona php55-openssl php55-pdflib php55-pear php55-posix php55-soap php55-sockets php55-solr php55-ssh2 php55-sqlite php55-xmlrpc php55-xsl php55-zip
+sudo port install php55-xdebug
+sudo port install cronolog
 sudo port select php php55
 
-You can get a list of the available configuration settings for xdebug with the following command:
-
-    php55 --ri xdebug
+# You can get a list of the available configuration settings for xdebug with the following command:
+#
+#   php55 --ri xdebug
 
 # 1. Add to environment: export PATH=/opt/local/apache2/bin:$PATH
 # 2. Use a configuration from /opt/local/etc/php55
@@ -171,7 +177,7 @@ sudo port install python27 py27-pip py27-flake8
 sudo port install py27-virtualenv py27-virtualenvwrapper
 
 # Macports doesn't create a python2 link
-ln -s /opt/local/Library/Frameworks/Python.framework/Versions/2.7/bin/python2.7 /opt/local/bin/python2
+sudo ln -s /opt/local/Library/Frameworks/Python.framework/Versions/2.7/bin/python2.7 /opt/local/bin/python2
 ```
 
 ### Python 3.4
