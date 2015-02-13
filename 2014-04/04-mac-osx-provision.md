@@ -33,29 +33,29 @@ sudo port install vim +huge +cscope +perl +python27 +lua
 sudo port install ncmpcpp unrar MPlayer highlight xsel herbstluftwm
 sudo port install nodejs npm
 
-# Macports doesn't create python2 link
-ln -s /opt/local/Library/Frameworks/Python.framework/Versions/2.7/bin/python2.7 /opt/local/bin/python2
 defaults write org.macosforge.xquartz.X11 app_to_run ""
 ```
 
 Defaults
 ---
-- The tools provided by GNU coreutils are prefixed with the character 'g'
-  by default to distinguish them from the BSD commands. If you want to use
-  the GNU tools by default, add this directory to the front of your PATH:
-  `/opt/local/libexec/gnubin/`
-- To use bash completion, add the following lines at the end of your .bash_profile:
+The tools provided by GNU coreutils are prefixed with the character 'g'
+by default to distinguish them from the BSD commands. If you want to use
+the GNU tools by default, add this directory to the front of your PATH:
+`/opt/local/libexec/gnubin/`
 
-    if [ -f /opt/local/etc/profile.d/bash_completion.sh ]; then
-        . /opt/local/etc/profile.d/bash_completion.sh
-    fi
+To use bash completion, add the following lines at the end of your .bash_profile:
+```sh
+  if [ -f /opt/local/etc/profile.d/bash_completion.sh ]; then
+      . /opt/local/etc/profile.d/bash_completion.sh
+  fi
+```
+The port bash-completion >=2.0 requires bash >=4.1; please make sure
+you are using /opt/local/bin/bash by changing the preferences of your
+terminal accordingly.
 
-  The port bash-completion >=2.0 requires bash >=4.1; please make sure
-  you are using /opt/local/bin/bash by changing the preferences of your
-  terminal accordingly.
-- To use the rsyncd server you must copy `/opt/local/etc/rsyncd.conf.example`
-  to `rsyncd.conf` and add your modules there. See `man rsyncd.conf` for more
-  information.
+To use the rsyncd server you must copy `/opt/local/etc/rsyncd.conf.example`
+to `rsyncd.conf` and add your modules there. See `man rsyncd.conf` for more
+information.
 
 MPD
 ---
@@ -70,7 +70,7 @@ sudo port load mpd
 ```
 
 ### Compile mpd
-- Download `mpd` from http://www.musicpd.org/download.html
+Download `mpd` from http://www.musicpd.org/download.html
 ```
 sudo port install boost icu sqlite3 yajl libmpdclient libsamplerate
 ./configure \
@@ -92,7 +92,7 @@ make install
 ```
 
 ### Compile mpc
-- Download `mpc` from http://www.musicpd.org/clients/mpc/
+Download `mpc` from http://www.musicpd.org/clients/mpc/
 ```
 ./configure \
   --prefix=/opt/local \
@@ -163,14 +163,15 @@ You can get a list of the available configuration settings for xdebug with the f
 sudo /opt/local/apache2/bin/apxs -a -e -n php5 /opt/local/apache2/modules/mod_php55.so
 sudo port load apache2
 ```
-Credits:
-- https://gist.github.com/jwcobb/4210358
-- https://documentation.cpanel.net/display/CKB/How+to+Update+a+Percona+Installation
+Credits: https://gist.github.com/jwcobb/4210358
 
 ### Python 2.7
 ```
 sudo port install python27 py27-pip py27-flake8
-sudo pip2.7 install virtualenv virtualenvwrapper
+sudo port install py27-virtualenv py27-virtualenvwrapper
+
+# Macports doesn't create a python2 link
+ln -s /opt/local/Library/Frameworks/Python.framework/Versions/2.7/bin/python2.7 /opt/local/bin/python2
 ```
 
 ### Python 3.4
@@ -183,7 +184,7 @@ sudo port select --set pep8 pep834
 sudo port select --set pyflakes py34-pyflakes
 sudo port select --set flake8 flake834
 
-# Macports doesn't create python3 link
+# Macports doesn't create a python3 link
 sudo ln -s /opt/local/Library/Frameworks/Python.framework/Versions/3.4/bin/python3.4 /opt/local/bin/python3
 ```
 
