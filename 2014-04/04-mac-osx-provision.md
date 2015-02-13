@@ -25,6 +25,7 @@ defaults write com.apple.dock expose-animation-duration -float 0
 Base Ports
 ---
 ```
+sudo port -v selfupdate
 sudo port install coreutils bash bash-completion htop wget tree colordiff ctags
 sudo port install rxvt-unicode tmux tmux-pasteboard keychain the_silver_searcher
 sudo port install id3lib urlview terminus-font p5-image-exiftool libcaca
@@ -128,48 +129,73 @@ sshfs rafi@rafi-desk:/mnt/media /mnt/media -C -p 9876
 Development Environments
 ---
 
-### Percona, Apache 2.2, and PHP 5.5
+### Apache 2.2, PHP 5.6, and MySQL 5.5 or Percona
 First disable built-in Apache: _System Preferences_ **->** _Sharing_
 and uncheck the "Personal Web sharing". Or, from terminal:
 ```
 sudo launchctl unload -w /System/Library/LaunchDaemons/org.apache.httpd.plist
 ```
-Now install the whole stack:
+PHP and Apache:
+```
+sudo port install php56 +apache2 php56-apache2handler php56-curl php56-exif php56-gd php56-geoip php56-gettext php56-http php56-iconv php56-mbstring php56-mcrypt  php56-openssl php56-pdflib php56-pear php56-posix php56-soap php56-sockets php56-solr php56-ssh2 php56-sqlite php56-xmlrpc php56-xsl php56-zip
+sudo port install php56-xdebug
+sudo port install cronolog
+sudo port select php php56
+
+# You can get a list of the available configuration settings for xdebug with the following command:
+#
+#   php56 --ri xdebug
+
+# 1. Add to environment: export PATH=/opt/local/apache2/bin:$PATH
+# 2. Use a configuration from /opt/local/etc/php56
+# 3. Symlink conf: sudo ln -s ~/.config/php/php56.ini /opt/local/etc/php56/php.ini
+sudo /opt/local/apache2/bin/apxs -a -e -n php5 /opt/local/apache2/modules/mod_php56.so
+sudo port load apache2
+```
+Install mysql 5.5:
+```
+sudo port install mysql55-server
+sudo port select mysql mysql55
+sudo port install php56-mysql
+
+# Add to PATH: export PATH=/opt/local/lib/mysql55/bin:$PATH
+
+sudo -u _mysql mysql_install_db
+sudo chown -R _mysql:_mysql /opt/local/var/db/mysql55/
+sudo chown -R _mysql:_mysql /opt/local/var/run/mysql55/
+sudo chown -R _mysql:_mysql /opt/local/var/log/mysql55/
+sudo port load mysql55-server
+/opt/local/lib/mysql55/bin/mysqladmin -u root -p password
+/opt/local/bin/mysql_secure_installation
+
+# To upgrade older existing database:
+man mysql_upgrade  # details on the upgrade program (man page)
+sudo port unload mysql55-server
+sudo /opt/local/lib/mysql55/bin/mysql_upgrade -u root -p
+sudo port load mysql55-server
+```
+Or, Percona:
 ```
 sudo port install apr-util +percona percona +openssl percona-server intltool +perl5_16
 sudo port install p5.16-dbd-mysql +percona percona-toolkit +perl5_16
 sudo port select mysql percona
+sudo port install php56-mysql +percona
 
 # 1. Add to environment: export PATH=/opt/local/lib/percona/bin:$PATH
 # 2. Generate my.cnf at https://tools.percona.com/wizard
 # 3. Symlink conf: sudo ln -s ~/.config/percona/my.cnf /opt/local/etc/percona/my.cnf
+# 4. php.ini update mysql.sock reflect /opt/local/var/run/percona/mysqld.sock
 sudo -u _mysql /opt/local/lib/percona/bin/mysql_install_db
 sudo port load percona-server
 sudo /opt/local/lib/percona/bin/mysql_secure_installation
 
-# Fix for php55-mysql
+# Fix for php56-mysql
 # Just for Mavericks (10.9)?
 cd /opt/local/lib/percona/mysql
 sudo ln -s libperconaserverclient.a libmysqlclient.a
 sudo ln -s libperconaserverclient.dylib libmysqlclient.dylib
-
-sudo port install apr-util +percona php55 +apache2 php55-apache2handler php55-curl php55-exif php55-gd php55-geoip php55-gettext php55-http php55-iconv php55-mbstring php55-mcrypt php55-mysql +percona php55-openssl php55-pdflib php55-pear php55-posix php55-soap php55-sockets php55-solr php55-ssh2 php55-sqlite php55-xmlrpc php55-xsl php55-zip
-sudo port install php55-xdebug
-sudo port install cronolog
-sudo port select php php55
-
-# You can get a list of the available configuration settings for xdebug with the following command:
-#
-#   php55 --ri xdebug
-
-# 1. Add to environment: export PATH=/opt/local/apache2/bin:$PATH
-# 2. Use a configuration from /opt/local/etc/php55
-# 3. Symlink conf: sudo ln -s ~/.config/php/php55.ini /opt/local/etc/php55/php.ini
-# 4. php.ini update mysql.sock reflect /opt/local/var/run/percona/mysqld.sock
-sudo /opt/local/apache2/bin/apxs -a -e -n php5 /opt/local/apache2/modules/mod_php55.so
-sudo port load apache2
 ```
-Credits: https://gist.github.com/jwcobb/4210358
+Reference: https://gist.github.com/jwcobb/4210358
 
 ### Python 2.7
 ```
