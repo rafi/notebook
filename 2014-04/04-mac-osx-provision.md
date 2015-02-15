@@ -28,7 +28,7 @@ Base Ports
 sudo port -v selfupdate
 sudo port install coreutils bash bash-completion htop wget tree colordiff ctags
 sudo port install rxvt-unicode tmux tmux-pasteboard keychain the_silver_searcher
-sudo port install id3lib urlview terminus-font p5-image-exiftool libcaca
+sudo port install id3lib urlview terminus-font p5-image-exiftool libcaca libexif
 sudo port install git +svn +doc +bash_completion +credential_osxkeychain
 sudo port install vim +huge +cscope +perl +python27 +lua
 sudo port install ncmpcpp unrar MPlayer highlight xsel herbstluftwm
@@ -94,7 +94,7 @@ make install
 
 ### Compile mpc
 Download `mpc` from http://www.musicpd.org/clients/mpc/
-```
+```sh
 ./configure \
   --prefix=/opt/local \
   --mandir=/opt/local/share/man \
@@ -104,15 +104,37 @@ make install
 ```
 
 ### Compile mpdscribble
-```
+```sh
 git clone git://git.musicpd.org/master/mpdscribble.git
+cd mpdscribble
 ./autogen.sh --prefix="/opt/local" --sysconfdir="/opt/local/etc"
 make install
 ```
 
+### Compile ympd
+```sh
+git clone git://github.com/notandy/ympd.git
+cd ympd
+# Add this to CMakeLists.txt: INCLUDE_DIRECTORIES(/opt/local/include)
+mkdir build && cd build
+cmake .. -DCMAKE_INSTALL_PREFIX:PATH=/opt/local
+make
+sudo make install
+```
+
+sxiv
+----
+Compile from source:
+```sh
+git clone git://github.com/muennich/sxiv.git
+cd sxiv
+make CFLAGS="-I/opt/local/include" LDFLAGS="-L/opt/local/lib"
+sudo make PREFIX="/opt/local" install
+```
+
 sshfs
 ---
-```
+```sh
 sudo port install sshfs
 ```
 When upgrading `sshfs`, unmount all FUSE filesystems and then unload the kernel extension.
@@ -124,6 +146,9 @@ Usage:
 # Mount:
 # sshfs USERNAME@HOSTNAME_OR_IP:/PATH LOCAL_MOUNT_POINT SSH_OPTIONS
 sshfs rafi@rafi-desk:/mnt/media /mnt/media -C -p 9876
+
+# Unmount:
+# umount LOCAL_MOUNT_POINT
 ```
 
 Development Environments
