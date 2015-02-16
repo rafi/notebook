@@ -4,6 +4,12 @@ Learning Python
 Fundamentals
 ---
 - [Pluralsight]'s course: [Python Fundamentals]
+  Highlights:
+  - Module 3: "Strings and Collections"
+  - Module 6: "Collections"
+  - Module 7: "Handling exceptions"
+  - Module 8: "Iterables"
+  - Module 9: "Classes"
 - [Pluralsight]'s course: [Python - Beyond the Basics]
 
 Web
