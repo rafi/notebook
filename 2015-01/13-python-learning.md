@@ -3,19 +3,40 @@ Learning Python
 
 Fundamentals
 ---
-- [Pluralsight]'s course: [Python Fundamentals]
+- [Pluralsight] course: [Python Fundamentals]
   Highlights:
   - Module 3: "Strings and Collections"
   - Module 6: "Collections"
   - Module 7: "Handling exceptions"
   - Module 8: "Iterables"
   - Module 9: "Classes"
-- [Pluralsight]'s course: [Python - Beyond the Basics]
+- [Pluralsight] course: [Python - Beyond the Basics]
 
 Web
 ---
 ### Flask
-- [Pluralsight]'s course: [Introduction to the Flask Microframework]
+- [Pluralsight] course: [Introduction to the Flask Microframework]
+
+**Highlights**
+```python
+# Application container
+flask.Flask()
+
+# request - Werzeug or Flask?
+flask.request.form
+flask.request.args
+flask.request.cookies
+flask.request.headers
+flask.request.files
+flask.request.method
+
+app.logger.debug(self, msg, *args, **kwargs)
+app.logger.setLevel(self, level)
+flask.render_template(template_name_or_list, **context)
+flask.url_for(endpoint, **values)
+flask.redirect(location, code = 302, Response = None)
+flask.flash(message, category = 'message')
+```
 
 #### Flask Larger Apps
 - [Flask Docs: Larger Applications]

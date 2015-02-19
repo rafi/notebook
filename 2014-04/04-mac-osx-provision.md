@@ -30,9 +30,9 @@ sudo port install coreutils bash bash-completion htop wget tree colordiff ctags
 sudo port install rxvt-unicode tmux tmux-pasteboard keychain the_silver_searcher
 sudo port install id3lib urlview terminus-font p5-image-exiftool libcaca libexif
 sudo port install git +svn +doc +bash_completion +credential_osxkeychain
-sudo port install vim +huge +cscope +perl +python27 +lua
+sudo port install vim +huge +breakindent +cscope +perl +lua +python34
 sudo port install ncmpcpp unrar MPlayer highlight xsel surfraw herbstluftwm
-sudo port install nodejs npm
+sudo port install poppler atool aria2 libmms faad2 pass nodejs npm
 
 defaults write org.macosforge.xquartz.X11 app_to_run ""
 ```
@@ -53,6 +53,11 @@ To use bash completion, add the following lines at the end of your .bash_profile
 The port bash-completion >=2.0 requires bash >=4.1; please make sure
 you are using /opt/local/bin/bash by changing the preferences of your
 terminal accordingly.
+
+To start the `gpg-agent` on startup, run:
+```sh
+launchctl load -w /Library/LaunchAgents/org.macports.gpg-agent.plist
+```
 
 To use the rsyncd server you must copy `/opt/local/etc/rsyncd.conf.example`
 to `rsyncd.conf` and add your modules there. See `man rsyncd.conf` for more
@@ -87,8 +92,9 @@ sudo port install boost icu sqlite3 yajl libmpdclient libsamplerate
   --enable-ao \
   --enable-bzip2 \
   --enable-mad \
+  --enable-lame-encoder \
   --enable-vorbis-encoder
-make CFLAGS="-I/opt/local/include"
+make CFLAGS="-I/opt/local/include" LDFLAGS="-L/opt/local/lib"
 make install
 ```
 
@@ -119,7 +125,7 @@ cd ympd
 mkdir build && cd build
 cmake .. -DCMAKE_INSTALL_PREFIX:PATH=/opt/local
 make
-sudo make install
+make install
 ```
 
 sxiv
@@ -129,7 +135,7 @@ Compile from source:
 git clone git://github.com/muennich/sxiv.git
 cd sxiv
 make CFLAGS="-I/opt/local/include" LDFLAGS="-L/opt/local/lib"
-sudo make PREFIX="/opt/local" install
+make PREFIX="/opt/local" install
 ```
 
 sshfs
@@ -251,6 +257,5 @@ be aware that they won't get cleaned up when you deactivate or uninstall npm.
 Globally installed packages will remain in `/opt/local/lib/node_modules/`
 until you manually delete them.
 ```
-sudo npm install -g mad bower grunt-cli
+npm install -g mad bower grunt-cli
 ```
-
