@@ -282,6 +282,16 @@ sudo port install python34 py34-pip py34-flake8
 sudo ln -s /opt/local/Library/Frameworks/Python.framework/Versions/3.4/bin/python3.4 /opt/local/bin/python3
 ```
 
+### Python utils
+```
+pip-2.7 install ss subliminal
+sudo ln -s /opt/local/Library/Frameworks/Python.framework/Versions/2.7/bin/subliminal /opt/local/bin/subliminal
+sudo ln -s /opt/local/Library/Frameworks/Python.framework/Versions/2.7/bin/ss /opt/local/bin/ss
+
+pip-3.4 install Pygments python-mpd2
+sudo ln -s /opt/local/Library/Frameworks/Python.framework/Versions/3.4/bin/pygmentize /opt/local/bin/pygmentize
+```
+
 ### NPM utils
 It is not recommended to install packages globally. But if you do so please
 be aware that they won't get cleaned up when you deactivate or uninstall npm.
