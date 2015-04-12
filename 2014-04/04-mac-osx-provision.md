@@ -26,13 +26,15 @@ Base Ports
 ---
 ```
 sudo port -v selfupdate
-sudo port install coreutils bash bash-completion htop wget tree colordiff ctags
-sudo port install rxvt-unicode tmux tmux-pasteboard keychain the_silver_searcher
-sudo port install id3lib urlview terminus-font p5-image-exiftool libcaca libexif
-sudo port install git +svn +doc +bash_completion +credential_osxkeychain
-sudo port install vim +huge +breakindent +cscope +perl +lua +python34
-sudo port install ncmpcpp unrar MPlayer highlight xsel surfraw herbstluftwm
-sudo port install poppler atool aria2 libmms faad2 pass nodejs npm
+sudo port install coreutils bash bash-completion htop wget tree colordiff \
+  ctags rxvt-unicode tmux tmux-pasteboard keychain the_silver_searcher \
+  id3lib urlview par terminus-font p5-image-exiftool libcaca libexif \
+  git +svn +doc +bash_completion +credential_osxkeychain \
+  vim +huge +breakindent +cscope +perl +lua +python27 \
+  ncmpcpp unrar MPlayer highlight xsel surfraw herbstluftwm \
+  poppler atool aria2 libmms faad2 pass spark nodejs npm \
+  git-extras git-cal bc tcpdump tarsnap netcat sshfs grc ttyrec \
+  calc tidy pngcrush httpie colout icat watch exiv2
 
 defaults write org.macosforge.xquartz.X11 app_to_run ""
 ```
