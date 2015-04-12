@@ -109,7 +109,8 @@ Download `mpc` from http://www.musicpd.org/clients/mpc/
 make install
 ```
 
-### Compile mpdscribble
+Compile mpdscribble
+---
 ```sh
 git clone git://git.musicpd.org/master/mpdscribble.git
 cd mpdscribble
@@ -117,7 +118,8 @@ cd mpdscribble
 make install
 ```
 
-### Compile ympd
+Compile ympd
+---
 ```sh
 git clone git://github.com/notandy/ympd.git
 cd ympd
@@ -128,14 +130,35 @@ make
 make install
 ```
 
-sxiv
-----
+Compile glyr
+---
+```sh
+git clone git://github.com/sahib/glyr.git
+cd glyr
+cmake . -DCMAKE_EXE_LINKER_FLAGS="-L/opt/local/lib" -DCMAKE_SHARED_LINKER_FLAGS="-L/opt/local/lib"
+make
+make install
+```
+
+Compile `sxiv`
+---
 Compile from source:
 ```sh
 git clone git://github.com/muennich/sxiv.git
 cd sxiv
 make CFLAGS="-I/opt/local/include" LDFLAGS="-L/opt/local/lib"
 make PREFIX="/opt/local" install
+```
+
+Compile `cam`
+---
+```
+git clone git://github.com/itchyny/cam
+cd ./cam
+autoreconf -i
+CFLAGS="-I/opt/local/include" LDFLAGS="-L/opt/local/lib" ./configure --prefix=/opt/local --mandir=/opt/local/share/man
+make CFLAGS="-I/opt/local/include" LDFLAGS="-L/opt/local/lib"
+make install
 ```
 
 sshfs
