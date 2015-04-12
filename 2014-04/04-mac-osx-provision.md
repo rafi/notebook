@@ -206,7 +206,14 @@ sudo port select php php56
 sudo /opt/local/apache2/bin/apxs -a -e -n php5 /opt/local/apache2/modules/mod_php56.so
 sudo port load apache2
 ```
-Install mysql 5.5:
+Install PostgreSQL 9.3:
+```
+sudo port install postgresql93-server
+sudo mkdir -p /opt/local/var/db/postgresql93/defaultdb
+sudo chown postgres:postgres /opt/local/var/db/postgresql93/defaultdb
+sudo su postgres -c '/opt/local/lib/postgresql93/bin/initdb -D /opt/local/var/db/postgresql93/defaultdb'
+```
+Install MySQL 5.5:
 ```
 sudo port install mysql55-server
 sudo port select mysql mysql55
@@ -256,6 +263,13 @@ Reference: https://gist.github.com/jwcobb/4210358
 sudo port install python27 py27-pip py27-flake8
 sudo port install py27-virtualenv py27-virtualenvwrapper
 
+sudo port select --set python python27
+sudo port select --set pip pip27
+sudo port select --set pep8 pep827
+sudo port select --set pyflakes py27-pyflakes
+sudo port select --set flake8 flake827
+sudo port select --set virtualenv virtualenv27
+
 # Macports doesn't create a python2 link
 sudo ln -s /opt/local/Library/Frameworks/Python.framework/Versions/2.7/bin/python2.7 /opt/local/bin/python2
 ```
@@ -263,12 +277,6 @@ sudo ln -s /opt/local/Library/Frameworks/Python.framework/Versions/2.7/bin/pytho
 ### Python 3.4
 ```
 sudo port install python34 py34-pip py34-flake8
-
-sudo port select --set python python34
-sudo port select --set pip pip34
-sudo port select --set pep8 pep834
-sudo port select --set pyflakes py34-pyflakes
-sudo port select --set flake8 flake834
 
 # Macports doesn't create a python3 link
 sudo ln -s /opt/local/Library/Frameworks/Python.framework/Versions/3.4/bin/python3.4 /opt/local/bin/python3
