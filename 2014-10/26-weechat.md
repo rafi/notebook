@@ -1,5 +1,13 @@
-# WeeChat
-By Rafael Bodill
+---
+title: WeeChat Guide
+date: '2014-10-26'
+description:
+categories:
+- setup
+tags:
+- weechat
+- guide
+---
 
 # Key Bindings
 Default: http://weechat.org/files/doc/devel/weechat_user.en.html#key_bindings

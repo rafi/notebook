@@ -1,4 +1,15 @@
-# apt: Keeping software versions intact
+---
+title: apt: Keeping software versions intact
+date: '2013-10-30'
+description:
+categories:
+- setup
+tags:
+- ubuntu
+- debian
+- apt
+- install
+---
 
 `apt` is the package manager that installs and removes software from your OS, Ubuntu, and Debian too. It's 100% compatible software, and it performs upgrades easily. Fedora/Centos/Redhat use yum, Arch uses pacman, Apple has the AppStore, and so on..
 

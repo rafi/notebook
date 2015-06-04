@@ -1,4 +1,15 @@
-# systemd
+---
+title: systemd
+date: '2014-10-28'
+description:
+categories:
+- setup
+tags:
+- systemd
+- guide
+- linux
+---
+
 Running `systemctl`, optionally specify `--system` or `--user`.
 
 ## Services

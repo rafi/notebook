@@ -1,4 +1,13 @@
-# Version Control /home with Git
+---
+title: Version Control /home with Git
+date: '2013-10-26'
+description:
+categories:
+- setup
+tags:
+- git
+- dotfiles
+---
 
 We'll create a detached bare repository somewhere tucked inside, point the work tree to your home, and more:
 

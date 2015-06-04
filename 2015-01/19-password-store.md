@@ -1,5 +1,13 @@
-password-store
-===
+---
+title: password-store
+date: '2015-01-19'
+description:
+categories:
+- secret
+tags:
+- password
+- security
+---
 
 Store encrypted passwords using a GPG key. Supports the regular CRUD,
 tree list, and optionally wraps around git for automatic commits and

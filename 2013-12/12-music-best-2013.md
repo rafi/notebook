@@ -1,5 +1,16 @@
-# 2013 - Albums of the Year (No particular order)
-----
+---
+title: 2013 - Albums of the Year
+date: '2013-12-12'
+description:
+categories:
+- music
+tags:
+- music
+- 2013
+---
+
+No particular order.
+
 - Girls Names - The New Life
 - Fuck Buttons - Slow Focus
 - Rhye - Woman
@@ -31,4 +42,3 @@
 - Rhye - Open
 - Baths - Miasma Sky
 - Vampire Weekend - Step
-

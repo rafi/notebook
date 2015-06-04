@@ -1,4 +1,12 @@
-# Format an hard driver with Ext4
+---
+title: Format an hard driver with Ext4
+date: '2013-12-02'
+description:
+categories:
+- setup
+tags:
+- ext4
+---
 
 First, delete the existing partition and create a new Linux partition using fdisk:
 

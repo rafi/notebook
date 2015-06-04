@@ -1,3 +1,14 @@
+---
+title: ArchLinux Install
+date: '2013-09-27'
+description:
+categories:
+- setup
+tags:
+- archlinux
+- linux
+- pacman
+---
 # Preparation
 - Burn latest install iso on usb with `dd`
 

@@ -1,5 +1,14 @@
-rsync
-===
+---
+title: rsync tips
+date: '2015-01-11'
+description:
+categories:
+- setup
+tags:
+- rsync
+- guide
+- linux
+---
 
 Dry-Run
 ---

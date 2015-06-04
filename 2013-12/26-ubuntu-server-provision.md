@@ -1,6 +1,15 @@
-# Ubuntu Server Provisioning
+---
+title: Ubuntu Server Provisioning
+date: '2013-12-26'
+description:
+categories:
+- setup
+tags:
+- ubuntu
+- provision
+---
 
-# As Root
+As Root:
 
 ## Add swap
 https://www.digitalocean.com/community/tutorials/how-to-add-swap-on-ubuntu-12-04

@@ -1,4 +1,14 @@
-# Israeli Radio Stations
+---
+title: Israeli Radio Stations
+date: '2014-07-10'
+description:
+categories:
+- music
+tags:
+- radio
+- israel
+- hebrew
+---
 
 - Reshet Alef           mms://s67wm.castup.net/990310002-52.wmv
 - Reshet Bet            mms://s4awm.castup.net/990310001-52.wmv

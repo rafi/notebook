@@ -1,5 +1,15 @@
-Mac OSX provisioning
-===
+---
+title: Mac OSX provisioning
+date: '2014-04-04'
+description:
+categories:
+- setup
+tags:
+- osx
+- provision
+- mac
+- macports
+---
 
 Xcode
 ---
@@ -12,19 +22,23 @@ Macports
 
 Sensible hacker defaults
 ---
-```
+```sh
 sudo scutil --set HostName rafi-mac
 ```
 - Follow https://github.com/mathiasbynens/dotfiles/blob/master/.osx and use what ever you like
 - Get rid of `.DS_Store` turds with http://asepsis.binaryage.com/
 - Disable annoying animations:
-```
+```sh
 defaults write com.apple.dock expose-animation-duration -float 0
+```
+
+Default Directories
+---
 ```
 
 Base Ports
 ---
-```
+```sh
 sudo port -v selfupdate
 sudo port install coreutils bash bash-completion htop wget tree colordiff \
   ctags rxvt-unicode tmux tmux-pasteboard keychain the_silver_searcher \
@@ -34,7 +48,7 @@ sudo port install coreutils bash bash-completion htop wget tree colordiff \
   ncmpcpp unrar MPlayer highlight xsel surfraw herbstluftwm \
   poppler atool aria2 libmms faad2 pass spark nodejs npm \
   git-extras git-cal bc tcpdump tarsnap netcat sshfs grc ttyrec \
-  calc tidy pngcrush httpie colout icat watch exiv2
+  calc tidy pngcrush httpie colout icat watch exiv2 terminal-notifier
 
 defaults write org.macosforge.xquartz.X11 app_to_run ""
 ```
@@ -70,16 +84,16 @@ MPD
 Instal via Macports or compile manually.
 
 ### Macports
-```
+```sh
 sudo port install mpd mpc
 
 # Load on startup
 sudo port load mpd
 ```
 
-### Compile mpd
+### Compile `mpd`
 Download `mpd` from http://www.musicpd.org/download.html
-```
+```sh
 sudo port install boost icu sqlite3 yajl libmpdclient libsamplerate
 ./configure \
   --prefix=/opt/local \
@@ -100,7 +114,7 @@ make CFLAGS="-I/opt/local/include" LDFLAGS="-L/opt/local/lib"
 make install
 ```
 
-### Compile mpc
+### Compile `mpc`
 Download `mpc` from http://www.musicpd.org/clients/mpc/
 ```sh
 ./configure \
@@ -111,7 +125,7 @@ Download `mpc` from http://www.musicpd.org/clients/mpc/
 make install
 ```
 
-Compile mpdscribble
+Compile `mpdscribble`
 ---
 ```sh
 git clone git://git.musicpd.org/master/mpdscribble.git
@@ -120,7 +134,7 @@ cd mpdscribble
 make install
 ```
 
-Compile ympd
+Compile `ympd`
 ---
 ```sh
 git clone git://github.com/notandy/ympd.git
@@ -132,7 +146,16 @@ make
 make install
 ```
 
-Compile glyr
+Compile `neovim`
+---
+```sh
+git clone git://github.com/neovim/neovim.git
+cd neovim
+make CMAKE_BUILD_TYPE=RelWithDebInfo DEPS_CMAKE_FLAGS=-DUSE_BUNDLED_BUSTED=OFF CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX:PATH=/opt/local"
+make install
+```
+
+Compile `glyr`
 ---
 ```sh
 git clone git://github.com/sahib/glyr.git
@@ -154,8 +177,8 @@ make PREFIX="/opt/local" install
 
 Compile `cam`
 ---
-```
-git clone git://github.com/itchyny/cam
+```sh
+git clone git://github.com/itchyny/cam.git
 cd ./cam
 autoreconf -i
 CFLAGS="-I/opt/local/include" LDFLAGS="-L/opt/local/lib" ./configure --prefix=/opt/local --mandir=/opt/local/share/man
@@ -173,7 +196,7 @@ Unloading can be done via: `sudo kextunload -b com.github.osxfuse.filesystems.os
 Alternatively (or if this fails), just reboot your computer.
 
 Usage:
-```
+```sh
 # Mount:
 # sshfs USERNAME@HOSTNAME_OR_IP:/PATH LOCAL_MOUNT_POINT SSH_OPTIONS
 sshfs rafi@rafi-desk:/mnt/media /mnt/media -C -p 9876
@@ -188,11 +211,11 @@ Development Environments
 ### Apache 2.2, PHP 5.6, and MySQL 5.5 or Percona
 First disable built-in Apache: _System Preferences_ **->** _Sharing_
 and uncheck the "Personal Web sharing". Or, from terminal:
-```
+```sh
 sudo launchctl unload -w /System/Library/LaunchDaemons/org.apache.httpd.plist
 ```
 PHP and Apache:
-```
+```sh
 sudo port install php56 +apache2 php56-apache2handler php56-curl php56-exif php56-gd php56-geoip php56-gettext php56-http php56-iconv php56-mbstring php56-mcrypt  php56-openssl php56-pdflib php56-pear php56-posix php56-soap php56-sockets php56-solr php56-ssh2 php56-sqlite php56-xmlrpc php56-xsl php56-zip
 sudo port install php56-xdebug
 sudo port install cronolog
@@ -209,14 +232,14 @@ sudo /opt/local/apache2/bin/apxs -a -e -n php5 /opt/local/apache2/modules/mod_ph
 sudo port load apache2
 ```
 Install PostgreSQL 9.3:
-```
+```sh
 sudo port install postgresql93-server
 sudo mkdir -p /opt/local/var/db/postgresql93/defaultdb
 sudo chown postgres:postgres /opt/local/var/db/postgresql93/defaultdb
 sudo su postgres -c '/opt/local/lib/postgresql93/bin/initdb -D /opt/local/var/db/postgresql93/defaultdb'
 ```
 Install MySQL 5.5:
-```
+```sh
 sudo port install mysql55-server
 sudo port select mysql mysql55
 sudo port install php56-mysql
@@ -238,7 +261,7 @@ sudo /opt/local/lib/mysql55/bin/mysql_upgrade -u root -p
 sudo port load mysql55-server
 ```
 Or, Percona:
-```
+```sh
 sudo port install apr-util +percona percona +openssl percona-server intltool +perl5_16
 sudo port install p5.16-dbd-mysql +percona percona-toolkit +perl5_16
 sudo port select mysql percona
@@ -261,23 +284,21 @@ sudo ln -s libperconaserverclient.dylib libmysqlclient.dylib
 Reference: https://gist.github.com/jwcobb/4210358
 
 ### Python 2.7
-```
+```sh
 sudo port install python27 py27-pip py27-flake8
 sudo port install py27-virtualenv py27-virtualenvwrapper
 
 sudo port select --set python python27
+sudo port select --set python2 python27
 sudo port select --set pip pip27
 sudo port select --set pep8 pep827
 sudo port select --set pyflakes py27-pyflakes
 sudo port select --set flake8 flake827
 sudo port select --set virtualenv virtualenv27
-
-# Macports doesn't create a python2 link
-sudo ln -s /opt/local/Library/Frameworks/Python.framework/Versions/2.7/bin/python2.7 /opt/local/bin/python2
 ```
 
 ### Python 3.4
-```
+```sh
 sudo port install python34 py34-pip py34-flake8
 
 # Macports doesn't create a python3 link
@@ -285,7 +306,7 @@ sudo ln -s /opt/local/Library/Frameworks/Python.framework/Versions/3.4/bin/pytho
 ```
 
 ### Python utils
-```
+```sh
 pip-2.7 install ss subliminal
 sudo ln -s /opt/local/Library/Frameworks/Python.framework/Versions/2.7/bin/subliminal /opt/local/bin/subliminal
 sudo ln -s /opt/local/Library/Frameworks/Python.framework/Versions/2.7/bin/ss /opt/local/bin/ss
@@ -299,6 +320,6 @@ It is not recommended to install packages globally. But if you do so please
 be aware that they won't get cleaned up when you deactivate or uninstall npm.
 Globally installed packages will remain in `/opt/local/lib/node_modules/`
 until you manually delete them.
-```
+```sh
 npm install -g mad bower grunt-cli
 ```

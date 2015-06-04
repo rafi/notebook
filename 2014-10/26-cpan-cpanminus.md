@@ -1,5 +1,13 @@
-# CPAN and CPANMinus
-By Rafael Bodill
+---
+title: CPAN and CPANMinus
+date: '2014-10-26'
+description:
+categories:
+- setup
+tags:
+- cpan
+- cpanminus
+---
 
 Install `cpan` and `cpanminus`.
 

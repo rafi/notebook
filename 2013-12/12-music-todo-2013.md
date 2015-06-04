@@ -1,4 +1,13 @@
-# 2013 Music TODO
+---
+title: 2014 Music TODO
+date: '2013-12-12'
+description:
+categories:
+- music
+tags:
+- todo
+- 2013
+---
 
 - Todd Terje – Strandbar (Disko Version)
 - Shit Robot – We Got A Love (Featuring Reggie Watts)

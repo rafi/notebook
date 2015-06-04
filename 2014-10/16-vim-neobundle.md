@@ -1,5 +1,13 @@
-# Spec'ing: NeoBundle - VIM plugin manager
-by Rafael Bodill
+---
+title: Spec'ing: NeoBundle - VIM plugin manager
+date: '2014-10-16'
+description:
+categories:
+- vim
+tags:
+- plugin
+- guide
+---
 
 ## Install
 ### Dependencies

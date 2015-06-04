@@ -1,5 +1,15 @@
-2014 - Music Albums
-===
+---
+title: 2014 - Music Albums
+date: '2014-12-22'
+description:
+categories:
+- music
+tags:
+- 2014
+- best
+- albums
+---
+
 No particular order.
 
 ## Best

@@ -1,5 +1,13 @@
-Learning Python
-===
+---
+title: Learning Python
+date: '2015-01-13'
+description:
+categories:
+- python
+tags:
+- beginner
+- guide
+---
 
 Fundamentals
 ---
