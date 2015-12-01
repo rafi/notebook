@@ -34,6 +34,30 @@ defaults write com.apple.dock expose-animation-duration -float 0
 
 Default Directories
 ---
+Careful! I wouldn't suggest renaming critical directories like Applications.
+```sh
+cd /System/Library/CoreServices/SystemFolderLocalizations/en.lproj
+sudo plutil -convert xml1 SystemFolderLocalizations.strings
+sudo vim SystemFolderLocalizations.strings
+sudo plutil -convert binary1 SystemFolderLocalizations.strings
+cd ~/docs
+touch .localized
+killall Finder
+```
+
+X11 .serverauth files
+---
+```sh
+sudo -E vim /opt/X11/bin/startx
+# Change path for .serverauth
+```
+
+Fix screen terminfo
+---
+https://github.com/neovim/neovim/issues/2048#issuecomment-78045837
+```sh
+infocmp $TERM | sed 's/kbs=^[hH]/kbs=\\177/' > $TERM.ti
+tic $TERM.ti
 ```
 
 Base Ports
@@ -41,14 +65,16 @@ Base Ports
 ```sh
 sudo port -v selfupdate
 sudo port install coreutils bash bash-completion htop wget tree colordiff \
-  ctags rxvt-unicode tmux tmux-pasteboard keychain the_silver_searcher \
-  id3lib urlview par terminus-font p5-image-exiftool libcaca libexif \
-  git +svn +doc +bash_completion +credential_osxkeychain \
-  vim +huge +breakindent +cscope +perl +lua +python27 \
-  ncmpcpp unrar MPlayer highlight xsel surfraw herbstluftwm \
-  poppler atool aria2 libmms faad2 pass spark nodejs npm \
+  ctags rxvt-unicode tmux keychain the_silver_searcher html-xml-utils jq \
+  id3lib urlview terminus-font p5-image-exiftool libcaca libexif pstree \
+  git +doc+bash_completion+credential_osxkeychain \
+  vim +breakindent+cscope+lua+perl+x11+python27 \
+  MacVim +breakindent+cscope+lua+perl+python27 \
+  ncmpcpp unrar MPlayer highlight xsel xdotool unclutter \
+  pango poppler atool aria2 libmms faad2 pass spark nodejs npm \
   git-extras git-cal bc tcpdump tarsnap netcat sshfs grc ttyrec \
-  calc tidy pngcrush httpie colout icat watch exiv2 terminal-notifier
+  calc tidy pngcrush httpie colout icat watch exiv2 terminal-notifier \
+  aspell aspell-dict-he aspell-dict-en shellcheck lnav
 
 defaults write org.macosforge.xquartz.X11 app_to_run ""
 ```
@@ -151,7 +177,8 @@ Compile `neovim`
 ```sh
 git clone git://github.com/neovim/neovim.git
 cd neovim
-make CMAKE_BUILD_TYPE=RelWithDebInfo DEPS_CMAKE_FLAGS=-DUSE_BUNDLED_BUSTED=OFF CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX:PATH=/opt/local"
+make distclean
+make CMAKE_BUILD_TYPE=Release DEPS_CMAKE_FLAGS=-DUSE_BUNDLED_BUSTED=OFF CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX:PATH=/opt/local"
 make install
 ```
 
@@ -161,6 +188,16 @@ Compile `glyr`
 git clone git://github.com/sahib/glyr.git
 cd glyr
 cmake . -DCMAKE_EXE_LINKER_FLAGS="-L/opt/local/lib" -DCMAKE_SHARED_LINKER_FLAGS="-L/opt/local/lib"
+make
+make install
+```
+
+Compile `tmux-mem-cpu-load`
+---
+```sh
+git clone git@github.com:thewtex/tmux-mem-cpu-load.git
+cd tmux-mem-cpu-load/
+cmake .
 make
 make install
 ```
@@ -184,6 +221,28 @@ autoreconf -i
 CFLAGS="-I/opt/local/include" LDFLAGS="-L/opt/local/lib" ./configure --prefix=/opt/local --mandir=/opt/local/share/man
 make CFLAGS="-I/opt/local/include" LDFLAGS="-L/opt/local/lib"
 make install
+```
+
+Compile `qmake`
+---
+```sh
+sudo port install qt5-mac
+git clone git@github.com:hluk/CopyQ.git copyq
+cd ./copyq
+qmake CONFIG+=release WITH_WEBKIT=1
+make CopyQ.app
+```
+
+Compile `telegram-cli`
+---
+```sh
+sudo port install libconfig-hr readline lua51 python34 libevent
+export CFLAGS="-I/usr/local/include -I/opt/local/include -I/opt/local/include/lua-5.1"
+export LDFLAGS="-L/usr/local/lib -L/opt/local/lib -L/opt/local/lib/lua-5.1"
+./configure && make
+mv bin/telegram-cli ~/.local/bin
+mv tg-server.pub ~/.config/telegram-cli/
+mkdir -p ~/.local/share/telegram/rafi
 ```
 
 sshfs
@@ -237,6 +296,8 @@ sudo port install postgresql93-server
 sudo mkdir -p /opt/local/var/db/postgresql93/defaultdb
 sudo chown postgres:postgres /opt/local/var/db/postgresql93/defaultdb
 sudo su postgres -c '/opt/local/lib/postgresql93/bin/initdb -D /opt/local/var/db/postgresql93/defaultdb'
+sudo port load postgresql93-server
+sudo su postgres -c 'createuser -e -s rafi'
 ```
 Install MySQL 5.5:
 ```sh
@@ -285,41 +346,38 @@ Reference: https://gist.github.com/jwcobb/4210358
 
 ### Python 2.7
 ```sh
-sudo port install python27 py27-pip py27-flake8
-sudo port install py27-virtualenv py27-virtualenvwrapper
+sudo port install python27
+sudo port install py27-pip py27-virtualenv py27-virtualenvwrapper
 
 sudo port select --set python python27
 sudo port select --set python2 python27
 sudo port select --set pip pip27
-sudo port select --set pep8 pep827
-sudo port select --set pyflakes py27-pyflakes
-sudo port select --set flake8 flake827
 sudo port select --set virtualenv virtualenv27
+sudo ln -s /opt/local/Library/Frameworks/Python.framework/Versions/2.7/bin/pip /opt/local/bin/pip2
+
+# Packages
+pip-2.7 install --user flake8 pep8
+pip-2.7 install --user ansible gcalcli percol pipdeptree subliminal yolk
 ```
 
 ### Python 3.4
 ```sh
-sudo port install python34 py34-pip py34-flake8
+sudo port install python34 py34-pip
+sudo port install py34-virtualenv py34-virtualenvwrapper
 
-# Macports doesn't create a python3 link
-sudo ln -s /opt/local/Library/Frameworks/Python.framework/Versions/3.4/bin/python3.4 /opt/local/bin/python3
+sudo port select --set python3 python34
+sudo ln -s /opt/local/Library/Frameworks/Python.framework/Versions/3.4/bin/pip /opt/local/bin/pip3
+
+# Packages
+sudo port install py34-pygments
+pip-3.4 install --user pgcli python-mpd2
 ```
 
-### Python utils
-```sh
-pip-2.7 install ss subliminal
-sudo ln -s /opt/local/Library/Frameworks/Python.framework/Versions/2.7/bin/subliminal /opt/local/bin/subliminal
-sudo ln -s /opt/local/Library/Frameworks/Python.framework/Versions/2.7/bin/ss /opt/local/bin/ss
-
-pip-3.4 install Pygments python-mpd2
-sudo ln -s /opt/local/Library/Frameworks/Python.framework/Versions/3.4/bin/pygmentize /opt/local/bin/pygmentize
-```
-
-### NPM utils
+### NPM packages
 It is not recommended to install packages globally. But if you do so please
 be aware that they won't get cleaned up when you deactivate or uninstall npm.
 Globally installed packages will remain in `/opt/local/lib/node_modules/`
 until you manually delete them.
 ```sh
-npm install -g mad bower grunt-cli
+npm install -g mad bower grunt-cli jshint
 ```
