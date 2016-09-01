@@ -13,7 +13,8 @@ tags:
 
 Xcode
 ---
-- Install Xcode and the Xcode Command Line Tools: https://www.macports.org/install.php
+- Install Xcode https://www.macports.org/install.php
+- Install Xcode command line tools: `xcode-select --install`
 - Agree to Xcode license in Terminal: `sudo xcodebuild -license`
 
 Macports
@@ -65,18 +66,71 @@ Base Ports
 ```sh
 sudo port -v selfupdate
 sudo port install coreutils bash bash-completion htop wget tree colordiff \
-  ctags rxvt-unicode tmux keychain the_silver_searcher html-xml-utils jq \
-  id3lib urlview terminus-font p5-image-exiftool libcaca libexif pstree \
+  ctags rxvt-unicode tmux tmux-pasteboard keychain the_silver_searcher \
+  id3lib urlview terminus-font p5-image-exiftool libcaca libexif pstree jq \
   git +doc+bash_completion+credential_osxkeychain \
   vim +breakindent+cscope+lua+perl+x11+python27 \
   MacVim +breakindent+cscope+lua+perl+python27 \
-  ncmpcpp unrar MPlayer highlight xsel xdotool unclutter \
-  pango poppler atool aria2 libmms faad2 pass spark nodejs npm \
+  ranger ncmpcpp unrar MPlayer mpv highlight xsel xdotool unclutter \
+  pango poppler atool aria2 libmms faad2 mpc pass spark nodejs npm \
   git-extras git-cal bc tcpdump tarsnap netcat sshfs grc ttyrec \
-  calc tidy pngcrush httpie colout icat watch exiv2 terminal-notifier \
-  aspell aspell-dict-he aspell-dict-en shellcheck lnav
+  calc tidy pngcrush colout icat watch exiv2 terminal-notifier \
+  aspell aspell-dict-he aspell-dict-en shellcheck lnav peco
 
 defaults write org.macosforge.xquartz.X11 app_to_run ""
+```
+
+Dependency reference:
+```
+- coreutils - gettext expat libiconv gperf ncurses gmp xz
+- htop - autoconf automake libtool
+- wget - gnutls curl-ca-bundle perl5 perl5.22 libidn libtasn1 nettle p11-kit
+  desktop-file-utils glib2 libffi pcre bzip2 libedit zlib pkgconfig popt
+  libxslt libxml2
+- rxvt-unicode - Xft2 fontconfig freetype libpng xrender xorg-libX11
+  xorg-bigreqsproto xorg-inputproto xorg-kbproto xorg-libXau xorg-xproto
+  xorg-libXdmcp xorg-libxcb python27 db48 openssl python2_select python_select
+  sqlite3 xorg-libpthread-stubs xorg-xcb-proto xorg-util-macros
+  xorg-xcmiscproto xorg-xextproto xorg-xf86bigfontproto xorg-xtrans
+  xorg-renderproto
+- tmux - libevent
+- jq - bison bison-runtime m4
+- terminus-font - bdftopcf xorg-libXfont xorg-fontsproto xorg-libfontenc
+  mkfontdir mkfontscale
+- libcaca - freeglut cmake curl libarchive lzo2 libGLU mesa flex indent
+  py27-libxml2 xorg-dri2proto xorg-glproto xorg-libXdamage xorg-damageproto
+  xorg-libXfixes xorg-fixesproto xorg-libXext xorg-libXi xorg-libXmu xorg-libXt
+  xorg-libsm xorg-libice xorg-libXrandr xorg-randrproto xorg-libXxf86vm
+  xorg-xf86vidmodeproto imlib2 giflib jpeg libid3tag tiff
+- git - p5.22-authen-sasl p5.22-digest-hmac p5.22-digest-sha1 p5.22-gssapi
+  kerberos5 libcomerr p5.22-cgi p5.22-html-parser p5.22-html-tagset
+  p5.22-test-deep p5.22-test-simple p5.22-test-nowarnings p5.22-test-warn
+  p5.22-sub-uplevel p5.22-error p5.22-net-smtp-ssl p5.22-io-socket-ssl
+  p5.22-io-socket-inet6 p5.22-io p5.22-socket6 p5.22-io-socket-ip
+  p5.22-net-libidn p5.22-net-ssleay p5.22-test-exception p5.22-term-readkey
+  rsync
+- vim - lua readline
+- MacVim - gnutar help2man p5.22-locale-gettext
+- ncmpcpp - boost icu fftw-3 libmpdclient doxygen taglib
+- MPlayer - lame libass fribidi yasm libmad libogg liboil libopus libtheora
+  libvorbis openjpeg15 jbigkit lcms2
+- xdotool - xorg-libXinerama xorg-xineramaproto xorg-libXtst xorg-recordproto
+- pango - cairo libpixman xorg-xcb-util gobject-introspection py27-mako
+  py27-beaker py27-setuptools py27-markupsafe harfbuzz graphite2
+- atool - gsed
+- pass - getopt gnupg2 gpg-agent libassuan libgpg-error pth libgcrypt libksba
+  pinentry-mac libusb-compat libusb openldap cyrus-sasl2 db46 tcp_wrappers
+  pwgen
+- shellcheck - ghc ghc-bootstrap llvm-3.5 libcxx llvm_select hs-json hs-mtl
+  hs-parsec hs-text hs-syb hs-quickcheck-devel hs-tf-random hs-primitive
+  hs-random hs-regex-tdfa hs-regex-base
+```
+
+Custom Ports
+---
+See https://github.com/rafi/portfiles
+```sh
+sudo port install diana entr z m icdiff diff-so-fancy bspwm sxhkd
 ```
 
 Defaults
@@ -170,6 +224,15 @@ mkdir build && cd build
 cmake .. -DCMAKE_INSTALL_PREFIX:PATH=/opt/local
 make
 make install
+```
+
+Compile `ncmpcpp`
+---
+```sh
+port install boost
+env LIBS=-L/opt/local/lib BOOST_LIB_SUFFIX="-mt" \
+  CPPFLAGS=-I/opt/local/include LDFLAGS=-s \
+  ./configure --prefix=/opt/local
 ```
 
 Compile `neovim`
@@ -344,33 +407,41 @@ sudo ln -s libperconaserverclient.dylib libmysqlclient.dylib
 ```
 Reference: https://gist.github.com/jwcobb/4210358
 
-### Python 2.7
+### Python 2 and 3 Utilities
 ```sh
-sudo port install python27
-sudo port install py27-pip py27-virtualenv py27-virtualenvwrapper
+sudo port install python27 py27-pip py27-virtualenv py27-flake8 py27-readline
+sudo port install python34 py34-pip py34-virtualenv py34-flake8 py34-readline py34-pygments
+pip-2.7 install --user vim-vint
+pip-3.4 install --user python-mpd2 pipdeptree
 
+# Set default version
 sudo port select --set python python27
 sudo port select --set python2 python27
 sudo port select --set pip pip27
 sudo port select --set virtualenv virtualenv27
-sudo ln -s /opt/local/Library/Frameworks/Python.framework/Versions/2.7/bin/pip /opt/local/bin/pip2
+sudo port select --set pycodestyle pycodestyle-py27
+sudo port select --set pyflakes py27-pyflakes
+sudo port select --set flake8 flake8-27
 
-# Packages
-pip-2.7 install --user flake8 pep8
-pip-2.7 install --user ansible gcalcli percol pipdeptree subliminal yolk
-```
+mkdir "$XDG_DATA_HOME/python/utils"
+cd "$XDG_DATA_HOME/python/utils"
 
-### Python 3.4
-```sh
-sudo port install python34 py34-pip
-sudo port install py34-virtualenv py34-virtualenvwrapper
+# Install following package via python 2.7:
+for app in "gcalcli" "percol"; do
+  virtualenv-2.7 "$app"
+  "$XDG_DATA_HOME/python/utils/$app/bin/pip" install "$app"
+done
 
-sudo port select --set python3 python34
-sudo ln -s /opt/local/Library/Frameworks/Python.framework/Versions/3.4/bin/pip /opt/local/bin/pip3
+# Install following package via python 2.7:
+for app in "httpie" "subliminal" "pgcli"; do
+  virtualenv-3.4 "$app"
+  "$XDG_DATA_HOME/python/utils/$app/bin/pip" install "$app"
+done
 
-# Packages
-sudo port install py34-pygments
-pip-3.4 install --user pgcli python-mpd2
+# Put this in your `~/.bashrc` or `~/.bash_profile`:
+for app in "gcalcli" "percol" "httpie" "subliminal" "pgcli"; do
+  alias "$app"="$XDG_DATA_HOME/python/utils/$app/bin/$app"
+done
 ```
 
 ### NPM packages

@@ -1,6 +1,6 @@
 ---
 title: rsync tips
-date: '2015-01-11'
+date: 2015-01-11
 description:
 categories:
 - setup
@@ -23,16 +23,17 @@ rsync -navh ~ rafi-desk:/mnt/backup/
 Archiving
 ---
 Simply using the `-a` option applies the sensible `rlptgoD` defaults:
-- `-a`, `--archive` - Archive mode; equals `-rlptgoD` (no `-H`,`-A`,`-X`)
-  - `-r`, `--recursive` - Recurse into directories
-  - `-l`, `--links` - Copy symlinks as symlinks
-  - `-p`, `--perms` - Preserve permissions
-  - `-t`, `--times` - Preserve modification times
-  - `-g`, `--group` - Preserve group
-  - `-o`, `--owner` - Preserve owner (super-user only)
-  - `-D` - same as --devices --specials:
-    - `--devices` - Preserve device files (super-user only)
-    - `--specials` - Preserve special files
+
+* `-a`, `--archive` - Archive mode; equals `-rlptgoD` (no `-H`,`-A`,`-X`)
+  * `-r`, `--recursive` - Recurse into directories
+  * `-l`, `--links` - Copy symlinks as symlinks
+  * `-p`, `--perms` - Preserve permissions
+  * `-t`, `--times` - Preserve modification times
+  * `-g`, `--group` - Preserve group
+  * `-o`, `--owner` - Preserve owner (super-user only)
+  * `-D` - same as --devices --specials:
+    * `--devices` - Preserve device files (super-user only)
+    * `--specials` - Preserve special files
 
 Examining Result
 ---

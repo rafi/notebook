@@ -42,6 +42,7 @@ is copied to clipboard for 45 seconds.
 Run Automator, and create a new **service**:
 
 1. Add "Run AppleScript" with:
+
 ```AppleScript
     on run {input, parameters}
       tell application "Google Chrome"
@@ -49,14 +50,18 @@ Run Automator, and create a new **service**:
       end tell
     end run
 ```
+
   Note: For other browsers, see this [get_url gist]
 2. Add "Run Shell Script", select "Pass input [as arguments]", with:
+
 ```sh
     ~/.local/bin/urlpass "$@"
 ```
+
 3. Save service.
 4. Assign keyboard shortcut in _System Preferences / Keyboard / Shortcuts_.
 5. Create `~/.local/bin/urlpass`:
+
 ```sh
   #!/usr/bin/env bash
 
@@ -76,6 +81,7 @@ Run Automator, and create a new **service**:
     fi
   done
 ```
+
 6. Set execute permissions: `chmod ug+x ~/.local/bin/urlpass`
 
 [GUI client]: http://ijhack.github.io/qtpass/
