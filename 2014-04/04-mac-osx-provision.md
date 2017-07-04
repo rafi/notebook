@@ -56,33 +56,18 @@ sudo port install coreutils bash bash-completion rxvt-unicode \
   bc ctags the_silver_searcher urlview terminus-font tcpdump \
   curl git xsel xdotool unrar pass gnetcat sshfs grc ttyrec \
   neomutt +gpgme+headercache+homespool+sidebar+smtp \
-  vim +cscope+lua+perl+x11+python27+python34 \
-  MacVim +cscope+lua+perl+python27+python34 \
+  vim +cscope+lua+perl+python27+python35 \
+  MacVim +cscope+lua+perl+python27+python35 \
   id3lib p5-image-exiftool libcaca libexif highlight unclutter \
   ranger ncmpcpp MPlayer mpv libmms faad2 mpc pango poppler \
-  atool aria2 spark nodejs6 npm3 git-extras git-cal tarsnap \
+  atool aria2 spark nodejs7 npm4 git-extras git-cal tarsnap \
   lnav peco colout cloc ncdu calc tidy pngcrush icat watch \
   exiv2 terminal-notifier aspell aspell-dict-en aspell-dict-he \
   figlet fortune p7zip pidof pinfo xmlstarlet \
   postgresql95 shellcheck
 
-sudo port install \
-  python27 py27-pip py27-virtualenv py27-flake8 py27-readline
-  python34 py34-pip py34-virtualenv py34-flake8 py34-readline #py34-pygments
-
-npm -g install mad bower grunt-cli jshint
-npm -g install stylelint jsonlint jsxhint markdownlint-cli sass-lint
-
-pip-2.7 install --user vim-vint
-pip-3.4 install --user python-mpd2 pipdeptree proselint yamllint
-
 defaults write org.macosforge.xquartz.X11 app_to_run /usr/bin/true
 defaults write org.macosforge.xquartz.X11 no_quit_alert -boolean true
-
-FIXME
----
-py34-pygments
-ERRORS: shellcheck telegram-cli
 ```
 
 ## Custom Ports
@@ -121,6 +106,45 @@ To start the `gpg-agent` on startup, run:
 launchctl load -w /Library/LaunchAgents/org.macports.gpg-agent.plist
 ```
 
+## Python Utilities
+
+```sh
+sudo port install \
+  python27 py27-readline py27-pip py27-virtualenv py27-flake8
+  python35 py35-readline py35-pip py35-virtualenv py35-flake8
+
+pip2 install --user vim-vint
+pip3 install --user Pygments python-mpd2 pipdeptree proselint yamllint
+
+# Set default version
+sudo port select --set python3 python35
+sudo port select --set python2 python27
+sudo port select --set python python35
+sudo port select --set pip pip35
+sudo port select --set virtualenv virtualenv35
+sudo port select --set pycodestyle pycodestyle-py35
+sudo port select --set pyflakes py35-pyflakes
+sudo port select --set flake8 flake8-35
+
+pipenv httpie
+pipenv subliminal
+pipenv pgcli
+pipenv tmuxp
+pipenv git+https://github.com/rachmadaniHaryono/we-get
+pipenv percol   # Python 2
+pipenv gcalcli  # Python 2
+pipenv git+https://github.com/ralphbean/bugwarrior.git@develop  # Python 2
+```
+
+## NodeJS Utilities
+
+```sh
+npm -g install mad tern write-good raml-cop raml2html raml2md
+npm -g install git+https://github.com/ramitos/jsctags.git
+npm -g install jshint jsxhint jsonlint stylelint markdownlint-cli sass-lint
+npm -g install resume-cli imagemin-cli
+```
+
 ## Compile `neovim`
 
 ```sh
@@ -129,22 +153,6 @@ cd neovim
 make distclean
 make CMAKE_BUILD_TYPE=Release DEPS_CMAKE_FLAGS=-DUSE_BUNDLED_BUSTED=OFF CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX:PATH=/opt/local"
 make install
-```
-
-## Python Utilities
-
-```sh
-
-# Set default version
-sudo port select --set python python27
-sudo port select --set python2 python27
-sudo port select --set pip pip27
-sudo port select --set virtualenv virtualenv27
-sudo port select --set pycodestyle pycodestyle-py27
-sudo port select --set pyflakes py27-pyflakes
-sudo port select --set flake8 flake8-27
-
-mkdir "$XDG_DATA_HOME/python/utils"
 ```
 
 ## Development Environments
