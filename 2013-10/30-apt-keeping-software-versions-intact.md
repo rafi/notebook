@@ -1,5 +1,5 @@
 ---
-title: apt: Keeping software versions intact
+title: 'apt: Keeping software versions intact'
 date: '2013-10-30'
 description:
 categories:

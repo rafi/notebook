@@ -1,5 +1,5 @@
 ---
-title: Spec'ing: NeoBundle - VIM plugin manager
+title: 'Spec''ing: NeoBundle - VIM plugin manager'
 date: '2014-10-16'
 description:
 categories:

@@ -1,5 +1,5 @@
 ---
-title: CPAN and CPANMinus
+title: CPAN, CPANMinus and XDG Conformity
 date: '2014-10-26'
 description:
 categories:
@@ -11,7 +11,7 @@ tags:
 
 Install `cpan` and `cpanminus`.
 
-Add to profile:
+Add to bash profile:
 ```sh
 alias cpan="cpan -j $XDG_CONFIG_HOME/cpan/config.pm"
 export PATH="${PATH}:$HOME/.local/bin"
@@ -22,6 +22,7 @@ export PERL_MB_OPT="--install_base \"$HOME/.local\""
 export PERL_MM_OPT="INSTALL_BASE=$HOME/.local"
 ```
 
-Install `local::lib`: `$ cpanm local::lib`
-
-Now you can install 
+Re-login to your terminal and try to install a package:
+```sh
+cpanm local::lib
+```
