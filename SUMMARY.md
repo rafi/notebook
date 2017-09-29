@@ -54,3 +54,8 @@
         * [Macports](server/macports/README.md)
     * [Provision](server/provision/README.md)
       * [Ansible](server/provision/ansible.md)
+* UI
+  * [Kodi](ui/kodi.md)
+* Music
+  * [2014 List](music/year/2014.md)
+  * [2013 Best](music/year/2013.md)
