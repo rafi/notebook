@@ -38,33 +38,24 @@ sudo -E vim /opt/X11/bin/startx
 # Change path for .serverauth
 ```
 
-## Fix screen terminfo
-
-See [information](https://github.com/neovim/neovim/issues/2048#issuecomment-78045837)
-
-```sh
-infocmp $TERM | sed 's/kbs=^[hH]/kbs=\\177/' > $TERM.ti
-tic $TERM.ti
-```
-
 ## Base Ports
 
 ```sh
 sudo port -v selfupdate
-sudo port install coreutils bash bash-completion rxvt-unicode \
+sudo port install coreutils bash bash-completion \
   tmux tmux-pasteboard keychain wget tree colordiff pstree jq \
-  bc ctags the_silver_searcher urlview terminus-font tcpdump \
-  curl git xsel xdotool unrar pass gnetcat sshfs grc ttyrec \
+  bc the_silver_searcher urlview tcpdump \
+  curl git xsel unrar pass gnetcat sshfs grc ttyrec \
   neomutt +gpgme+headercache+homespool+sidebar+smtp \
   vim +cscope+lua+perl+python27+python35 \
   MacVim +cscope+lua+perl+python27+python35 \
-  id3lib p5-image-exiftool libcaca libexif highlight unclutter \
+  id3lib p5-image-exiftool libcaca libexif highlight \
   ranger ncmpcpp MPlayer mpv libmms faad2 mpc pango poppler \
-  atool aria2 spark nodejs7 npm4 git-extras git-cal tarsnap \
+  atool aria2 spark git-extras git-cal tarsnap \
   lnav peco colout cloc ncdu calc tidy pngcrush icat watch \
   exiv2 terminal-notifier aspell aspell-dict-en aspell-dict-he \
-  figlet fortune p7zip pidof pinfo xmlstarlet \
-  postgresql95 shellcheck
+  figlet fortune p7zip pidof pinfo xmlstarlet shellcheck \
+  nodejs8 npm4
 
 defaults write org.macosforge.xquartz.X11 app_to_run /usr/bin/true
 defaults write org.macosforge.xquartz.X11 no_quit_alert -boolean true
@@ -75,10 +66,9 @@ defaults write org.macosforge.xquartz.X11 no_quit_alert -boolean true
 Install local Macports repository, i.e. [rafi/portfiles](https://github.com/rafi/portfiles)
 
 ```sh
-sudo port install bspwm sxhkd z diff-so-fancy entr glyr diana \
-  htop-vim icdiff lemonade m-cli progress py34-httpstat sxiv \
-  docker-bash-completion docker-compose-bash-completion \
-  fzf gopass QSyncthingTray telegram-cli tmux-mem-cpu-load
+sudo port install z diff-so-fancy entr glyr diana fzf \
+  htop-vim icdiff m-cli progress py34-httpstat tmux-mem-cpu-load \
+  docker-bash-completion docker-compose-bash-completion
 ```
 
 ## Defaults
