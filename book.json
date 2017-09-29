@@ -1,0 +1,29 @@
+{
+  "title": "Rafael's Computer",
+  "author": "Rafael Bodill",
+  "description": "The entails of Rafael's computer.",
+  "github": "https://github.com/rafi/knowledge",
+  "plugins": [ "github", "hints", "puml", "infinitescroll", "emphasize" ],
+  "pluginsConfig": {
+    "github": {
+        "url": "https://github.com/rafi"
+    },
+    "fontsettings": {
+      "theme": "night",
+      "family": "serif",
+      "size": 2
+    },
+    "sharing": {
+      "facebook": false,
+      "twitter": false,
+      "google": false,
+      "weibo": false,
+      "instapaper": false,
+      "vk": false,
+      "all": [
+        "facebook", "google", "twitter",
+        "weibo", "instapaper"
+      ]
+    }
+  }
+}
