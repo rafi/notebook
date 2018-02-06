@@ -4,13 +4,28 @@ date: '2014-04-04'
 description:
 categories:
 - setup
-tags:
-- osx
-- provision
-- mac
-- macports
+search:
+  keywords: ['osx', 'provision', 'mac', 'macports']
 ---
 # Mac OSX provisioning
+
+<!-- vim-markdown-toc GFM -->
+
+* [Xcode](#xcode)
+* [Macports](#macports)
+* [Sensible hacker defaults](#sensible-hacker-defaults)
+* [X11 .serverauth files](#x11-serverauth-files)
+* [Base Ports](#base-ports)
+* [Custom Ports](#custom-ports)
+* [Defaults](#defaults)
+* [Python Utilities](#python-utilities)
+* [NodeJS Utilities](#nodejs-utilities)
+* [Compile `neovim`](#compile-neovim)
+* [Development Environments](#development-environments)
+  * [Apache 2.2, PHP 5.6, and MySQL 5.5 or Percona](#apache-22-php-56-and-mysql-55-or-percona)
+* [Dependency Reference](#dependency-reference)
+
+<!-- vim-markdown-toc -->
 
 ## Xcode
 
@@ -31,34 +46,25 @@ sudo scutil --set HostName rafi-mac
 Follow [mathiasbynens/dotfiles](https://github.com/mathiasbynens/dotfiles/blob/master/.osx)
 and use what ever you like.
 
-## X11 .serverauth files
-
-```sh
-sudo -E vim /opt/X11/bin/startx
-# Change path for .serverauth
-```
-
 ## Base Ports
 
 ```sh
 sudo port -v selfupdate
-sudo port install coreutils bash bash-completion \
-  tmux tmux-pasteboard keychain wget tree colordiff pstree jq \
-  bc the_silver_searcher urlview tcpdump \
-  curl git xsel unrar pass gnetcat sshfs grc ttyrec \
-  neomutt +gpgme+headercache+homespool+sidebar+smtp \
-  vim +cscope+lua+perl+python27+python35 \
-  MacVim +cscope+lua+perl+python27+python35 \
-  id3lib p5-image-exiftool libcaca libexif highlight \
-  ranger ncmpcpp MPlayer mpv libmms faad2 mpc pango poppler \
-  atool aria2 spark git-extras git-cal tarsnap \
-  lnav peco colout cloc ncdu calc tidy pngcrush icat watch \
-  exiv2 terminal-notifier aspell aspell-dict-en aspell-dict-he \
-  figlet fortune p7zip pidof pinfo xmlstarlet shellcheck \
-  nodejs8 npm4
-
-defaults write org.macosforge.xquartz.X11 app_to_run /usr/bin/true
-defaults write org.macosforge.xquartz.X11 no_quit_alert -boolean true
+sudo port install \
+  coreutils gnutls bash bash-completion less z mas entr \
+  tmux tmux-pasteboard tmux-mem-cpu-load fish \
+  bc tree colordiff pstree jq urlview tcpdump nmap readline \
+  rsync aria2 curl unrar gnetcat ttyrec the_silver_searcher \
+  id3lib libcaca libexif libmms faad2 terminal-notifier \
+  figlet fortune keychain mpc p7zip sshpass tarsnap spark exiv2 \
+  lnav ncdu calc tidy pngcrush watch watchman pidof pinfo hstr \
+  atool p5-image-exiftool cloc aspell aspell-dict-en aspell-dict-he \
+  go gnupg2 grc ncmpcpp pango poppler icdiff \
+  git git-cal git-extras colout pass peco ranger xmlstarlet \
+  wget texlive nodejs8 npm5 highlight mpv shellcheck sshfs xsel \
+  vim +cscope+lua+perl+python27+python36 \
+  MacVim +cscope+lua+perl+python27+python36 \
+  neomutt +gpgme+headercache+homespool+sidebar+smtp
 ```
 
 ## Custom Ports
@@ -66,9 +72,9 @@ defaults write org.macosforge.xquartz.X11 no_quit_alert -boolean true
 Install local Macports repository, i.e. [rafi/portfiles](https://github.com/rafi/portfiles)
 
 ```sh
-sudo port install z diff-so-fancy entr glyr diana fzf \
-  htop-vim icdiff m-cli progress py34-httpstat tmux-mem-cpu-load \
-  docker-bash-completion docker-compose-bash-completion
+sudo port install ctop-bin fd-bin diff-so-fancy diana dry-bin \
+  htop-vim progress py36-httpstat ttyd timg glyr fzf fzy \
+  migrate-bin ripgrep-bin universal-ctags
 ```
 
 ## Defaults
@@ -100,21 +106,22 @@ launchctl load -w /Library/LaunchAgents/org.macports.gpg-agent.plist
 
 ```sh
 sudo port install \
-  python27 py27-readline py27-pip py27-virtualenv py27-flake8
-  python35 py35-readline py35-pip py35-virtualenv py35-flake8
+  python27 py27-gnureadline py27-pip py27-virtualenv py27-flake8 \
+  python36 py36-gnureadline py36-pip py36-virtualenv py36-flake8
 
+# Set default versions
+sudo port select --set python3 python36
+sudo port select --set python2 python27
+sudo port select --set python python36
+sudo port select --set pip pip36
+sudo port select --set virtualenv virtualenv36
+sudo port select --set pycodestyle pycodestyle-py36
+sudo port select --set pyflakes py36-pyflakes
+sudo port select --set flake8 flake8-36
+
+# Install packages
 pip2 install --user vim-vint
 pip3 install --user Pygments python-mpd2 pipdeptree proselint yamllint
-
-# Set default version
-sudo port select --set python3 python35
-sudo port select --set python2 python27
-sudo port select --set python python35
-sudo port select --set pip pip35
-sudo port select --set virtualenv virtualenv35
-sudo port select --set pycodestyle pycodestyle-py35
-sudo port select --set pyflakes py35-pyflakes
-sudo port select --set flake8 flake8-35
 
 pipenv httpie
 pipenv subliminal
@@ -129,10 +136,10 @@ pipenv git+https://github.com/ralphbean/bugwarrior.git@develop  # Python 2
 ## NodeJS Utilities
 
 ```sh
-npm -g install mad tern write-good raml-cop raml2html raml2md
-npm -g install git+https://github.com/ramitos/jsctags.git
+npm -g install mad tern write-good
 npm -g install jshint jsxhint jsonlint stylelint markdownlint-cli sass-lint
-npm -g install resume-cli imagemin-cli
+npm -g install git+https://github.com/ramitos/jsctags.git
+npm -g install resume-cli imagemin-cli raml-cop raml2html raml2md
 ```
 
 ## Compile `neovim`
@@ -178,51 +185,4 @@ sudo port select php php56
 # 3. Symlink conf: sudo ln -s ~/.config/php/php56.ini /opt/local/etc/php56/php.ini
 sudo /opt/local/apache2/bin/apxs -a -e -n php5 /opt/local/apache2/modules/mod_php56.so
 sudo port load apache2
-```
-
-## Dependency Reference
-
-```txt
-- coreutils - gettext expat libiconv gperf ncurses gmp xz
-- htop - autoconf automake libtool
-- wget - gnutls curl-ca-bundle perl5 perl5.22 libidn libtasn1 nettle p11-kit
-  desktop-file-utils glib2 libffi pcre bzip2 libedit zlib pkgconfig popt
-  libxslt libxml2
-- rxvt-unicode - Xft2 fontconfig freetype libpng xrender xorg-libX11
-  xorg-bigreqsproto xorg-inputproto xorg-kbproto xorg-libXau xorg-xproto
-  xorg-libXdmcp xorg-libxcb python27 db48 openssl python2_select python_select
-  sqlite3 xorg-libpthread-stubs xorg-xcb-proto xorg-util-macros
-  xorg-xcmiscproto xorg-xextproto xorg-xf86bigfontproto xorg-xtrans
-  xorg-renderproto
-- tmux - libevent
-- jq - bison bison-runtime m4
-- terminus-font - bdftopcf xorg-libXfont xorg-fontsproto xorg-libfontenc
-  mkfontdir mkfontscale
-- libcaca - freeglut cmake curl libarchive lzo2 libGLU mesa flex indent
-  py27-libxml2 xorg-dri2proto xorg-glproto xorg-libXdamage xorg-damageproto
-  xorg-libXfixes xorg-fixesproto xorg-libXext xorg-libXi xorg-libXmu xorg-libXt
-  xorg-libsm xorg-libice xorg-libXrandr xorg-randrproto xorg-libXxf86vm
-  xorg-xf86vidmodeproto imlib2 giflib jpeg libid3tag tiff
-- git - p5.22-authen-sasl p5.22-digest-hmac p5.22-digest-sha1 p5.22-gssapi
-  kerberos5 libcomerr p5.22-cgi p5.22-html-parser p5.22-html-tagset
-  p5.22-test-deep p5.22-test-simple p5.22-test-nowarnings p5.22-test-warn
-  p5.22-sub-uplevel p5.22-error p5.22-net-smtp-ssl p5.22-io-socket-ssl
-  p5.22-io-socket-inet6 p5.22-io p5.22-socket6 p5.22-io-socket-ip
-  p5.22-net-libidn p5.22-net-ssleay p5.22-test-exception p5.22-term-readkey
-  rsync
-- vim - lua readline
-- MacVim - gnutar help2man p5.22-locale-gettext
-- ncmpcpp - boost icu fftw-3 libmpdclient doxygen taglib
-- MPlayer - lame libass fribidi yasm libmad libogg liboil libopus libtheora
-  libvorbis openjpeg15 jbigkit lcms2
-- xdotool - xorg-libXinerama xorg-xineramaproto xorg-libXtst xorg-recordproto
-- pango - cairo libpixman xorg-xcb-util gobject-introspection py27-mako
-  py27-beaker py27-setuptools py27-markupsafe harfbuzz graphite2
-- atool - gsed
-- pass - getopt gnupg2 gpg-agent libassuan libgpg-error pth libgcrypt libksba
-  pinentry-mac libusb-compat libusb openldap cyrus-sasl2 db46 tcp_wrappers
-  pwgen
-- shellcheck - ghc ghc-bootstrap llvm-3.5 libcxx llvm_select hs-json hs-mtl
-  hs-parsec hs-text hs-syb hs-quickcheck-devel hs-tf-random hs-primitive
-  hs-random hs-regex-tdfa hs-regex-base
 ```

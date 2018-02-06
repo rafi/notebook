@@ -28,6 +28,7 @@ sudo port load mpd
 
 ### Compile `mpd`
 Download `mpd` from http://www.musicpd.org/download.html
+
 ```sh
 sudo port install boost icu sqlite3 yajl libmpdclient libsamplerate
 ./configure \
@@ -51,6 +52,7 @@ make install
 
 ### Compile `mpc`
 Download `mpc` from http://www.musicpd.org/clients/mpc/
+
 ```sh
 ./configure \
   --prefix=/opt/local \
