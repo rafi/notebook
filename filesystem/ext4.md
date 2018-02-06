@@ -1,5 +1,6 @@
 ---
 title: Provision partition with Ext4
+path: filesystem/ext4
 date: '2013-12-02'
 description:
 categories:

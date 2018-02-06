@@ -1,3 +1,6 @@
+---
+path: filesystem
+---
 # Filesystem
 
 ## Files
