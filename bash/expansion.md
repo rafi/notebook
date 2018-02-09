@@ -1,6 +1,5 @@
 ---
 title: Bash Parameter Expansion
-path: bash/expansion
 date: 2017-02-12
 updated:
 description:

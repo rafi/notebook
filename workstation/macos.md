@@ -1,6 +1,7 @@
 ---
-title: Mac OSX provisioning
+title: macOS provisioning
 date: '2014-04-04'
+featured: true
 description:
 categories:
 - setup

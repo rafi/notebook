@@ -1,3 +1,7 @@
+---
+title: Archey3 - system information in the terminal
+date: 2018-01-25
+---
 # Archey3
 
 System information in the terminal.
@@ -16,7 +20,10 @@ System information in the terminal.
 ## Configuration
 
 Create a config file at `~/.config/archey3/config`:
-```
+
+Example for i3 and mpd:
+
+```ini
 [core]
 display_modules = distro(), uname(n), uname(r), uptime(), wm(), packages(), ram(), cpu(), env(editor), fs(/), mpd(albums)
 align = center
@@ -31,6 +38,7 @@ manual = None
 ```
 
 And an alias:
+
 ```sh
 alias archey3='archey3 --config="$XDG_CONFIG_HOME/archey3/config"'
 ```

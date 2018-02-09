@@ -1,3 +1,8 @@
+---
+title: Aria2 - ultra fast download client & server
+date: 2018-01-25
+featured: true
+---
 # Aria2
 
 Ultra fast download client & server utility that utilizes your maximum download
