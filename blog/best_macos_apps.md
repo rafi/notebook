@@ -1,6 +1,5 @@
 ---
 title: Best macOS Apps
-path: best-macos-apps
 date: '2018-01-20'
 description:
 featured: true

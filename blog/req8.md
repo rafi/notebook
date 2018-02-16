@@ -1,6 +1,5 @@
 ---
 title: req8 - postman alternative
-path: req8
 date: '2017-11-18'
 featured: true
 description:

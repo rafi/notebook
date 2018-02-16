@@ -1,6 +1,5 @@
 ---
 title: Free and wonderful password management
-path: free-password-management
 date: '2017-12-25'
 featured: true
 description:

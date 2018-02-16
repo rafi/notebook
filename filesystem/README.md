@@ -1,7 +1,7 @@
 ---
-title: "Filesystem"
+title: "Filesystems"
 ---
-# Filesystem
+# Filesystems
 
 ## Files
 
@@ -11,6 +11,6 @@ title: "Filesystem"
 
 ### ext4
 
-- [Provision partition with Ext4](./ext4.md)
+- [Provision partition with Ext4](./ext4)
 
-# Apps
+## Apps
