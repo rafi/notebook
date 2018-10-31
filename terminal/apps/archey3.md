@@ -39,7 +39,7 @@ manual = None
 
 And an alias:
 
-```sh
+```bash
 alias archey3='archey3 --config="$XDG_CONFIG_HOME/archey3/config"'
 ```
 

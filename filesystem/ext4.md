@@ -23,7 +23,7 @@ front-end for the different `mkfs.fstype` tools:
 `mkfs -t ext4 /dev/sdb1`
 
 Finally, use `tune2fs` to adjust some parameters:
-```sh
+```bash
 tune2fs -m 0 /dev/sdb1
 tune2fs -L bakap01 /dev/sdb1
 ```

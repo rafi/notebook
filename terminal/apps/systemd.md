@@ -20,7 +20,7 @@ See everything systemd controls: `systemctl` or `systemctl --user`. Add `--all`
 to see everything, running or not.
 
 List all available services:
-```sh
+```bash
 # System-wide:
 sudo systemctl list-units -t service --all
 
@@ -29,7 +29,7 @@ systemctl --user list-units -t service --all
 ```
 
 Listing running processes with `ps` and cgroups:
-```sh
+```bash
 ps xawf -eo pid,user,cgroup,args
 ```
 

@@ -43,7 +43,7 @@ Run Automator, and create a new **service**:
 
 1. Add "Run AppleScript" with:
 
-```AppleScript
+```applescript
     on run {input, parameters}
       tell application "Google Chrome"
         return URL of active tab of first window
@@ -54,7 +54,7 @@ Run Automator, and create a new **service**:
   Note: For other browsers, see this [get_url gist]
 2. Add "Run Shell Script", select "Pass input [as arguments]", with:
 
-```sh
+```bash
     ~/.local/bin/urlpass "$@"
 ```
 
@@ -62,7 +62,7 @@ Run Automator, and create a new **service**:
 4. Assign keyboard shortcut in _System Preferences / Keyboard / Shortcuts_.
 5. Create `~/.local/bin/urlpass`:
 
-```sh
+```bash
   #!/usr/bin/env bash
 
   # Import the gpg-agent-info variable and export it

@@ -24,18 +24,18 @@ bandwidth. Aria2 supports HTTP(S), S(FTP), BitTorrent and Metalink.
 ### Client
 
 Download torrent via magnet link with 3 maximum connections per server:
-```sh
+```bash
 aria2c -x3 http://oracle.com/downloads/jdk
 ```
 
 Download torrent via magnet link:
-```sh
+```bash
 aria2c magnet:?xt=urn:btih:1234...
 ```
 
 ### Server
 
-```sh
+```bash
 aria2c --conf-path=$HOME/.config/aria2/daemon
 ```
 
@@ -90,7 +90,7 @@ bt-detach-seed-only=true
 
 Cool bash function:
 
-```sh
+```bash
 # Show active aria2 downloads with diana
 da() {
   watch -ctn 3 "(echo '\033[32mGID\t\t Name\t\t\t\t\t\t\t%   Down   Size Speed    Up   S/L Time\033[36m'; \

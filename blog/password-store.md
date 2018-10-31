@@ -91,7 +91,7 @@ print the GPG key ID, in ASCII armor format:
 Make sure to install `git` and `tree` if you don’t have them already. And,
 depending on your operating-system, choose the **one** for you:
 
-```sh
+```bash
 brew install pass      # Mac OSX with Homebrew
 port install pass      # Mac OSX with Macports
 apt-get install pass   # Linux with Ubuntu
@@ -104,7 +104,7 @@ yum install pass       # Linux with CentOS/RedHat
 `pass` is the only command you’ll need. You can `insert`, `edit`, `grep`, `mv`
 and so much more. Here are a few examples:
 
-```sh
+```bash
 pass insert joe/gmail.com    # Create a directory nested password
 pass insert -m wallet/visa   # Create a multiline password
 pass edit joe/gmail.com
@@ -197,7 +197,7 @@ end run
 * Assign keyboard shortcut in *System Preferences* / *Keyboard* / *Shortcuts*.
 * Create `~/.local/bin/urlpass`:
 
-```sh
+```bash
 #!/usr/bin/env bash
 # Import the gpg-agent-info variable and export it
 eval $(cat "~/.gpg-agent-info" | cut -d: -f 1)

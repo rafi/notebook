@@ -16,7 +16,7 @@ Try your command before doing it for real with the dry-run option:
 - `-n`, `--dry-run` - Perform a trial run with no changes made
 
 For example:
-```sh
+```bash
 rsync -navh ~ rafi-desk:/mnt/backup/
 ```
 
@@ -41,7 +41,7 @@ Use the `--log-file` option to examine transfer. rsync might be trying to update
 the group names on destination directories, this is because you're using the
 option `a` or `g` to preserve group. You could use the `--chmod` option to
 override that:
-```sh
+```bash
 rsync --log-file=my.log --chown=rafi:staff -navh rafi-desk:/mnt/media/music/ Music/
 ```
 
@@ -54,7 +54,7 @@ Filename Encoding
 ---
 If you're syncing from a Mac running OSX to a Linux machine, you'll need to use
 `--iconv=LOCAL,REMOTE` to convert the encoding:
-```sh
+```bash
 rsync --iconv=UTF8-MAC,UTF-8 --chown=rafi:staff -avh rafi-desk:/mnt/media/music/ Music/
 ```
 

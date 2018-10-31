@@ -19,7 +19,7 @@ MPD and MPC
 Instal via Macports or compile manually.
 
 ### Macports
-```sh
+```bash
 sudo port install mpd mpc
 
 # Load on startup
@@ -29,7 +29,7 @@ sudo port load mpd
 ### Compile `mpd`
 Download `mpd` from http://www.musicpd.org/download.html
 
-```sh
+```bash
 sudo port install boost icu sqlite3 yajl libmpdclient libsamplerate
 ./configure \
   --prefix=/opt/local \
@@ -53,7 +53,7 @@ make install
 ### Compile `mpc`
 Download `mpc` from http://www.musicpd.org/clients/mpc/
 
-```sh
+```bash
 ./configure \
   --prefix=/opt/local \
   --mandir=/opt/local/share/man \
@@ -64,7 +64,7 @@ make install
 
 Compile `mpdscribble`
 ---
-```sh
+```bash
 git clone git://git.musicpd.org/master/mpdscribble.git
 cd mpdscribble
 ./autogen.sh --prefix="/opt/local" --sysconfdir="/opt/local/etc"
@@ -73,7 +73,7 @@ make install
 
 Compile `ympd`
 ---
-```sh
+```bash
 git clone git://github.com/notandy/ympd.git
 cd ympd
 # Add this to CMakeLists.txt: INCLUDE_DIRECTORIES(/opt/local/include)
@@ -85,7 +85,7 @@ make install
 
 Compile `ncmpcpp`
 ---
-```sh
+```bash
 port install boost
 env LIBS=-L/opt/local/lib BOOST_LIB_SUFFIX="-mt" \
   CPPFLAGS=-I/opt/local/include LDFLAGS=-s \

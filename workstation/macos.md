@@ -30,7 +30,7 @@ search:
 
 ## Sensible hacker defaults
 
-```sh
+```bash
 sudo scutil --set HostName rafi-mac
 ```
 
@@ -39,7 +39,7 @@ and use what ever you like.
 
 ## Homebrew
 
-```sh
+```bash
 brew install \
   coreutils gnutls bash bash-completion@2 less z mas entr tmux bc \
   tmux-mem-cpu-load tmux-xpanes reattach-to-user-namespace tree \
@@ -76,7 +76,7 @@ brew cask install transmission mpv atom bartender beyond-compare \
 
 ## Python Utilities
 
-```sh
+```bash
 pip3 install --user --upgrade pipsi
 
 pipsi install pygments
@@ -87,7 +87,7 @@ pipsi install --python python2.7 gcalcli
 
 ## NodeJS Utilities
 
-```sh
+```bash
 npm -g install mad tern write-good
 npm -g install jshint jsxhint jsonlint stylelint markdownlint-cli sass-lint
 npm -g install git+https://github.com/ramitos/jsctags.git
@@ -96,7 +96,7 @@ npm -g install resume-cli imagemin-cli raml-cop raml2html raml2md
 
 ## Compile `neovim`
 
-```sh
+```bash
 git clone git://github.com/neovim/neovim.git
 cd neovim
 make distclean

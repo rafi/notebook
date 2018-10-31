@@ -12,7 +12,7 @@ tags:
 Install `cpan` and `cpanminus`.
 
 Add to bash profile:
-```sh
+```bash
 alias cpan="cpan -j $XDG_CONFIG_HOME/cpan/config.pm"
 export PATH="${PATH}:$HOME/.local/bin"
 export PERL_CPANM_OPT="-l $HOME/.local"
@@ -23,6 +23,6 @@ export PERL_MM_OPT="INSTALL_BASE=$HOME/.local"
 ```
 
 Re-login to your terminal and try to install a package:
-```sh
+```bash
 cpanm local::lib
 ```

@@ -24,7 +24,7 @@ set runtimepath+=~/.vim/bundle/neobundle.vim
 ```
 
 ### Advanced Auto-Install
-```viml
+```vim
 let $VAR=expand('$XDG_CACHE_HOME/vim')
 let s:plugins_dir = expand('$VAR/plugins')
 let g:neobundle#types#git#default_protocol = 'git'
