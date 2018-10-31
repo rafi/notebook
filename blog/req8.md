@@ -31,7 +31,7 @@ synchronization*.
 How come *I* need to keep Postman's state? I want **projects** to do it.
 
 ![](https://cdn-images-1.medium.com/max/1600/1*e8LuL3nBJVAe4fVVhcnSww.png)
-<span>coworkers synchronizing results in duplicates.</span>
+<span class="caption">coworkers synchronizing results in duplicates.</span>
 
 ## Cloud Synchronization (No thanks)
 

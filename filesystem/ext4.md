@@ -1,7 +1,6 @@
 ---
-title: Provision partition with Ext4
+title: Provision Partition with Ext4
 date: '2013-12-02'
-description:
 categories:
 - setup
 tags:
@@ -24,7 +23,7 @@ front-end for the different `mkfs.fstype` tools:
 `mkfs -t ext4 /dev/sdb1`
 
 Finally, use `tune2fs` to adjust some parameters:
-```
+```sh
 tune2fs -m 0 /dev/sdb1
 tune2fs -L bakap01 /dev/sdb1
 ```

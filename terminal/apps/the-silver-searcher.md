@@ -1,3 +1,7 @@
+---
+title: The Silver Searcher
+date: 2018-01-25
+---
 # The Silver Searcher
 
 ## Installation

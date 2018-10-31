@@ -6,7 +6,7 @@ description:
 categories:
 - setup
 search:
-  keywords: ['osx', 'provision', 'mac', 'macports']
+  keywords: ['osx', 'provision', 'mac', 'homebrew']
 ---
 # Mac OSX provisioning
 
@@ -15,16 +15,10 @@ search:
 * [Xcode](#xcode)
 * [Macports](#macports)
 * [Sensible hacker defaults](#sensible-hacker-defaults)
-* [X11 .serverauth files](#x11-serverauth-files)
-* [Base Ports](#base-ports)
-* [Custom Ports](#custom-ports)
-* [Defaults](#defaults)
+* [Homebrew](#homebrew)
 * [Python Utilities](#python-utilities)
 * [NodeJS Utilities](#nodejs-utilities)
 * [Compile `neovim`](#compile-neovim)
-* [Development Environments](#development-environments)
-  * [Apache 2.2, PHP 5.6, and MySQL 5.5 or Percona](#apache-22-php-56-and-mysql-55-or-percona)
-* [Dependency Reference](#dependency-reference)
 
 <!-- vim-markdown-toc -->
 
@@ -33,10 +27,6 @@ search:
 - Install Xcode (see [help](https://www.macports.org/install.php))
 - Install Xcode command line tools: `xcode-select --install`
 - Agree to Xcode license in Terminal: `sudo xcodebuild -license`
-
-## Macports
-
-Install [MacPorts](https://www.macports.org/install.php), choose version.
 
 ## Sensible hacker defaults
 
@@ -47,91 +37,52 @@ sudo scutil --set HostName rafi-mac
 Follow [mathiasbynens/dotfiles](https://github.com/mathiasbynens/dotfiles/blob/master/.osx)
 and use what ever you like.
 
-## Base Ports
+## Homebrew
 
 ```sh
-sudo port -v selfupdate
-sudo port install \
-  coreutils gnutls bash bash-completion less z mas entr \
-  tmux tmux-pasteboard tmux-mem-cpu-load fish \
-  bc tree colordiff pstree jq urlview tcpdump nmap readline \
-  rsync aria2 curl unrar gnetcat ttyrec the_silver_searcher \
-  id3lib libcaca libexif libmms faad2 terminal-notifier \
-  figlet fortune keychain mpc p7zip sshpass tarsnap spark exiv2 \
-  lnav ncdu calc tidy pngcrush watch watchman pidof pinfo hstr \
-  atool p5-image-exiftool cloc aspell aspell-dict-en aspell-dict-he \
-  go gnupg2 grc ncmpcpp pango poppler icdiff \
-  git git-cal git-extras colout pass peco ranger xmlstarlet \
-  wget texlive nodejs8 npm5 highlight mpv shellcheck sshfs xsel \
-  vim +cscope+lua+perl+python27+python36 \
-  MacVim +cscope+lua+perl+python27+python36 \
-  neomutt +gpgme+headercache+homespool+sidebar+smtp
-```
+brew install \
+  coreutils gnutls bash bash-completion@2 less z mas entr tmux bc \
+  tmux-mem-cpu-load tmux-xpanes reattach-to-user-namespace tree \
+  colordiff pstree jq urlview tcpdump nmap readline rsync aria2 \
+  curl unrar netcat ttyrec ttygif ttyd the_silver_searcher id3lib \
+  libcaca libexif libmms faad2 terminal-notifier figlet fortune \
+  keychain p7zip tarsnap spark exiv2 lnav ncdu calc tidy-html5 \
+  pngcrush watch pidof pinfo atool exif cloc gnupg grc pango bat \
+  poppler icdiff git-cal git-extras pass peco ranger wget fd \
+  xmlstarlet highlight shellcheck sshfs ccat editorconfig ctop \
+  htop progress httpstat catimg fzf fzy ripgrep httpie pgcli \
+  go node yarn zsh fish diff-so-fancy proselint subliminal yamllint \
+  mpc ncmpcpp mpv neomutt jrnl rclone resty task vit tig glyr \
+  gawk pineentry-mac
 
-## Custom Ports
+brew install python python@2 pipenv --with-tcl-tk
+brew install --with-default-names gnu-sed
+brew install git --with-curl --with-openssl
+brew install vim --with-lua --with-override-system-vi
+brew install macvim --with-lua
+brew install aspell --with-lang-he --without-lang-de --without-lang-es --without-lang-fr
+brew install --HEAD neovim
+brew install --HEAD universal-ctags/universal-ctags/universal-ctags
+brew install kubernetes-cli kubernetes-helm kubectx stern --with-short-names
+brew install rafi/tap/reg
+brew install --HEAD diana cam
 
-Install local Macports repository, i.e. [rafi/portfiles](https://github.com/rafi/portfiles)
+brew tap beeftornado/rmtree
 
-```sh
-sudo port install ctop-bin fd-bin diff-so-fancy diana dry-bin \
-  htop-vim progress py36-httpstat ttyd timg glyr fzf fzy \
-  migrate-bin ripgrep-bin universal-ctags
-```
-
-## Defaults
-
-The tools provided by GNU coreutils are prefixed with the character 'g'
-by default to distinguish them from the BSD commands. If you want to use
-the GNU tools by default, add this directory to the front of your PATH:
-`/opt/local/libexec/gnubin/`
-
-To use bash completion, add the following lines at the end of your .bash_profile:
-
-```sh
-  if [ -f /opt/local/etc/profile.d/bash_completion.sh ]; then
-      . /opt/local/etc/profile.d/bash_completion.sh
-  fi
-```
-
-The port bash-completion >=2.0 requires bash >=4.1; please make sure
-you are using /opt/local/bin/bash by changing the preferences of your
-terminal accordingly.
-
-To start the `gpg-agent` on startup, run:
-
-```sh
-launchctl load -w /Library/LaunchAgents/org.macports.gpg-agent.plist
+brew cask install transmission mpv atom bartender beyond-compare \
+  clipy contexts dash docker iterm2 karabiner-elements keycastr licecap \
+  marked slack spotify telegram typora whatsapp
 ```
 
 ## Python Utilities
 
 ```sh
-sudo port install \
-  python27 py27-gnureadline py27-pip py27-virtualenv py27-flake8 \
-  python36 py36-gnureadline py36-pip py36-virtualenv py36-flake8
+pip3 install --user --upgrade pipsi
 
-# Set default versions
-sudo port select --set python3 python36
-sudo port select --set python2 python27
-sudo port select --set python python36
-sudo port select --set pip pip36
-sudo port select --set virtualenv virtualenv36
-sudo port select --set pycodestyle pycodestyle-py36
-sudo port select --set pyflakes py36-pyflakes
-sudo port select --set flake8 flake8-36
-
-# Install packages
-pip2 install --user vim-vint
-pip3 install --user Pygments python-mpd2 pipdeptree proselint yamllint
-
-pipenv httpie
-pipenv subliminal
-pipenv pgcli
-pipenv tmuxp
-pipenv git+https://github.com/rachmadaniHaryono/we-get
-pipenv percol   # Python 2
-pipenv gcalcli  # Python 2
-pipenv git+https://github.com/ralphbean/bugwarrior.git@develop  # Python 2
+pipsi install pygments
+pipsi install tmuxp
+pipsi install vim-vint
+pipsi install --python python2.7 gcalcli
 ```
 
 ## NodeJS Utilities
@@ -149,41 +100,6 @@ npm -g install resume-cli imagemin-cli raml-cop raml2html raml2md
 git clone git://github.com/neovim/neovim.git
 cd neovim
 make distclean
-make CMAKE_BUILD_TYPE=Release DEPS_CMAKE_FLAGS=-DUSE_BUNDLED_BUSTED=OFF CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX:PATH=/opt/local"
+make CMAKE_BUILD_TYPE=Release DEPS_CMAKE_FLAGS=-DUSE_BUNDLED_BUSTED=OFF
 make install
-```
-
-## Development Environments
-
-### Apache 2.2, PHP 5.6, and MySQL 5.5 or Percona
-
-First disable built-in Apache: _System Preferences_ **->** _Sharing_
-and uncheck the "Personal Web sharing". Or, from terminal:
-
-```sh
-sudo launchctl unload -w /System/Library/LaunchDaemons/org.apache.httpd.plist
-```
-
-PHP and Apache:
-
-```sh
-sudo port install php56 +apache2 php56-apache2handler php56-curl php56-exif \
-  php56-gd php56-geoip php56-gettext php56-http php56-iconv php56-mbstring \
-  php56-mcrypt  php56-openssl php56-pdflib php56-pear php56-posix php56-soap \
-  php56-sockets php56-solr php56-ssh2 php56-sqlite php56-xmlrpc php56-xsl \
-  php56-zip
-sudo port install php56-xdebug
-sudo port install cronolog
-sudo port select php php56
-
-# You can get a list of the available configuration settings for xdebug with
-# the following command:
-#
-#   php56 --ri xdebug
-
-# 1. Add to environment: export PATH=/opt/local/apache2/bin:$PATH
-# 2. Use a configuration from /opt/local/etc/php56
-# 3. Symlink conf: sudo ln -s ~/.config/php/php56.ini /opt/local/etc/php56/php.ini
-sudo /opt/local/apache2/bin/apxs -a -e -n php5 /opt/local/apache2/modules/mod_php56.so
-sudo port load apache2
 ```
