@@ -13,7 +13,7 @@ search:
 <!-- vim-markdown-toc GFM -->
 
 * [Xcode](#xcode)
-* [Macports](#macports)
+* [Homebrew](#homebrew)
 * [Sensible hacker defaults](#sensible-hacker-defaults)
 * [Homebrew](#homebrew)
 * [Python Utilities](#python-utilities)

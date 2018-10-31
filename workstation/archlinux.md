@@ -1,7 +1,6 @@
 ---
 title: ArchLinux Install
 date: 2013-09-27
-permalink: '/2013/archlinux-setup.html'
 description:
 categories:
 - setup

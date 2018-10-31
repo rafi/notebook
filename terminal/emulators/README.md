@@ -1,5 +1,5 @@
 # Terminal Emulators
 
-- [Alacritty](terminal/emulators/alacritty)
-- [iterm2](terminal/emulators/iterm2)
-- [urxvt](terminal/emulators/urxvt)
+- [Alacritty](./alacritty.md)
+- [iterm2](./iterm2.md)
+- [urxvt](./urxvt.md)
