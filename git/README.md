@@ -1,3 +1,3 @@
 # Git
 
-- [Version Control Your Home](./version-control-your-home)
+- [Version Control Your Home](git/version-control-your-home)
