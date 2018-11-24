@@ -1,0 +1,6 @@
+{
+	"default": true,
+	"first-header-h1": { "level": 1 },
+	"no-inline-html": false,
+	"line-length": false
+}

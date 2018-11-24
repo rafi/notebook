@@ -1,0 +1,13 @@
+{
+  "async": true,
+  "ecmaVersion": 6,
+  "plugins": {
+    "complete_strings": {},
+    "node_resolve": {},
+    "modules": {},
+    "es_modules": {},
+    "doc_comment": { "fullDocs": true }
+  },
+  "libs": [ "browser", "ecmascript" ],
+  "loadEagerly": []
+}
