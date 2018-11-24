@@ -24,9 +24,9 @@ search:
 
 ## Xcode
 
-- Install Xcode (see [help](https://www.macports.org/install.php))
-- Install Xcode command line tools: `xcode-select --install`
-- Agree to Xcode license in Terminal: `sudo xcodebuild -license`
+* Install Xcode
+* Install Xcode command line tools: `xcode-select --install`
+* Agree to Xcode license in Terminal: `sudo xcodebuild -license`
 
 ## Sensible hacker defaults
 
@@ -53,18 +53,16 @@ brew install \
   htop progress httpstat catimg fzf fzy ripgrep httpie pgcli \
   go node yarn zsh fish diff-so-fancy proselint subliminal yamllint \
   mpc ncmpcpp mpv neomutt jrnl rclone resty task vit tig glyr \
-  gawk pineentry-mac
+  gawk pineentry-mac gnu-sed
 
 brew install python python@2 pipenv --with-tcl-tk
-brew install --with-default-names gnu-sed
 brew install git --with-curl --with-openssl
 brew install vim --with-lua --with-override-system-vi
-brew install macvim --with-lua
 brew install aspell --with-lang-he --without-lang-de --without-lang-es --without-lang-fr
 brew install --HEAD neovim
 brew install --HEAD universal-ctags/universal-ctags/universal-ctags
 brew install kubernetes-cli kubernetes-helm kubectx stern --with-short-names
-brew install rafi/tap/reg
+brew install rafi/tap/reg rafi/tap/yaml2json
 brew install --HEAD diana cam
 
 brew tap beeftornado/rmtree
@@ -92,6 +90,14 @@ npm -g install mad tern write-good
 npm -g install jshint jsxhint jsonlint stylelint markdownlint-cli sass-lint
 npm -g install git+https://github.com/ramitos/jsctags.git
 npm -g install resume-cli imagemin-cli raml-cop raml2html raml2md
+```
+
+## Docker completion
+
+```bash
+ln -s /Applications/Docker.app/Contents/Resources/etc/docker.bash-completion /usr/local/etc/bash_completion.d/docker
+ln -s /Applications/Docker.app/Contents/Resources/etc/docker-machine.bash-completion /usr/local/etc/bash_completion.d/docker-machine
+ln -s /Applications/Docker.app/Contents/Resources/etc/docker-compose.bash-completion /usr/local/etc/bash_completion.d/docker-compose
 ```
 
 ## Compile `neovim`
