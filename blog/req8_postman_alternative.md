@@ -2,13 +2,14 @@
 title: req8 - postman alternative
 date: '2017-11-18'
 featured: true
-description:
 categories:
 - apps
 search:
   keywords: ['osx', 'apps', 'macos']
 ---
 # req8 — Postman alternative
+
+[[toc]]
 
 Postman have been in my chest-tool for many years now, but I can't say I like
 it much; actually, at all. I tested many alternatives, terminal CLI tools and

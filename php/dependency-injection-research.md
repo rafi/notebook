@@ -1,7 +1,5 @@
 ---
-title: PHP Dependency Injection research
 date: '2013-12-13'
-description:
 categories:
 - php
 - dependencies
@@ -9,6 +7,7 @@ tags:
 - di
 - dependency injection
 ---
+# PHP Dependency Injection research
 
 ##### Advantages:
 - Makes unit testing and mocking easier (or possible)

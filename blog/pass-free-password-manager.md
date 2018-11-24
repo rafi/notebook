@@ -1,14 +1,15 @@
 ---
-title: Free and wonderful password management
+title: pass - Free and wonderful password management
 date: '2017-12-25'
 featured: true
-description:
 categories:
 - apps
 search:
   keywords: ['osx', 'apps', 'macos']
 ---
-# Free and wonderful password management
+# pass - Free and wonderful password management
+
+[[toc]]
 
 I’ve started using the Internet back in ’96 and I have accumulated several
 hundreds of password credentials for different sites. This entails my long

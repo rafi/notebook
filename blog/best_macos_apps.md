@@ -1,7 +1,6 @@
 ---
 title: Best macOS Apps
 date: '2018-01-20'
-description:
 featured: true
 categories:
 - apps
@@ -9,6 +8,8 @@ search:
   keywords: ['osx', 'apps', 'macos']
 ---
 # Best macOS Apps
+
+[[toc]]
 
 Unless otherwise stated, all apps are _FREE_.
 
