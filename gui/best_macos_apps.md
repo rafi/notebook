@@ -1,5 +1,5 @@
 ---
-title: Best macOS Apps
+title: Best macOS GUI Apps
 date: '2018-01-20'
 featured: true
 categories:
@@ -7,7 +7,7 @@ categories:
 search:
   keywords: ['osx', 'apps', 'macos']
 ---
-# Best macOS Apps
+# Best macOS GUI Apps
 
 [[toc]]
 

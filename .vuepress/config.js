@@ -15,11 +15,9 @@ module.exports = {
     updatePopup: true,
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Blog', link: '/blog/' },
     ],
     sidebar: [
       '/',
-      '/blog/',
       {
         title: 'Wiki',
         collapsable: false,
