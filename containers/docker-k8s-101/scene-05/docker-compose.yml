@@ -1,0 +1,11 @@
+version: "2"
+services:
+
+  myapp:
+    image: artifactory.local/myapp
+    environment:
+      MYAPP_CFG_ROOT: /etc/myapp
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./config:/etc/myapp
