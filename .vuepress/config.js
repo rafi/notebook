@@ -1,13 +1,14 @@
 module.exports = {
-  title: 'Rafael Bodill Knowledge Base',
+  title: 'Rafi\'s Knowledge',
   description: 'Knowledge Base of Rafael Bodill',
   dest: './dist',
-  plugins: [
-    '@vuepress/back-to-top',
-    '@vuepress/medium-zoom',
-  ],
+  plugins: {
+    '@vuepress/back-to-top': true,
+    '@vuepress/medium-zoom': true,
+    '@vuepress/google-analytics': { ga: 'UA-129679382-1' },
+  },
   themeConfig: {
-    // repo: 'rafi/notebook',
+    repo: 'rafi/notebook',
     repoLabel: '',
     editLinks: false,
     lastUpdated: 'Last Updated',
@@ -15,7 +16,6 @@ module.exports = {
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Blog', link: '/blog/' },
-      { text: 'GitHub', link: 'https://github.com/rafi' },
     ],
     sidebar: [
       '/',

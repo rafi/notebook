@@ -11,10 +11,11 @@
     "lint": "eslint --ext .js,.vue . && markdownlint --ignore=node_modules ."
   },
   "devDependencies": {
-    "@vuepress/plugin-back-to-top": "^1.0.0-alpha.23",
-    "@vuepress/plugin-medium-zoom": "^1.0.0-alpha.23",
+    "@vuepress/plugin-back-to-top": "^1.0.0-alpha.30",
+    "@vuepress/plugin-google-analytics": "^1.0.0-alpha.30",
+    "@vuepress/plugin-medium-zoom": "^1.0.0-alpha.30",
     "eslint": "^5.9.0",
-    "eslint-plugin-vue": "^4.7.1",
-    "vuepress": "^1.0.0-alpha.23"
+    "eslint-plugin-vue": "^5.0.0",
+    "vuepress": "^1.0.0-alpha.30"
   }
 }
