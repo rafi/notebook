@@ -15,11 +15,11 @@ search:
 
 ## How Do You Call Your Workstation?
 
-Give your box a name please:
+Give your box a name please: (:warning: Change rafi-mac to something of yours)
 
 ```bash
 hostname
-export COMPUTER_NAME="$1"
+export COMPUTER_NAME="rafi-mac"
 sudo scutil --set ComputerName "${COMPUTER_NAME}"
 sudo scutil --set HostName "${COMPUTER_NAME}"
 sudo scutil --set LocalHostName "${COMPUTER_NAME}"
@@ -60,7 +60,8 @@ On July 27, 2004, Chet Ramey released version 3 of Bash.
 # Let's Install Newest Bash!
 
 ```bash
-$ brew install readline bash bash-completion@2
+brew uninstall --force bash-completion
+brew install readline bash bash-completion@2
 ```
 
 ---
@@ -373,7 +374,8 @@ alias ....='cd ../../../'
 alias .....='cd ../../../../'
 
 # Kubernetes
-alias k='kubectl'
+alias k=kubectl
+alias kctx=kubectx
 
 # Git
 alias gb='git branch'
@@ -506,6 +508,7 @@ brew install go node yarn python python@2 pipenv
 brew install git --with-curl --with-openssl
 brew install vim --with-lua --with-override-system-vi
 brew install neovim
+brew install kubernetes-cli kubectx stern
 brew install tmux tmux-mem-cpu-load tmux-xpanes reattach-to-user-namespace
 brew install aria2 lnav pngcrush poppler peco diff-so-fancy
 brew install fd bat shellcheck ctop httpie
