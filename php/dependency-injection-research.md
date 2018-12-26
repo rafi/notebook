@@ -10,17 +10,20 @@ tags:
 # PHP Dependency Injection research
 
 ##### Advantages:
+
 - Makes unit testing and mocking easier (or possible)
 - Decouples object instantiation from usage
 - Allows for better separation of concerns and higher object cohesion
 - Reduces the usage and need for singleton classes which are considered bad by many people
 
 ##### Injection types
+
 - Constructor injection
 - Setter injection
 - Interface injection
 
 ##### Hard coded dependency
+
 - Hard to reuse
 - Poor isolation
 - Hard to test
@@ -29,6 +32,7 @@ tags:
 - Hard to understand
 
 ##### Dependency injection
+
 - Loose coupling
 - Reuse of code
 - Reduce amount of code
@@ -36,9 +40,11 @@ tags:
 - **Extremely easy to test**
 
 # Container
+
 Manual Di management is complicated. A container is one solution
 
 ## Disclaimer
+
 - Dependency Injection != DI container
 - DI container use Service Locator Anti-Pattern
 - DI container make code 'less native'
@@ -69,31 +75,43 @@ Singletons are bad because they are impossible to properly test with and against
 # PHP Libraries
 
 ### [Pimple](http://pimple.sensiolabs.org/)
+
 Pimple is a simple di container, about 50 lines of code.
+
 - Define parameters, objects, shared objects, protected params
 - Packaging a Container for reusability
 
 ### [Aura.Di](https://github.com/auraphp/Aura.Di)
+
 Dependency injection container system with the following features:
+
 - Native support for constructor- and setter-based injection
 - Lazy-loading of services
 - Inheritable configuration of setters and constructor params
 
 ### [kohana-dependencies](https://github.com/Zeelot/kohana-dependencies)
+
 A simple dependency injection container for Kohana 3.3.x
+
 - Create an container from an array or a programmatic API
 
 ### [PHP-DI](https://github.com/mnapoli/PHP-DI)
+
 Large one-for-all solution with many features and many dependencies.
+
 - Lot's of features, see possible [definitions](https://github.com/mnapoli/PHP-DI/blob/master/doc/definition.md)
 
 ## [Auryn](https://github.com/rdlowrey/Auryn)
+
 Flexible recursive dependency injector.
+
 - Injection definitions, type-hint aliasing, parameters, global params
 - Instance sharing, instantiation delegates, injecting for execution, dep resolution
 
 ## [Orni\Di](https://github.com/orno/di)
+
 Small but powerful dependency injection container.
+
 - Constructor injection, setter injection, factory closures, automatic dep resolution
 - Caching
 - Configuration
@@ -101,6 +119,7 @@ Small but powerful dependency injection container.
 # Research Findings
 
 ## Items
+
  Library             | Features                      | Pros           | Cons
  ------------------- | ----------------------------- | -------------- | ----
  Pimple              | Simple, params, objects, lazy-load, protect, extend and reuse | Small and simple | Still bound to a container configuration
@@ -118,6 +137,7 @@ In our use-case, controllers instantiate a use-case, context, which itself depen
 Being very disgust from huge configurations, convention-over-configuration is more favorable in this use-case for me. Creating a small dependency resolver in the controller base and using reflection to reveal the contructor parameters. Reflection is costly, but we'll perform it once per-request (as long as one context is being executed) the overhead is insignificant.
 
 ### Custom example
+
 ```php
 // src/core/classes/Vendor/CoreBundle/Controller/API.php
 namespace Vendor\CoreBundle\Controller;

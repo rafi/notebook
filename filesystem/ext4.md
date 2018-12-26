@@ -23,10 +23,12 @@ front-end for the different `mkfs.fstype` tools:
 `mkfs -t ext4 /dev/sdb1`
 
 Finally, use `tune2fs` to adjust some parameters:
+
 ```bash
 tune2fs -m 0 /dev/sdb1
 tune2fs -L bakap01 /dev/sdb1
 ```
+
 The `-m` option is for adjusting the percentage of reserved blocks.
 The reserved blocks are used by privileged processes which is by default 5% of
 the hard disk size. Since I'm using the external hard disk solely as a storage,

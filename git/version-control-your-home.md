@@ -14,6 +14,7 @@ Create a bare repository in .config/config.git:
 `git init --bare`
 
 Now, let's change our minds and set a working tree:
+
 ```bash
 git config core.bare false
 git config core.worktree /home/rafi   ; NO TRAILING SLASH!
@@ -22,6 +23,7 @@ git config core.worktree /home/rafi   ; NO TRAILING SLASH!
 Make sure to create ~/.gitignore that will at least include `/.config/config.git` among other garbage you don't want collected by Git.
 
 Prepare an alias in ~/.bash_aliases or ~/.bashrc:
+
 ```bash
 alias gith='git --git-dir=/home/rafi/.config/config.git'
 ```

@@ -7,7 +7,7 @@ title: "Filesystems"
 
 ## Directories
 
-## Filesystems
+## Filesystem Types
 
 ### ext4
 

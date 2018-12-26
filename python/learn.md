@@ -9,8 +9,10 @@ tags:
 - guide
 ---
 
-Fundamentals
----
+# Learning Python
+
+## Fundamentals
+
 - [Pluralsight] course: [Python Fundamentals]
   Highlights:
   - Module 3: "Strings and Collections"
@@ -20,12 +22,14 @@ Fundamentals
   - Module 9: "Classes"
 - [Pluralsight] course: [Python - Beyond the Basics]
 
-Web
----
+## Web
+
 ### Flask
+
 - [Pluralsight] course: [Introduction to the Flask Microframework]
 
 **Highlights**
+
 ```python
 # Application container
 flask.Flask()
@@ -47,6 +51,7 @@ flask.flash(message, category = 'message')
 ```
 
 #### Flask Larger Apps
+
 - [Flask Docs: Larger Applications]
 - [Matt Wright: How I Structure My Flask Applications], and [files](https://github.com/mattupstate/overholt)
 - [Armin Ronacher: Large app how to]

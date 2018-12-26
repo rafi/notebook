@@ -17,6 +17,7 @@ search:
 Prerequisites: [Virtualbox](https://www.virtualbox.org/wiki/Downloads)
 
 macOS instructions:
+
 ```bash
 brew update
 brew install kubernetes-cli kubernetes-helm kubectx stern
@@ -26,6 +27,7 @@ brew cask upgrade minikube
 ```
 
 Append to your `.bashrc`:
+
 ```bash
 . "/usr/local/etc/profile.d/bash_completion.sh"
 ```
@@ -106,6 +108,7 @@ open http://localhost:8001/api/v1/namespaces/kube-system/services/http:kubernete
 # Metrics Server
 
 Kubernetes doesn't have built-in metrics:
+
 ```bash
 kubectl top nodes
 ```
@@ -511,7 +514,6 @@ kubectl exec -it ghost-97d8bf485-p25r2 -- tail /var/log/apt/history.log
 ---
 
 ## Admire Your Work
-
 
 ```bash
 kubectl get all --all-namespaces

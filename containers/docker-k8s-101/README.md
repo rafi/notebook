@@ -10,7 +10,6 @@ search:
 
 # Docker & Kubernetes 101
 
-
 ---
 
 # Docker
