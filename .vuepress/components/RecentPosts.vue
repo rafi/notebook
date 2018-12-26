@@ -3,6 +3,7 @@
 		<ul>
 			<li v-for="post in recentPosts">
 				<router-link :to="post.path">{{ post.title }}</router-link>
+				<small>({{ new Date(post.frontmatter.date).toDateString() }})</small>
 			</li>
 		</ul>
 	</div>
