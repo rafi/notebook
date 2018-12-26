@@ -2,5 +2,10 @@
 	"default": true,
 	"first-header-h1": { "level": 1 },
 	"no-inline-html": false,
+	"no-bare-urls": false,
+	"single-h1": false,
+	"first-line-h1": false,
+	"first-heading-h1": false,
+	"no-trailing-punctuation": false,
 	"line-length": false
 }

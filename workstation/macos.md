@@ -45,7 +45,7 @@ brew install \
   tmux-mem-cpu-load tmux-xpanes reattach-to-user-namespace tree \
   colordiff pstree jq urlview tcpdump nmap readline rsync aria2 \
   curl unrar netcat ttyrec ttygif ttyd the_silver_searcher id3lib \
-  libcaca libexif libmms faad2 terminal-notifier figlet fortune \
+  libexif libmms faad2 terminal-notifier figlet fortune gnu-sed \
   keychain p7zip tarsnap spark exiv2 lnav ncdu calc tidy-html5 \
   pngcrush watch pidof pinfo atool exif cloc gnupg grc pango bat \
   poppler icdiff git-cal git-extras pass peco ranger wget fd \
@@ -53,19 +53,18 @@ brew install \
   htop progress httpstat catimg fzf fzy ripgrep httpie pgcli \
   go node yarn zsh fish diff-so-fancy proselint subliminal yamllint \
   mpc ncmpcpp mpv neomutt jrnl rclone resty task vit tig glyr \
-  gawk pineentry-mac gnu-sed
+  kubernetes-cli kubernetes-helm kubectx stern gawk pineentry-mac
 
+brew install libcaca --with-imlib2
 brew install python python@2 pipenv --with-tcl-tk
 brew install git --with-curl --with-openssl
 brew install vim --with-lua --with-override-system-vi
 brew install aspell --with-lang-he --without-lang-de --without-lang-es --without-lang-fr
 brew install --HEAD neovim
 brew install --HEAD universal-ctags/universal-ctags/universal-ctags
-brew install kubernetes-cli kubernetes-helm kubectx stern --with-short-names
+
 brew install rafi/tap/reg rafi/tap/yaml2json
 brew install --HEAD diana cam
-
-brew tap beeftornado/rmtree
 
 brew cask install transmission mpv atom bartender beyond-compare \
   clipy contexts dash docker iterm2 karabiner-elements keycastr licecap \

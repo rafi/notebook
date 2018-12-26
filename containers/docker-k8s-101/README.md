@@ -579,8 +579,8 @@ https://docs.google.com/presentation/d/1BhUfwkiRTQZsvN9kCpxpbT09kpWFTiuAprOfGemr
 ## Workstation Setup
 
 ```bash
-brew install kubernetes-cli kubectx \
-  fzf stern bash-completion@2 --with-short-names
+brew uninstall --force bash-completion
+brew install kubernetes-cli kubectx fzf stern bash-completion@2
 ```
 
 Append to your `~/.bash_profile` for awesome shell completion:

@@ -27,6 +27,7 @@ module.exports = {
           '/filesystem/',
           '/git/',
           '/go/',
+          '/gui/',
           '/music/',
           '/perl/',
           '/php/',
@@ -37,7 +38,6 @@ module.exports = {
           '/storage/',
           '/terminal/',
           '/tmux/',
-          '/gui/',
           '/vim/',
           '/workstation/',
         ]

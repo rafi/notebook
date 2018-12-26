@@ -23,10 +23,11 @@ generate:
 	@[ -d img ] || mkdir img
 	@for f in ${files}; do \
 		cat "$$f/README.md" >> $(output); \
-		[ -d "$$f/img" ] && ( \
+		if [ -d "$$f/img" ]; then \
 			pushd img >/dev/null; \
 			ln -fs ../$$f/img/* .; \
-			popd >/dev/null) \
+			popd >/dev/null; \
+		fi \
 	done
 	@echo '=> Compiling slides.md'
 	@cat $(output) footer.tpl > slides.md
