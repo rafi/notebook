@@ -32,6 +32,7 @@ module.exports = {
           '/php/',
           '/python/',
           '/server/',
+          '/shell/',
           '/snippets/',
           '/storage/',
           '/terminal/',
