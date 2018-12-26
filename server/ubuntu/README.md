@@ -1,1 +1,3 @@
 # Ubuntu
+
+<RecentPosts :children=true />

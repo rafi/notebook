@@ -1,2 +1,3 @@
 # Tmux
 
+<RecentPosts :children=true />

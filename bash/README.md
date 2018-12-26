@@ -3,4 +3,4 @@ title: Bash
 ---
 # Bash
 
-- [Bash expansion](./expansion.md)
+<RecentPosts :children=true />

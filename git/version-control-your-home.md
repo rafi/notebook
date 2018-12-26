@@ -1,6 +1,6 @@
 ---
 title: Version Control /home with Git
-date: '2013-10-26'
+date: 2013-10-26
 categories:
 - setup
 tags:

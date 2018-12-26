@@ -1,3 +1,3 @@
 # Perl
 
-- [CPAN, CPANMinus and XDG Conformity](./cpan.md)
+<RecentPosts :children=true />

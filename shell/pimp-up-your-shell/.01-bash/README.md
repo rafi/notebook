@@ -6,11 +6,11 @@
 
 ## How Do You Call Your Workstation?
 
-Give your box a name please:
+Give your box a name please: (:warning: Change rafi-mac to something of yours)
 
 ```bash
 hostname
-export COMPUTER_NAME="$1"
+export COMPUTER_NAME="rafi-mac"
 sudo scutil --set ComputerName "${COMPUTER_NAME}"
 sudo scutil --set HostName "${COMPUTER_NAME}"
 sudo scutil --set LocalHostName "${COMPUTER_NAME}"
