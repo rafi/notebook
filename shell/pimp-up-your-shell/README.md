@@ -1,16 +1,15 @@
 ---
-title: 'Pimp Up Your Shell'
-date: '2018-12-23'
+title: Pimp Up Your Shell
+date: 2018-12-23
 featured: true
 categories:
 - shell
 search:
-  keywords: ['shell', 'terminal', 'bash', 'linux']
+  keywords: [shell, terminal, bash, linux]
 ---
 
 # Pimp Up Your Shell
 
-http://rafi.io/slides/pimp-up-your-shell
 
 ---
 

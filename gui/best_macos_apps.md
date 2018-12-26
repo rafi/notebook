@@ -1,6 +1,6 @@
 ---
 title: Best macOS GUI Apps
-date: '2018-01-20'
+date: 2018-01-20
 featured: true
 categories:
 - apps

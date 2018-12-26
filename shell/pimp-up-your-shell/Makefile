@@ -4,7 +4,7 @@ path = rafi.io/slides/$(name)/
 url = http://$(path)
 theme = league
 reveal = reveal-md ./slides.md --title "$(title)" --theme $(theme)
-files = $(wildcard ./??-*)
+files = $(wildcard .??-*)
 output = README.md
 
 install: generate

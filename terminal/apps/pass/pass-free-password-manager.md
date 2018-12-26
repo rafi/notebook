@@ -1,6 +1,6 @@
 ---
 title: pass - Free and wonderful password management
-date: '2017-12-25'
+date: 2017-12-25
 featured: true
 categories:
 - apps
