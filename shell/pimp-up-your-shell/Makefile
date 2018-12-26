@@ -7,14 +7,21 @@ reveal = reveal-md ./slides.md --title "$(title)" --theme $(theme)
 files = $(wildcard .??-*)
 output = README.md
 
-install: generate
+all: build
+
+view: generate
 	$(reveal)
 	@rm ./slides.md
 
-deploy: generate
+build: generate
+	@echo '=> Build static site'
 	$(reveal) --static
+	@rm ./slides.md
+
+deploy: generate build
+	@echo '=> Synchronizing site with server'
 	rsync -az --delete _static/* bob:/srv/http/$(path)
-	@rm ./slides.md ./_static
+	@rm -rf ./_static
 	open "$(url)"
 
 generate:
@@ -39,4 +46,4 @@ clean:
 	rm -rf ./slides.md ./_static
 	find ./img -type l -delete
 
-.PHONY: install deploy generate clean
+.PHONY: all view build deploy generate clean
