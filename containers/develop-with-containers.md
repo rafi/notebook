@@ -17,6 +17,8 @@ has become such a valuable tool, not only in production.
 I'll start with analyzing `Dockerfile`s and then continue to talk about
 developing with containers.
 
+[[toc]]
+
 ## Dockerfile Best Practices
 
 Every line in your `Dockerfile` is an independent cached layer so it's important
@@ -27,13 +29,13 @@ to understand the mechanics of cache-busting and manual garbage collection.
 Almost every project has dependencies. It's important to separate the
 installation of these dependencies from your actual project, and have it run
 before your own project installation. To understand why, follow to the next
-section on [Cache-Busting](#cache-busting).
+section on [leveraging docker cache](#leverage-docker-cache).
 
 Here are a few examples of dependency separation:
 
 #### Go
 
-```Dockerfile
+```docker
 FROM golang:alpine
 RUN go get -u -v github.com/golang/dep/cmd/dep
 RUN go get -d -v golang.org/x/net/html
@@ -43,7 +45,7 @@ RUN go install github.com/golang/example/outyet
 
 #### Python 3
 
-```Dockerfile
+```docker
 FROM python:3.7-slim
 WORKDIR /app
 COPY requirements.txt .
@@ -54,7 +56,7 @@ RUN pip install -e .
 
 #### NodeJS
 
-```Dockerfile
+```docker
 FROM node:10.13-alpine
 WORKDIR /app
 COPY package.json .
@@ -89,7 +91,7 @@ appeared, offering more control for layer commits.
 Back to Docker, each layer has a size that weighs in forever. For example,
 the following example is BAD practice of installing cython & ujson:
 
-```Dockerfile
+```docker
 FROM python:3.7-slim
 RUN apt-get update
 RUN apt-get install -y --no-install-recommends build-essential
@@ -127,7 +129,7 @@ We in-fact created many layers that are like snapshots in time. If we have
 combined them, or "squashed" them, the overall layer size will be more
 efficient, aggregated:
 
-```Dockerfile
+```docker
 FROM python:3.7-slim
 RUN apt-get update && \
   apt-get install -y --no-install-recommends build-essential && \
@@ -169,7 +171,7 @@ Docker-compose is an invaluable tool for development, it defines a composition
 of services that can be created & destroyed in matter of seconds. Let's review
 the following example:
 
-```yaml.docker-compose
+```yaml
 version: '2'
 
 services:
@@ -195,7 +197,7 @@ versions we need and accessible on ports 5432 and 6379.
 
 If your project has a `Dockerfile`, we can automate our project as-well:
 
-```yaml.docker-compose
+```yaml
 version: '2'
 
 services:
@@ -242,7 +244,7 @@ Python and is open-sourced.
 
 Find pre-built images in [Docker Hub](https://hub.docker.com/).
 
-## 10 Tips for `Dockerfile`s
+## 10 Tips for Better `Dockerfile`s
 
 1. Combine `RUN` statements.
 1. Clean after yourself.
@@ -259,3 +261,328 @@ Find pre-built images in [Docker Hub](https://hub.docker.com/).
    unexpected disasters.
 
 ## Developing Alongside Containers
+
+So we've learned the power of containers in development by spinning up quickly
+3rd-party services and our own projects for usage, but what about actual
+development? During which we make a lot of changes and restart our application
+to reload the changes repeatedly…
+
+Writing your own code and using containers as runtime can surprisingly ease
+development in certain situations.
+
+### Exercise 1: Python Container with Debugging Support
+
+Let's take Python for example. In-order to reload your code changes you must
+reload your runtime server. Many frameworks and interpreters have a reload
+option, e.g. [bottle](https://bottlepy.org/docs/dev/tutorial.html#auto-reloading),
+[flask](http://flask.pocoo.org/docs/latest/server),
+[gunicorn](https://docs.gunicorn.org/en/latest/settings.html?highlight=reload#debugging),
+etc. However we can achieve this with restarting containers as-well.
+
+Consider this application:
+
+```py
+import sys
+import signal
+import falcon
+
+
+class HealthResource:
+    def on_get(self, req, resp):
+        resp.media = {'status': 'OK', 'health': 1.0}
+
+
+def sigterm_handler(signum, frame):
+    sys.exit(1)
+
+
+def main(args):
+    from wsgiref import simple_server
+    signal.signal(signal.SIGTERM, sigterm_handler)
+    httpd = simple_server.make_server('0.0.0.0', 8080, api)
+    httpd.serve_forever()
+
+
+api = falcon.API()
+api.add_route('/healthz', HealthResource())
+
+if __name__ == '__main__':
+    main(sys.argv[1:])
+```
+
+A `Dockerfile`:
+
+```docker
+FROM python:3.7-slim
+RUN pip install --no-cache-dir falcon
+ENTRYPOINT ["python", "app.py"]
+WORKDIR /app
+COPY . .
+```
+
+And a `docker-compose.yml`:
+
+```yaml
+version: '2'
+
+services:
+  api:
+    build: .
+    image: myapp/api
+    container_name: myapp-api
+    ports:
+      - 8080:8080
+    volumes:
+      - .:/app
+```
+
+Let's build our image:
+
+```bash
+$ docker-compose build
+Building api
+…
+Successfully built d39e1a19c0d0
+Successfully tagged myapp/api:latest
+
+$ docker-compose up -d
+Starting myapp-api ... done
+```
+
+With `curl` or [HTTPie](https://httpie.org) let's send a `/healthz` request:
+
+```bash
+$ curl localhost:8080/healthz
+{"status": "OK", "health": 1.0}
+```
+
+Hooray.
+
+[pdb](https://docs.python.org/3/library/pdb.html) is the most commonly-used
+debugger for Python because it is built into the standard library.  Let's add
+a breakpoint and see what happens:
+
+```diff
+class HealthResource:
+    def on_get(self, req, resp):
++       import pdb; pdb.set_trace()
+        resp.media = { 'status': 'OK', 'health': 1.0 }
+```
+
+Reload the container and run `curl` again:
+
+```bash
+$ docker-compose restart
+Restarting myapp-api ... done
+
+$ curl localhost:8080/healthz
+A server error occurred.  Please contact the administrator.
+```
+
+Oh oh. We have an error. Let's examine the logs with `docker logs -f myapp-api`
+
+```
+172.23.0.1 - - [01/Jan/2019 19:53:44] "GET /healthz HTTP/1.1" 200 31
+> /app/app.py(9)on_get()
+-> resp.media = {'status': 'OK', 'health': 1.0}
+172.23.0.1 - - [01/Jan/2019 20:00:39] "GET / HTTP/1.1" 404 0
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/wsgiref/handlers.py", line 137, in run
+    self.result = application(self.environ, self.start_response)
+  File "/usr/local/lib/python3.7/site-packages/falcon/api.py", line 244, in __call__
+    responder(req, resp, **params)
+  File "app.py", line 9, in on_get
+    resp.media = {'status': 'OK', 'health': 1.0}
+  File "app.py", line 9, in on_get
+    resp.media = {'status': 'OK', 'health': 1.0}
+  File "/usr/local/lib/python3.7/bdb.py", line 88, in trace_dispatch
+    return self.dispatch_line(frame)
+  File "/usr/local/lib/python3.7/bdb.py", line 113, in dispatch_line
+    if self.quitting: raise BdbQuit
+bdb.BdbQuit
+```
+
+We need an interactive tty in-order for [pdb](https://docs.python.org/3/library/pdb.html)
+to interact with us at the breakpoint. Let's stop this container and run our
+api interactively:
+
+```bash
+$ docker-compose stop
+Stopping myapp-api ... done
+
+$ docker-compose run --rm --service-ports api
+```
+
+On a different terminal, let's `curl` again:
+
+```bash
+$ curl localhost:8080/healthz
+```
+
+This time, the request is frozen and the terminal window running docker-compose
+initiated an interactive shell:
+
+```
+> /app/app.py(9)on_get()
+-> resp.media = {'status': 'OK', 'health': 1.0}
+(Pdb) list
+  4
+  5
+  6     class HealthResource:
+  7         def on_get(self, req, resp):
+  8             import pdb; pdb.set_trace()
+  9  ->         resp.media = {'status': 'OK', 'health': 1.0}
+ 10
+ 11
+ 12     def sigterm_handler(signum, frame):
+ 13         sys.exit(1)
+ 14
+
+(Pdb) args
+self = <__main__.HealthResource object at 0x7f82b947dd30>
+req = <Request: GET 'http://localhost:8080/healthz'>
+resp = <Response: 200 OK>
+
+(Pdb) cont
+```
+
+Excellent! We can run containers with debugging support, but it's quite tiresome
+to constantly restart our containers.
+
+### Exercise 2: Auto-Reloading
+
+For auto-reloading our containers, we can use a special little tool called
+`entr`. You can install it with Homebrew on macOS:
+
+```bash
+$ brew install entr
+…
+==> Pouring entr-4.1.mojave.bottle.tar.gz
+🍺  /usr/local/Cellar/entr/4.1: 7 files, 40.7KB
+```
+
+[`entr`](http://eradman.com/entrproject/) helps running arbitrary commands when
+files change. This will help restarting container:
+
+```bash
+$ find . -name '*py' | entr -r docker-compose up
+Starting myapp-api ... done
+Attaching to myapp-api
+```
+
+Now let's change `OK` to `SEVERE` in `app.py`, to see if container restarts:
+
+```diff
+class HealthResource:
+    def on_get(self, req, resp):
+-       import pdb; pdb.set_trace()
+-       resp.media = {'status': 'OK', 'health': 1.0}
++       resp.media = {'status': 'SEVERE', 'health': 1.0}
+```
+
+You will notice that our container has been restarted:
+
+```bash
+$ find . -name '*py' | entr -r docker-compose up
+Starting myapp-api ... done
+Attaching to myapp-api
+Gracefully stopping... (press Ctrl+C again to force)
+Stopping myapp-api ... done
+Starting myapp-api ... done
+Attaching to myapp-api
+```
+
+On a different terminal, let's test it:
+
+```bash
+$ curl localhost:8080/healthz
+{"status": "SEVERE", "health": 1.0}
+```
+
+Hooray, no manual restarts! :smiley:
+
+[The Silver Searcher](https://github.com/ggreer/the_silver_searcher) is a much
+better tool than `find`, we can use it as-well:
+
+```bash
+ag -l --py | entr -r docker-compose up
+```
+
+### Exercise 3: Automating Docker-Compose
+
+`make` is an old trusted build system. We can easily abuse it to make our
+work-flow with docker-compose even more easier.
+
+Consider the following `Makefile`:
+
+```makefile
+default: menu
+
+menu:
+	@echo "# MYAPP Makefile"
+	@echo
+	@echo "## docker-compose shortcuts:"
+	@echo
+	@echo "  * make bash - Execute bash in 'api' container"
+	@echo "  * make clean - Delete composed container and lock files"
+	@echo "  * make debug - Run app with an interactive tty"
+	@echo "  * make develop - Install development requirements"
+	@echo "  * make install - Build, create, and start app"
+	@echo "  * make logs - Tail app containers logs"
+	@echo "  * make ps - List all containers including load-stats"
+	@echo "  * make stat - Start containers"
+	@echo "  * make stop - Stop composed containers"
+	@echo "  * make test - Run tests within 'api' container"
+	@echo "  * make watch - Watch file changes and restarts 'api' container"
+	@echo
+
+bash:
+	docker-compose exec api bash
+
+clean: stop
+	docker-compose down; \
+	find . -name __pycache__ -type d | xargs rm -rf; \
+	rm -rf *.egg-info dist .cache
+
+debug:
+	docker-compose run --rm --service-ports api
+
+develop: install
+	docker-compose exec api pip install -r dev-requirements.txt
+
+install: stop
+	docker-compose build
+
+logs:
+	docker-compose logs --tail 15 -f
+
+ps:
+	@docker-compose ps
+	@echo
+	@docker stats --no-stream $(docker-compose ps | grep '^\w' | awk '{print $1}')
+
+start:
+	docker-compose up -d
+
+stop:
+	docker-compose stop -t 5
+
+test:
+	docker-compose exec api py.test -v -s
+
+watch:
+	find . -name '*py' | entr -r docker-compose up --build api
+
+.PHONY: menu bash clean debug develop install logs ps start stop test
+```
+
+Once saved, as `Makefile`, you can quickly run work-flow commands quickly,
+for example:
+
+```bash
+make install
+make start
+```
+
+Pretty useful when starting to learn docker/compose, it serves as a reference
+card as-well.
