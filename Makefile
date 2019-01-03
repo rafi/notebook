@@ -4,15 +4,22 @@ all:
 	@echo 'tasks'
 	@echo '---'
 	@echo 'make install - Install dependencies with yarn'
-	@echo 'make build - Build vuepress site and deploy'
+	@echo 'make start - Run development server locally'
+	@echo 'make deploy - Build & deploy distribution assets'
 	@echo 'make favicon - Generate favicons from logo'
 	@echo 'make lint - Lint markdown and javascript files'
 
 install:
 	yarn install
 
+start:
+	yarn run dev
+
 build:
-	yarn build
+	rm -rf ./dist
+	yarn run build
+
+deploy: build
 	rsync -ah ./dist/* bob:/srv/http/rafi.io/
 
 lint:
@@ -32,4 +39,4 @@ favicon:
 	convert -resize x512 $(logo) icons/android-chrome-512x512.png; \
 	convert -resize x144 $(logo) icons/msapplication-icon-144x144.png
 
-.PHONY: all install build lint favicon
+.PHONY: all install start build deploy lint favicon
