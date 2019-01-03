@@ -8,7 +8,13 @@ search:
   keywords: ['docker', 'containers', 'develop']
 ---
 
-# Developing with Docker containers
+# Developing with Docker Containers
+
+::: warning
+This article guide is intended for advanced users with knowledge of creating and
+running Docker containers locally. If you are new to containers or Docker,
+please refer to the [Docker & K8s 101](./docker-k8s-101/) article.
+:::
 
 As a programmer I often use many different technologies and frameworks.
 It's a pain installing all the different dependencies, and that's why Docker
@@ -31,16 +37,20 @@ installation of these dependencies from your actual project, and have it run
 before your own project installation. To understand why, follow to the next
 section on [leveraging docker cache](#leverage-docker-cache).
 
-Here are a few examples of dependency separation:
+Here are a few examples of dependency separation in a `Dockerfile` files:
 
 #### Go
 
 ```docker
 FROM golang:alpine
+
+# Dependency installation
 RUN go get -u -v github.com/golang/dep/cmd/dep
 RUN go get -d -v golang.org/x/net/html
-COPY . /go/src/github.com/golang/example/outyet
-RUN go install github.com/golang/example/outyet
+
+# Copy project files and compile project
+COPY . /go/src/github.com/golang/example/myapp
+RUN go install github.com/golang/example/myapp
 ```
 
 #### Python 3
@@ -48,8 +58,12 @@ RUN go install github.com/golang/example/outyet
 ```docker
 FROM python:3.7-slim
 WORKDIR /app
+
+# Dependency installation
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy project files and run setup.py
 COPY . .
 RUN pip install -e .
 ```
@@ -59,10 +73,13 @@ RUN pip install -e .
 ```docker
 FROM node:10.13-alpine
 WORKDIR /app
+
+# Dependency installation
 COPY package.json .
 RUN yarn install
+
+# Copy project files
 COPY . .
-RUN yarn build
 ```
 
 ### Leverage Docker Cache
@@ -92,6 +109,8 @@ Back to Docker, each layer has a size that weighs in forever. For example,
 the following example is BAD practice of installing cython & ujson:
 
 ```docker
+# Dockerfile
+
 FROM python:3.7-slim
 RUN apt-get update
 RUN apt-get install -y --no-install-recommends build-essential
@@ -127,9 +146,11 @@ b529b6b0c31c      /bin/sh -c apt-get purge -y build-essential     1.38MB
 
 We in-fact created many layers that are like snapshots in time. If we have
 combined them, or "squashed" them, the overall layer size will be more
-efficient, aggregated:
+efficient, aggregated. Consider this change:
 
 ```docker
+# Dockerfile
+
 FROM python:3.7-slim
 RUN apt-get update && \
   apt-get install -y --no-install-recommends build-essential && \
@@ -158,9 +179,25 @@ IMAGE             CREATED BY                                      SIZE
 As you can see, we've improved the image size by 186mb by squashing multiple
 layers into one.
 
-## 3rd-Party Dependencies and Docker Compose
+### 10 Tips for Better `Dockerfile`s
 
-Programming today involves a developer to use many different persistency
+1. Combine `RUN` statements.
+1. Clean after yourself.
+1. Don't copy your entire application directory in one line. Separate the
+   dependencies before.
+1. Use `.dockerignore` file to reduce the context Docker needs to copy.
+1. Use `COPY` instead of `ADD`. `COPY` is simple, `ADD` has some magic
+   under-hood.
+1. Create a non-root user. A good preventive security practice.
+1. Don't run multiple services in one container.
+1. Don't use external services during build e.g. database migration.
+1. Declare cheap commands as late as possible (`EXPOSE`, `ENV`, `ARG`, etc.).
+1. Pin software versions. Never, ever, use `:latest` tags. It can lead to
+   unexpected disasters.
+
+## 3rd-Party Service Dependencies and Docker Compose
+
+Programming today involves a developer to use many different persistence
 services such as MySQL, PostgreSQL, Redis, Elasticsearch, Kafka, RabbitMQ etc.
 
 Running all these services on your personal workstation can be very cumbersome
@@ -169,7 +206,7 @@ MongoDB 4.x -- this used to be a real pain until Docker made it real easy.
 
 Docker-compose is an invaluable tool for development, it defines a composition
 of services that can be created & destroyed in matter of seconds. Let's review
-the following example:
+the following example of a typical `docker-compose.yml` file:
 
 ```yaml
 version: '2'
@@ -244,22 +281,6 @@ Python and is open-sourced.
 
 Find pre-built images in [Docker Hub](https://hub.docker.com/).
 
-## 10 Tips for Better `Dockerfile`s
-
-1. Combine `RUN` statements.
-1. Clean after yourself.
-1. Don't copy your entire application directory in one line. Separate the
-   dependencies before.
-1. Use `.dockerignore` file to reduce the context Docker needs to copy.
-1. Use `COPY` instead of `ADD`. `COPY` is simple, `ADD` has some magic
-   under-hood.
-1. Create a non-root user. A good preventive security practice.
-1. Don't run multiple services in one container.
-1. Don't use external services during build e.g. database migration.
-1. Declare cheap commands as late as possible (`EXPOSE`, `ENV`, `ARG`, etc.).
-1. Pin software versions. Never, ever, use `:latest` tags. It can lead to
-   unexpected disasters.
-
 ## Developing Alongside Containers
 
 So we've learned the power of containers in development by spinning up quickly
@@ -270,7 +291,12 @@ to reload the changes repeatedly…
 Writing your own code and using containers as runtime can surprisingly ease
 development in certain situations.
 
-### Exercise 1: Python Container with Debugging Support
+Moreover, in certain ecosystems such as Python, it is necessary to manage your
+dependencies in a "virtual-environment". Using containers, you can eliminate
+this aspect of working on Python projects, as containers already provide an
+isolated state of your application.
+
+### Exercise A1: Python Container with Debugging Support
 
 Let's take Python for example. In-order to reload your code changes you must
 reload your runtime server. Many frameworks and interpreters have a reload
@@ -280,6 +306,8 @@ option, e.g. [bottle](https://bottlepy.org/docs/dev/tutorial.html#auto-reloading
 etc. However we can achieve this with restarting containers as-well.
 
 Consider this application:
+
+Create a new directory, and then inside a file called `app.py` with following:
 
 ```py
 import sys
@@ -340,11 +368,6 @@ Let's build our image:
 
 ```bash
 $ docker-compose build
-Building api
-…
-Successfully built d39e1a19c0d0
-Successfully tagged myapp/api:latest
-
 $ docker-compose up -d
 Starting myapp-api ... done
 ```
@@ -381,7 +404,7 @@ A server error occurred.  Please contact the administrator.
 
 Oh oh. We have an error. Let's examine the logs with `docker logs -f myapp-api`
 
-```
+```log
 172.23.0.1 - - [01/Jan/2019 19:53:44] "GET /healthz HTTP/1.1" 200 31
 > /app/app.py(9)on_get()
 -> resp.media = {'status': 'OK', 'health': 1.0}
@@ -416,13 +439,13 @@ $ docker-compose run --rm --service-ports api
 On a different terminal, let's `curl` again:
 
 ```bash
-$ curl localhost:8080/healthz
+curl localhost:8080/healthz
 ```
 
 This time, the request is frozen and the terminal window running docker-compose
 initiated an interactive shell:
 
-```
+```log
 > /app/app.py(9)on_get()
 -> resp.media = {'status': 'OK', 'health': 1.0}
 (Pdb) list
@@ -449,7 +472,7 @@ resp = <Response: 200 OK>
 Excellent! We can run containers with debugging support, but it's quite tiresome
 to constantly restart our containers.
 
-### Exercise 2: Auto-Reloading
+### Exercise A2: Auto-Reloading
 
 For auto-reloading our containers, we can use a special little tool called
 `entr`. You can install it with Homebrew on macOS:
@@ -508,7 +531,7 @@ better tool than `find`, we can use it as-well:
 ag -l --py | entr -r docker-compose up
 ```
 
-### Exercise 3: Automating Docker-Compose
+### Exercise A3: Automating Docker-Compose
 
 `make` is an old trusted build system. We can easily abuse it to make our
 work-flow with docker-compose even more easier.
@@ -527,10 +550,10 @@ menu:
 	@echo "  * make clean - Delete composed container and lock files"
 	@echo "  * make debug - Run app with an interactive tty"
 	@echo "  * make develop - Install development requirements"
-	@echo "  * make install - Build, create, and start app"
+	@echo "  * make install - Build and create image"
 	@echo "  * make logs - Tail app containers logs"
 	@echo "  * make ps - List all containers including load-stats"
-	@echo "  * make stat - Start containers"
+	@echo "  * make start - Start containers"
 	@echo "  * make stop - Stop composed containers"
 	@echo "  * make test - Run tests within 'api' container"
 	@echo "  * make watch - Watch file changes and restarts 'api' container"
@@ -576,13 +599,159 @@ watch:
 .PHONY: menu bash clean debug develop install logs ps start stop test
 ```
 
-Once saved, as `Makefile`, you can quickly run work-flow commands quickly,
-for example:
+Once saved, as `Makefile`, you can run work-flow commands quickly, for example:
 
 ```bash
 make install
 make start
+make stop
+make watch
 ```
 
 Pretty useful when starting to learn docker/compose, it serves as a reference
 card as-well.
+
+## Service Discovery
+
+Let's introduce another service to our composition. This time, we'll use NodeJS
+to create a new service that will communicate with our existing Python service.
+
+### Exercise B1: NodeJS API Service Container
+
+Before continuing, let's stop any running containers and create a `python`
+directory and move `Dockerfile` and `app.py` there:
+
+```bash
+$ docker-compose down
+$ mkdir python
+$ mv Dockerfile app.py python/
+$ tree
+.
+├── Makefile
+├── docker-compose.yml
+└── python
+    ├── Dockerfile
+    └── app.py
+```
+
+Create another directory called `node`, and create a `index.js` file inside it
+with the following content:
+
+```js
+const express = require('express')
+const app = express()
+const port = 3000
+
+app.get('/', (req, res) => res.send('Hello World!'))
+app.get('/healthz', (req, res) => res.send({ status: 'OK', health: 1.0 }))
+app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+```
+
+And this `package.json`:
+
+```json
+{
+  "name": "exercise-nodejs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
+```
+
+Finally, let's create a `Dockerfile`:
+
+```docker
+FROM node:10.13-alpine
+WORKDIR /app
+CMD ["node", "index.js"]
+COPY package.json .
+RUN yarn install
+COPY . .
+```
+
+Now let's teach our `docker-compose.yml` where to find both services:
+
+```yaml
+version: '2'
+
+services:
+
+  acme-python:
+    build:
+      context: python
+    image: acme/python
+    container_name: acme-python
+    ports:
+      - 8080:8080
+    volumes:
+      - ./python:/app
+
+  acme-node:
+    build:
+      context: node
+    image: acme/node
+    container_name: acme-node
+    ports:
+      - 3000:3000
+    volumes:
+      - ./node:/app
+```
+
+Finally, let's build our two projects:
+
+```bash
+docker-compose build
+docker-compose up
+```
+
+Both our services are available to HTTP requests:
+
+```bash
+$ curl localhost:8080
+{"status": "OK", "health": 1.0}
+
+$ curl localhost:3000
+{"status":"OK","health":1}
+```
+
+But how could they communicate with _each other_?
+
+### Exercise B2: Docker Service Discovery
+
+Docker has an embedded DNS server that helps with discovering other containers
+in the same Docker network.
+
+While your docker-compose is up and running, execute this command:
+
+```bash
+$ docker-compose exec acme-node wget -qO- http://acme-python:8080/healthz
+{"status": "OK", "health": 1.0}
+```
+
+What happened here is we've executed `wget` inside the NodeJS container, and
+called `acme-python` as the host. This utilizes Docker's DNS server and
+load-balancing and will match our Python container internal network IP.
+
+## What Have We Learned
+
+* Containers can improve our development work-flow. From dependency isolation
+  and caching, to spinning up complex distributed application schemas locally.
+* Leveraging Docker caching layers can be a tremendous time-saver.
+* Combining `RUN` commands in the project's `Dockerfile` and cleaning garbage
+  _in the same line_ can reduce image size significantly.
+* Using a `docker-compose.yml` file in a every project introduces a
+  reproducible set of distributed 3rd-party services your project needs during
+  development. New developer ramp-up time decreases dramatically, and other
+  teams can quickly spawn your project up for usage only.
+* Containers are not only for production. They offer a separate dimension of
+  abilities & features that can be proved worthy for development & debugging.
+* `make` is an extremely popular build automation tool pre-installed in many
+  Unix environments. It can also be used as a shortcut recipe for installing,
+  building, and distributing in each project as a `Makefile` file.
+
+## Related Articles
+
+* [Docker & Kubernetes 101](./docker-k8s-101/)
+* [Kubernetes & Ingress Workshop](./kubernetes-ingress-istio-workshop.md)

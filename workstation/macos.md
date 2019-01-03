@@ -62,6 +62,7 @@ brew install vim --with-lua --with-override-system-vi
 brew install aspell --with-lang-he --without-lang-de --without-lang-es --without-lang-fr
 brew install --HEAD neovim
 brew install --HEAD universal-ctags/universal-ctags/universal-ctags
+brew install --HEAD itchyny/fillin/fillin itchyny/rexdep/rexdep
 
 brew install rafi/tap/reg rafi/tap/yaml2json
 brew install --HEAD diana cam
