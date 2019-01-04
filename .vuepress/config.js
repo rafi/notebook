@@ -1,12 +1,14 @@
 module.exports = {
-  title: 'Rafi\'s Knowledge',
+  title: 'Rafi\'s',
   description: 'Knowledge Base of Rafael Bodill',
   dest: './dist',
-  plugins: {
-    '@vuepress/back-to-top': true,
-    '@vuepress/medium-zoom': true,
-    '@vuepress/google-analytics': { ga: 'UA-129679382-1' },
-  },
+  plugins: [
+    ['@vuepress/back-to-top', true],
+    ['@vuepress/pwa', { serviceWorker: true, updatePopup: true }],
+    ['@vuepress/medium-zoom', true],
+    ['@vuepress/google-analytics', { ga: 'UA-129679382-1' }],
+    ['@vuepress/notification', true],
+  ],
   head: [
     ['link', { rel: 'icon', href: `/logo.png` }],
     ['link', { rel: 'manifest', href: '/manifest.json' }],

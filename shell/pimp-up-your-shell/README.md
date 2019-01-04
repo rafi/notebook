@@ -29,7 +29,8 @@ sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.serve
 
 You might need to reboot your laptop after this. :face_with_rolling_eyes:
 
-Check-out https://mths.be/macos for awesome ways to configure your macOS.
+Check-out [mths.be/macos](https://mths.be/macos) for awesome ways to configure
+your macOS.
 
 ---
 
@@ -287,7 +288,8 @@ export LESS="-FiQMXR"
 export LESSCHARSET="UTF-8"
 ```
 
-Generate new token for Homebrew at https://github.com/settings/tokens
+Generate new token for Homebrew at
+[github.com/settings/tokens](https://github.com/settings/tokens)
 
 ---
 
@@ -486,13 +488,18 @@ Hello, my name is Homebrew
 brew --version
 ```
 
-Please upgrade me some times
+Please treat & upgrade me nicely, I'm fighting against Apple's will:
 
 ```bash
-brew update
-brew outdated
-brew upgrade
+$ brew docker
+$ brew update
+$ brew outdated
+$ brew upgrade
+$ brew cleanup
+==> This operation has freed approximately 7.2GB of disk space.
 ```
+
+:muscle:
 
 ---
 
@@ -523,7 +530,7 @@ brew install rafi/tap/gits rafi/tap/reg rafi/tap/yaml2json
 
 Some of these are PAID apps!
 
-```
+```bash
 brew cask install transmission mpv bartender beyond-compare \
   clipy contexts dash docker iterm2 karabiner-elements \
   keycastr licecap marked slack spotify telegram typora whatsapp

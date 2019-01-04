@@ -693,5 +693,5 @@ $ kubectl exec -it myapp-649887b547-fh7vw sh
 
 ## Related Articles
 
-* [Developing with Docker containers](./develop-with-containers.md)
-* [Kubernetes & Ingress Workshop](./kubernetes-ingress-istio-workshop.md)
+* [Developing with Docker containers](/containers/develop-with-containers.md)
+* [Kubernetes & Ingress Workshop](/containers/kubernetes-ingress-istio-workshop.md)

@@ -10,7 +10,7 @@ search:
 
 # Developing with Docker Containers
 
-::: warning
+::: warning Please note
 This article guide is intended for advanced users with knowledge of creating and
 running Docker containers locally. If you are new to containers or Docker,
 please refer to the [Docker & K8s 101](./docker-k8s-101/) article.
@@ -621,18 +621,18 @@ to create a new service that will communicate with our existing Python service.
 Before continuing, let's stop any running containers and create a `python`
 directory and move `Dockerfile` and `app.py` there:
 
-```bash
+::: vue
 $ docker-compose down
 $ mkdir python
 $ mv Dockerfile app.py python/
-$ tree
-.
-├── Makefile
-├── docker-compose.yml
-└── python
-    ├── Dockerfile
-    └── app.py
-```
+$ tree  _(Install tree with '**brew install tree**')_
+_._
+_├── Makefile_
+_├── docker-compose.yml_
+_└──_ `python`  _← (**Our new directory for the Python service**)_
+&nbsp;   _├── Dockerfile_
+&nbsp;   _└── app.py_
+:::
 
 Create another directory called `node`, and create a `index.js` file inside it
 with the following content:
@@ -734,19 +734,20 @@ What happened here is we've executed `wget` inside the NodeJS container, and
 called `acme-python` as the host. This utilizes Docker's DNS server and
 load-balancing and will match our Python container internal network IP.
 
-## What Have We Learned
+## Lessons Learned
 
 * Containers can improve our development work-flow. From dependency isolation
   and caching, to spinning up complex distributed application schemas locally.
-* Leveraging Docker caching layers can be a tremendous time-saver.
+* Leveraging Docker cache layers is a tremendous time-saver. Puritans won't
+  argue otherwise in aspect of day-to-day development.
 * Combining `RUN` commands in the project's `Dockerfile` and cleaning garbage
-  _in the same line_ can reduce image size significantly.
+  _in the same line_ will reduce image size significantly.
 * Using a `docker-compose.yml` file in a every project introduces a
   reproducible set of distributed 3rd-party services your project needs during
   development. New developer ramp-up time decreases dramatically, and other
-  teams can quickly spawn your project up for usage only.
+  teams will quickly spawn your project up to freely _use_.
 * Containers are not only for production. They offer a separate dimension of
-  abilities & features that can be proved worthy for development & debugging.
+  abilities & features that can prove worthy for development & debugging cycles.
 * `make` is an extremely popular build automation tool pre-installed in many
   Unix environments. It can also be used as a shortcut recipe for installing,
   building, and distributing in each project as a `Makefile` file.

@@ -2,20 +2,25 @@
   "name": "rafi-notebook",
   "version": "0.5.0",
   "main": "index.js",
-  "repository": "git@github.com:rafi/notebook.git",
+  "repository": "git://github.com/rafi/notebook.git",
   "author": "Rafael Bodill <justrafi at gmail dot com>",
   "license": "MIT",
+  "homepage": "https://github.com/rafi/notebook#readme",
+  "keywords": [ "wiki", "guides", "programming", "linux", "containers" ],
   "scripts": {
     "dev": "vuepress dev",
     "build": "vuepress build",
+    "show-help": "vuepress --help",
     "lint": "eslint --ext .js,.vue . && markdownlint --ignore=node_modules ."
   },
   "devDependencies": {
     "@vuepress/plugin-back-to-top": "^1.0.0-alpha.30",
     "@vuepress/plugin-google-analytics": "^1.0.0-alpha.30",
     "@vuepress/plugin-medium-zoom": "^1.0.0-alpha.30",
+    "@vuepress/plugin-notification": "^1.0.0-alpha.30",
+    "@vuepress/plugin-pwa": "^1.0.0-alpha.30",
+    "vuepress": "^1.0.0-alpha.30",
     "eslint": "^5.9.0",
-    "eslint-plugin-vue": "^5.0.0",
-    "vuepress": "^1.0.0-alpha.30"
+    "eslint-plugin-vue": "^5.0.0"
   }
 }
