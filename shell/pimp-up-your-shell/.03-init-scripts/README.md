@@ -15,19 +15,17 @@ LH MOUSE.COM /Y
 
 ---
 
-### `~/.bashrc` & `~/.bash_profile`
+### Bash Invocation
 
-`.bash_profile` is executed for login shells, while `.bashrc` is executed for
-interactive non-login shells.
+Bash behaviour can be altered depending on how it is invoked. If Bash is
+spawned by login in a TTY, an SSH daemon, or similar, it is considered
+a **login shell**. This mode can also be engaged using the `-l`/`--login`
+option. Bash is considered an **interactive shell** when its standard input
+and error are connected to a terminal, and it is not started with `-c` option.
 
-When you login via console or ssh: `.bash_profile` is executed to configure
-your shell before the initial command prompt.
-
-But, if you've already logged into your machine and open a new terminal window
-then `.bashrc` is executed before the window command prompt.
-
-On macOS, Terminal by default runs a login shell every time,
-so this is a little different to most other systems.
+All interactive shells source `~/.bashrc`, while interactive _login_ shells
+also source `~/.bash_profile`. Your terminal emulator might be using
+a _login_ shell via `-l`.
 
 ---
 
@@ -59,7 +57,7 @@ touch aliases completion exports inputrc utils
 mkdir -p ~/.local/{share,bin} ~/.cache
 ```
 
-In your new `~/.config/bash/exports`
+In your new `~/.config/bash/exports` append:
 
 ```bash
 # XDG directories
@@ -79,7 +77,7 @@ source "$HOME/.config/bash/exports"
 source "$XDG_CONFIG_HOME/bash/bashrc"
 ```
 
-In your new `~/.bashrc`:
+And in your new `~/.bashrc`:
 
 ```bash
 # If not running interactively, don't do anything
@@ -242,7 +240,6 @@ alias psk='ps -ax | fzf | cut -d " " -f1 | xargs -o kill'
 alias pst='pstree -g 3 -ws'
 
 # Misc
-alias cal='cal | grep -C6 "$(date +%e)"'
 alias fontcache='fc-cache -f -v'
 alias freq='cut -f1 -d" " "$HISTFILE" | sort | uniq -c | sort -nr | head -n 30'
 alias sniff="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
@@ -324,8 +321,8 @@ Append in your `~/.config/bash/completion`
 
 ```bash
 # Load all completions Homebrew's bash-completion@2 has prepared
-if [ -f /usr/local/share/bash-completion/bash_completion ]; then
-  . /usr/local/share/bash-completion/bash_completion
+if [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]]; then
+	. "/usr/local/etc/profile.d/bash_completion.sh"
 fi
 
 # Kubernetes

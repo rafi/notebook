@@ -2,11 +2,13 @@
 
 {{ URL }}
 
+A guide for boosting your macOS shell experience.
+
 ---
 
 ## How Do You Call Your Workstation?
 
-Give your box a name please: (:warning: Change rafi-mac to something of yours)
+Give your box a name please: (:warning: Change `rafi-mac` to something of yours)
 
 ```bash
 hostname

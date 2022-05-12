@@ -1,6 +1,6 @@
 ## Other Great Tools
 
-* [ranger](https://ranger.github.io)
+* [lf](https://github.com/gokcehan/lf)
 * [entr](http://entrproject.org)
 * [ttyd](https://github.com/tsl0922/ttyd)
 * [pass](https://www.passwordstore.org) and [pineentry-mac](https://github.com/GPGTools/pinentry-mac)

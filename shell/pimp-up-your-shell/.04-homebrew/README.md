@@ -6,7 +6,7 @@ Hello, my name is Homebrew
 brew --version
 ```
 
-Please upgrade me some times
+Please upgrade me from time to time...
 
 ```bash
 brew update
@@ -17,6 +17,8 @@ brew upgrade
 ---
 
 ## Install Everyone's Favorite Tools
+
+Don't blindly install all these tools, pick & choose!
 
 ```bash
 brew install bc tree colordiff pstree jq urlview tcpdump nmap \

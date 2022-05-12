@@ -11,11 +11,13 @@ search:
 # Pimp Up Your Shell
 
 
+A guide for boosting your macOS shell experience.
+
 ---
 
 ## How Do You Call Your Workstation?
 
-Give your box a name please: (:warning: Change rafi-mac to something of yours)
+Give your box a name please: (:warning: Change `rafi-mac` to something of yours)
 
 ```bash
 hostname
@@ -29,8 +31,7 @@ sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.serve
 
 You might need to reboot your laptop after this. :face_with_rolling_eyes:
 
-Check-out [mths.be/macos](https://mths.be/macos) for awesome ways to configure
-your macOS.
+Check-out https://mths.be/macos for awesome ways to configure your macOS.
 
 ---
 
@@ -113,6 +114,8 @@ brew ls coreutils
 /usr/bin/sort --help
 ```
 
+Note the difference.
+
 ---
 # Init Scripts
 
@@ -131,19 +134,17 @@ LH MOUSE.COM /Y
 
 ---
 
-### `~/.bashrc` & `~/.bash_profile`
+### Bash Invocation
 
-`.bash_profile` is executed for login shells, while `.bashrc` is executed for
-interactive non-login shells.
+Bash behaviour can be altered depending on how it is invoked. If Bash is
+spawned by login in a TTY, an SSH daemon, or similar, it is considered
+a **login shell**. This mode can also be engaged using the `-l`/`--login`
+option. Bash is considered an **interactive shell** when its standard input
+and error are connected to a terminal, and it is not started with `-c` option.
 
-When you login via console or ssh: `.bash_profile` is executed to configure
-your shell before the initial command prompt.
-
-But, if you've already logged into your machine and open a new terminal window
-then `.bashrc` is executed before the window command prompt.
-
-On macOS, Terminal by default runs a login shell every time,
-so this is a little different to most other systems.
+All interactive shells source `~/.bashrc`, while interactive _login_ shells
+also source `~/.bash_profile`. Your terminal emulator might be using
+a _login_ shell via `-l`.
 
 ---
 
@@ -175,7 +176,7 @@ touch aliases completion exports inputrc utils
 mkdir -p ~/.local/{share,bin} ~/.cache
 ```
 
-In your new `~/.config/bash/exports`
+In your new `~/.config/bash/exports` append:
 
 ```bash
 # XDG directories
@@ -195,7 +196,7 @@ source "$HOME/.config/bash/exports"
 source "$XDG_CONFIG_HOME/bash/bashrc"
 ```
 
-In your new `~/.bashrc`:
+And in your new `~/.bashrc`:
 
 ```bash
 # If not running interactively, don't do anything
@@ -288,8 +289,7 @@ export LESS="-FiQMXR"
 export LESSCHARSET="UTF-8"
 ```
 
-Generate new token for Homebrew at
-[github.com/settings/tokens](https://github.com/settings/tokens)
+Generate new token for Homebrew at https://github.com/settings/tokens
 
 ---
 
@@ -359,7 +359,6 @@ alias psk='ps -ax | fzf | cut -d " " -f1 | xargs -o kill'
 alias pst='pstree -g 3 -ws'
 
 # Misc
-alias cal='cal | grep -C6 "$(date +%e)"'
 alias fontcache='fc-cache -f -v'
 alias freq='cut -f1 -d" " "$HISTFILE" | sort | uniq -c | sort -nr | head -n 30'
 alias sniff="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
@@ -441,8 +440,8 @@ Append in your `~/.config/bash/completion`
 
 ```bash
 # Load all completions Homebrew's bash-completion@2 has prepared
-if [ -f /usr/local/share/bash-completion/bash_completion ]; then
-  . /usr/local/share/bash-completion/bash_completion
+if [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]]; then
+	. "/usr/local/etc/profile.d/bash_completion.sh"
 fi
 
 # Kubernetes
@@ -488,22 +487,19 @@ Hello, my name is Homebrew
 brew --version
 ```
 
-Please treat & upgrade me nicely, I'm fighting against Apple's will:
+Please upgrade me from time to time...
 
 ```bash
-$ brew docker
-$ brew update
-$ brew outdated
-$ brew upgrade
-$ brew cleanup
-==> This operation has freed approximately 7.2GB of disk space.
+brew update
+brew outdated
+brew upgrade
 ```
-
-:muscle:
 
 ---
 
 ## Install Everyone's Favorite Tools
+
+Don't blindly install all these tools, pick & choose!
 
 ```bash
 brew install bc tree colordiff pstree jq urlview tcpdump nmap \
@@ -530,7 +526,7 @@ brew install rafi/tap/gits rafi/tap/reg rafi/tap/yaml2json
 
 Some of these are PAID apps!
 
-```bash
+```
 brew cask install transmission mpv bartender beyond-compare \
   clipy contexts dash docker iterm2 karabiner-elements \
   keycastr licecap marked slack spotify telegram typora whatsapp
@@ -934,7 +930,7 @@ in my [github.com/rafi/.config](https://github.com/rafi/.config) repository.
 ---
 ## Other Great Tools
 
-* [ranger](https://ranger.github.io)
+* [lf](https://github.com/gokcehan/lf)
 * [entr](http://entrproject.org)
 * [ttyd](https://github.com/tsl0922/ttyd)
 * [pass](https://www.passwordstore.org) and [pineentry-mac](https://github.com/GPGTools/pinentry-mac)

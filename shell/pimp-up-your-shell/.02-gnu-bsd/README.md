@@ -28,4 +28,6 @@ brew ls coreutils
 /usr/bin/sort --help
 ```
 
+Note the difference.
+
 ---
