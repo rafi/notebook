@@ -1,3 +1,0 @@
-# Shell
-
-<RecentPosts :children=true />

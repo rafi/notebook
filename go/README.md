@@ -1,3 +1,0 @@
-# Go
-
-<RecentPosts :children=true />

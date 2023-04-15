@@ -1,3 +1,0 @@
-# PHP
-
-<RecentPosts :children=true />
