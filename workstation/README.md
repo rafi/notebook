@@ -1,3 +1,0 @@
-# Workstation
-
-<RecentPosts :children=true />

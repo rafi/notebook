@@ -1,3 +1,0 @@
-# GUI
-
-<RecentPosts :children=true />

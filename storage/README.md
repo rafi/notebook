@@ -1,3 +1,0 @@
-# Storage
-
-- [PostgreSQL](./postgresql.md)

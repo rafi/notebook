@@ -1,3 +1,0 @@
-# Containers
-
-<RecentPosts :children=true />

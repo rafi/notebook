@@ -1,3 +1,0 @@
-# Perl
-
-<RecentPosts :children=true />

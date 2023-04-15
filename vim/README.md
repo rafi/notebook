@@ -1,3 +1,0 @@
-# Vim
-
-<RecentPosts :children=true />
