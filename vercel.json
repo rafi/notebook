@@ -1,0 +1,32 @@
+{
+  "redirects" : [
+    {
+      "source" : "/containers/develop-with-containers.html",
+      "destination" : "/operating-systems/containers/develop-with-containers"
+    },
+    {
+      "source" : "/shell/pimp-up-your-shell/",
+      "destination" : "/operating-systems/linux/shell/bash/pimp-up-your-shell/"
+    },
+    {
+      "source" : "/containers/kubernetes-ingress-istio-workshop.html",
+      "destination" : "/operating-systems/containers/kubernetes-ingress-istio-workshop"
+    },
+    {
+      "source" : "/gui/best_macos_apps.html",
+      "destination" : "/operating-systems/macos/best_macos_apps"
+    },
+    {
+      "source" : "/terminal/apps/pass/pass-free-password-manager.html",
+      "destination" : "/terminal/apps/pass/pass-free-password-manager"
+    },
+    {
+      "source" : "/terminal/apps/req8_postman_alternative.html",
+      "destination" : "/terminal/apps/req8_postman_alternative"
+    },
+    {
+      "source" : "/workstation/macos.html",
+      "destination" : "/operating-systems/macos/setup"
+    }
+  ]
+}
