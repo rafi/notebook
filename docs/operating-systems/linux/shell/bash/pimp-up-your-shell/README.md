@@ -8,14 +8,13 @@ search:
 
 # Pimp Up Your Shell
 
-
 A guide for boosting your macOS shell experience.
 
 ---
 
 ## How Do You Call Your Workstation?
 
-Give your box a name please: (:warning: Change `rafi-mac` to something of yours)
+Give your box a name please: (⚠️ Change `rafi-mac` )
 
 ```bash
 hostname
@@ -27,7 +26,7 @@ sudo scutil --set LocalHostName "${COMPUTER_NAME}"
 sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "${COMPUTER_NAME}"
 ```
 
-You might need to reboot your laptop after this. :face_with_rolling_eyes:
+You might need to reboot your laptop after this. 🙄
 
 Check-out https://mths.be/macos for awesome ways to configure your macOS.
 
@@ -35,11 +34,19 @@ Check-out https://mths.be/macos for awesome ways to configure your macOS.
 
 ## Most Frequently Used Shells
 
-1. **Bash** - (Bourne Again Shell) Default on many Linux distros.
-2. **Tcsh** - Enhanced C shell.
-3. **Ksh** - Korn shell.
-4. **Zsh** - Incorporates many features of other Unix/GNU Linux shells.
-5. **Fish** - Friendly interactive shell.
+1. **Bash** — (Bourne Again Shell) Default on many Linux distros.
+2. **Tcsh** — Enhanced C shell.
+3. **Ksh** — Korn shell.
+4. **Zsh** — Incorporates many features of other Unix/GNU Linux shells.
+5. **Fish** — Friendly interactive shell.
+
+---
+
+## Apple default shell is ZSH
+
+Since around 2020, apple has switched to ZSH.
+
+Continue with this tutorial **only** if you want to switch to Bash!
 
 ---
 
@@ -54,10 +61,14 @@ git version 2.17.1
 ```
 
 On July 27, 2004, Chet Ramey released version 3 of Bash.
+It's really old.
 
 ---
 
-# Let's Install Newest Bash!
+# Let's Install The Newest Bash!
+
+Make sure first you uninstall a conflicting package,
+if you have it installed.
 
 ```bash
 brew uninstall --force bash-completion
@@ -69,8 +80,8 @@ brew install readline bash bash-completion@2
 ## Set New Bash As Default Shell
 
 ```bash
-echo "/usr/local/bin/bash" | sudo tee -a /etc/shells
-chsh -s /usr/local/bin/bash
+echo "/opt/homebrew/bin/bash" | sudo tee -a /etc/shells
+chsh -s /opt/homebrew/bin/bash
 ```
 
 Now, close all Terminal windows and open them again.
@@ -82,6 +93,7 @@ echo $BASH_VERSION
 You should see the fresh new Bash version you've installed.
 
 ---
+
 ## GNU vs. BSD
 
 POSIX is a set of standards to implement.
@@ -108,18 +120,19 @@ brew install coreutils gnutls gawk gnu-sed gnu-tar gnu-which
 
 ```bash
 brew ls coreutils
-/usr/local/bin/gsort --help
+/opt/homebrew/bin/gsort --help
 /usr/bin/sort --help
 ```
 
 Note the difference.
 
 ---
+
 # Init Scripts
 
 Remember `autoexec.bat` and `config.sys` ?
 
-```
+```dosbatch
 @ECHO OFF
 PROMPT $P$G
 PATH C:\DOS;C:\WINDOWS
@@ -171,7 +184,7 @@ ln -s .config/bash/profile .bash_profile
 cd ~/.config/bash
 touch aliases completion exports inputrc utils
 
-mkdir -p ~/.local/{share,bin} ~/.cache
+mkdir -p ~/.local/{share,state,bin} ~/.cache
 ```
 
 In your new `~/.config/bash/exports` append:
@@ -184,7 +197,9 @@ export LANG="en_US.UTF-8"
 export XDG_CONFIG_HOME="$HOME/.config"
 export  XDG_CACHE_HOME="$HOME/.cache"
 export   XDG_DATA_HOME="$HOME/.local/share"
+export  XDG_STATE_HOME="$HOME/.local/state"
 ```
+
 (Change `en_US.UTF-8` to something else if needed)
 
 ---
@@ -223,7 +238,7 @@ source "$XDG_CONFIG_HOME/bash/utils"
 
 Update `~/.config/bash/inpurc` with following:
 
-```
+```readline
 $include /etc/inputrc
 
 # Ring the bell, let other programs handle it (urxvt, tmux, etc.)
@@ -280,11 +295,9 @@ Append to `~/.config/bash/exports`
 # Local bin first, then PATH, and lastly the relative bin/ directory.
 export PATH="$HOME/.local/bin:$PATH:bin"
 
-# Python per user site-packages directory
-export PATH="$PATH:$HOME/Library/Python/3.7/bin"
-export PATH="$PATH:$HOME/Library/Python/2.7/bin"
-
 export INPUTRC="$XDG_CONFIG_HOME/bash/inputrc"
+
+export HOMEBREW_PREFIX="${HOMEBREW_PREFIX:-/opt/homebrew}"
 
 export HOMEBREW_GITHUB_API_TOKEN=""       # Your token here
 
@@ -293,7 +306,7 @@ export LESS="-FiQMXR"
 export LESSCHARSET="UTF-8"
 ```
 
-:information_source: Generate new token for Homebrew at https://github.com/settings/tokens
+ℹ️ Generate new token for Homebrew at https://github.com/settings/tokens
 
 ---
 
@@ -318,7 +331,7 @@ unset LS
 
 ## Use GNU Tools
 
-Remember we installed '`coreutils`'?
+Remember we installed `coreutils`?
 
 Let's append to `~/.config/bash/aliases`
 
@@ -341,18 +354,18 @@ alias grep="grep --color=auto --exclude-dir=.git"
 
 # Use Neovim
 if hash nvim 2>/dev/null; then
-	alias vim=nvim
-	alias suvim='sudo -E nvim'
+  alias vim=nvim
+  alias suvim='sudo -E nvim'
 else
-	alias suvim='sudo -E vim'
+  alias suvim='sudo -E vim'
 fi
 alias v='vim $(fzf)'
 
 # File find, if fd is not installed
 if ! hash fd 2>/dev/null; then
-	alias f='find . -iname '
-	alias ff='find . -type f -iname '
-	alias fd='find . -type d -iname '
+  alias f='find . -iname '
+  alias ff='find . -type f -iname '
+  alias fd='find . -type d -iname '
 fi
 
 # Head and tail will show as much possible without scrolling
@@ -439,7 +452,7 @@ shopt -s histappend     # Append each session's history to $HISTFILE
 shopt -s histverify     # Edit a recalled history line before executing
 
 if [[ $DISPLAY ]]; then
-	shopt -s checkwinsize  # Update LINES and COLUMNS after each command
+  shopt -s checkwinsize  # Update LINES and COLUMNS after each command
 fi
 
 export HISTFILE="$XDG_CACHE_HOME/bash_history"
@@ -461,8 +474,8 @@ Append in your `~/.config/bash/completion`
 
 ```bash
 # Load all completions Homebrew's bash-completion@2 has prepared
-if [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]]; then
-	. "/usr/local/etc/profile.d/bash_completion.sh"
+if [[ -r "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh" ]]; then
+  . "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh"
 fi
 
 # Kubernetes
@@ -470,12 +483,12 @@ complete -o default -F __start_kubectl k
 
 # Extra macOS stuff
 if [[ "$OSTYPE" == "darwin"* ]]; then
-	# Add tab completion for `defaults read|write NSGlobalDomain`
-	# You could just use `-g` instead, but I like being explicit
-	complete -W "NSGlobalDomain" defaults
+  # Add tab completion for `defaults read|write NSGlobalDomain`
+  # You could just use `-g` instead, but I like being explicit
+  complete -W "NSGlobalDomain" defaults
 
-	# Add `killall` tab completion for common apps
-	complete -o "nospace" -W "Contacts Calendar Dock Finder Mail Safari iTunes SystemUIServer Terminal Twitter" killall
+  # Add `killall` tab completion for common apps
+  complete -o "nospace" -W "Contacts Calendar Dock Finder Mail Safari iTunes SystemUIServer Terminal Twitter" killall
 fi
 ```
 
@@ -488,6 +501,7 @@ Check-out my [Bash config](https://github.com/rafi/.config/tree/master/bash)
 in my [github.com/rafi/.config](https://github.com/rafi/.config) repository.
 
 ---
+
 # Know Your OS Package-Manager
 
 Hello, my name is Homebrew
@@ -512,19 +526,17 @@ Don't blindly install all these tools, pick & choose!
 
 ```bash
 brew install bat colordiff coreutils curl diff-so-fancy fd gnutls findutils \
-lf fzf git gnupg gnu-sed gnu-tar grep htop jq kubernetes-cli kubectx less \
-moreutils neovim nmap tree pidof pinfo pstree pyenv pyenv-virtualenv \
-ripgrep rsync shellcheck socat stern tcpdump \
-telnet unrar unzip watch wget
+  lf fzf git gnupg gnu-sed gnu-tar grep htop jq kubernetes-cli kubectx less \
+  moreutils neovim nmap tree pidof pinfo pstree pyenv pyenv-virtualenv \
+  ripgrep rsync shellcheck socat stern tcpdump \
+  telnet unrar unzip watch wget
 
 brew install go node yarn python pipenv
-brew install yamllint jsonlint
 brew install git diff-so-fancy
 brew install neovim
 brew install kubernetes-cli kubectx stern crane
 brew install tmux tmux-mem-cpu-load tmux-xpanes reattach-to-user-namespace
-brew install fd ripgrep bat shellcheck ctop httpie
-brew install aspell --with-lang-he --without-lang-de --without-lang-es --without-lang-fr
+brew install fd ripgrep bat shellcheck
 
 brew install rafi/tap/gits
 ```
@@ -535,7 +547,7 @@ brew install rafi/tap/gits
 
 Some of these are PAID apps!
 
-```
+```sh
 brew install --cask transmission mpv dozer beyond-compare \
   clipy docker iterm2 karabiner-elements \
   keycastr kitty licecap marked meetingbar \
@@ -547,16 +559,15 @@ brew install --cask transmission mpv dozer beyond-compare \
 # Install Node Tools
 
 ```bash
-npm -g install markdownlint-cli
-npm -g install reveal-md write-good
-npm -g install resume-cli imagemin-cli
+yarn global add reveal-md
 ```
 
 ```bash
-npm -g ls --depth=0
+yarn global list
 ```
 
 ---
+
 ## Let's Fix Something
 
 What's the most annoying thing when using many terminal windows/tabs?
@@ -567,7 +578,7 @@ What's the most annoying thing when using many terminal windows/tabs?
 
 ## Shell History
 
-Remember '`shopt -s histappend`' from our `~/.bashrc` ?
+Remember `shopt -s histappend` from our `~/.bashrc` ?
 
 This causes shell to append each session's history to $HISTFILE,
 and not overwrite it.
@@ -603,13 +614,14 @@ Now open a few terminals, and test it!
 ![Great Success](./img/success.jpg)
 
 ---
+
 ## Let's Add Some Colors
 
-Remember we've installed '`coreutils`'?
+Remember we've installed `coreutils`?
 
 We've also aliased 'dircolors' to 'gdircolors'.
 
-The program '`ls`' uses the environment variable `LS_COLORS` to determine the
+The program `ls` uses the environment variable `LS_COLORS` to determine the
 colors in which the filenames are to be displayed.
 
 ---
@@ -617,7 +629,7 @@ colors in which the filenames are to be displayed.
 ## Find a Cool LS_COLORS Theme
 
 [Find a cool theme](https://www.google.com/search?q=cool+LS_COLORS)
-in the internet and move it to `~/.config/bash/dircolors`
+on the internet and move it to `~/.config/bash/dircolors`
 
 ```bash
 curl -LO https://gist.github.com/clsn/1728412/raw/3f27dd4ece98f6ffa5ceba5bdcce536beba06b75/.dir_colors
@@ -657,38 +669,40 @@ grc ls -alph
 Use with netstat, ping, tail, ps, and more.
 
 ---
+
 # The Shell is The Best File-manager
 
-Let's improve our speed of '`cd`' by a bazillion!
+Let's improve our speed of `cd` by a bazillion!
 
 ---
 
-## Introducing… `z`
+## Introducing… `zoxide`
 
-After a short learning phase, z will take you to the most 'frecent'
-directory that matches ALL of the regexes given on the command line, in
+After a short learning phase, zoxide will take you to the most 'frecent'
+directory that matches ALL the regexes given on the command line, in
 order.
 
 ```bash
-brew info z
-brew install z
+brew info zoxide
+brew install zoxide
 ```
 
 Append to `~/.config/bash/utils`
 
 ```bash
-# https://github.com/rupa/z
 # Must be loaded _after_ setting PROMPT_COMMAND
-if [ -f "/usr/local/etc/profile.d/z.sh" ]; then
-  . "/usr/local/etc/profile.d/z.sh"
+# See https://github.com/ajeetdsouza/zoxide
+if command -v zoxide 1>/dev/null 2>&1; then
+  export _ZO_ECHO=1
+  eval "$(zoxide init bash)"
 fi
 ```
 
 ---
 
-# Train `z`
+# Train `zoxide`
 
-`z` has to be trained. `cd` into your favorite directories.
+`zoxide` has to be trained. `cd` into your favorite directories.
 
 ```bash
 cd ~/code/work/ansible
@@ -697,10 +711,10 @@ cd ~/.config
 cd ~/.vim
 ```
 
-Check `z`'s listing:
+Check `zoxide`'s listing:
 
 ```bash
-$ z
+$ zoxide query -sl
 112.274    /Users/rafi/code/tikal/dartagnan-infra
 148.375    /Users/rafi/code/dev/acme/docker-k8s-101
 275.512    /Users/rafi/code/dev/acme
@@ -711,7 +725,7 @@ $ z
 
 ---
 
-# Use `z`
+# Use `zoxide`
 
 ```bash
 $ z foo auto
@@ -732,6 +746,7 @@ $ pwd
 ![Very Nice!](./img/borat-very-nice.gif)
 
 ---
+
 # `grep` is so Darn Slow
 
 ```bash
@@ -775,6 +790,7 @@ brew install ripgrep
   their patterns to a .ignore file. (\*cough\* \*.min.js \*cough\*)
 
 ---
+
 # SSH-Keys
 
 You don't use passphrases for your keys?
@@ -782,7 +798,7 @@ You don't use passphrases for your keys?
 With SSH keys, if someone gains access to your computer, they also gain access
 to every system that uses that key. To add an extra layer of security, you can
 add a passphrase to your SSH key. You can use ssh-agent to securely save your
-passphrase so you don't have to reenter it.
+passphrase, so you don't have to reenter it.
 
 ---
 
@@ -803,7 +819,7 @@ if hash keychain 2>/dev/null; then
 fi
 ```
 
-Read about '`--inherit any`' [here](https://www.funtoo.org/Keychain).
+Read about `--inherit any` [here](https://www.funtoo.org/Keychain).
 
 ---
 
@@ -814,6 +830,7 @@ time you restart your computer, and open a new terminal, you will be asked
 once for the passphrase of `id_rsa`.
 
 ---
+
 # `git` is Glorious.
 
 ![Borat Kazak](./img/borat-kazak.jpg)
@@ -826,24 +843,24 @@ Teach git some new pretty formats, append to `~/.gitconfig`
 
 ```ini
 [pretty]
-	log = %C(240)%h%C(reset) -%C(auto)%d%Creset %s %C(242)(%an %ar)
-	detailed = %C(cyan)%h %C(red)%ad %C(blue)[%an]%C(magenta)%d %C(white)%s
-	shorter = %C(auto)%D %C(240)--%C(242)%gD%N %ad by %C(white)%cn%C(reset)
+  log = %C(240)%h%C(reset) -%C(auto)%d%Creset %s %C(242)(%an %ar)
+  detailed = %C(cyan)%h %C(red)%ad %C(blue)[%an]%C(magenta)%d %C(white)%s
+  shorter = %C(auto)%D %C(240)--%C(242)%gD%N %ad by %C(white)%cn%C(reset)
 ```
 
 ---
 
-## Git Has It's Own Aliases
+## Git has its own Aliases
 
 Teach git some new tricks: (append to `~/.gitconfig`)
 
 ```ini
 [alias]
-	log  = log --pretty=log
-	lb   = log --graph --simplify-by-decoration --pretty=shorter --all --notes --date-order --relative-date
-	lg   = log --graph --pretty=log --all
-	lgd  = log --graph --pretty=log
-	lgw  = !sh -c '"while true; do clear; git lg -15; sleep 5; done"'
+  log  = log --pretty=log
+  lb   = log --graph --simplify-by-decoration --pretty=shorter --all --notes --date-order --relative-date
+  lg   = log --graph --pretty=log --all
+  lgd  = log --graph --pretty=log
+  lgw  = !sh -c '"while true; do clear; git lg -15; sleep 5; done"'
 ```
 
 Let's add some Bash aliases: (append to `~/.config/bash/aliases`)
@@ -875,36 +892,36 @@ Great visibility, great benefits. Understand repository history better.
 
 ```ini
 [alias]
-	s  = status -sb
-	f  = fetch --prune
-	c  = commit -v
-	cm = commit -vm
-	br = branch -v
-	st = status
-	ck = checkout
-	t  = tag --column
-	tn = tag -n
-	d  = diff
-	ds = diff --staged
-	dw = diff --color-words
-	dh = diff --color-words HEAD
-	dp = !git log --pretty=oneline | fzf | cut -d ' ' -f1 | xargs -o git show
-	lcrev = log --reverse --no-merges --stat @{1}..
-	lcp   = diff @{1}..
-	patch = !git --no-pager diff --no-color
-	prune = fetch --prune
-	stash-all = stash save --include-untracked
-	sm    = submodule
-	smu   = submodule foreach git pull origin master
-	snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
-	snapshots = !git stash list --grep snapshot
-	w  = whatchanged --decorate
-	wp = whatchanged --decorate -p
+  s  = status -sb
+  f  = fetch --prune
+  c  = commit -v
+  cm = commit -vm
+  br = branch -v
+  st = status
+  ck = checkout
+  t  = tag --column
+  tn = tag -n
+  d  = diff
+  ds = diff --staged
+  dw = diff --color-words
+  dh = diff --color-words HEAD
+  dp = !git log --pretty=oneline | fzf | cut -d ' ' -f1 | xargs -o git show
+  lcrev = log --reverse --no-merges --stat @{1}..
+  lcp   = diff @{1}..
+  patch = !git --no-pager diff --no-color
+  prune = fetch --prune
+  stash-all = stash save --include-untracked
+  sm    = submodule
+  smu   = submodule foreach git pull origin master
+  snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
+  snapshots = !git stash list --grep snapshot
+  w  = whatchanged --decorate
+  wp = whatchanged --decorate -p
 ```
 
 ---
 
-## Better Git Diffs
+### Better Git Diffs
 
 Use [diff-so-fancy](https://github.com/so-fancy/diff-so-fancy)
 
@@ -923,10 +940,10 @@ Edit your `~/.gitconfig`
 
 ```ini
 [pager]
-	show-branch = true
-	status = true
-	diff = diff-so-fancy | less --tabs=1,3
-	show = diff-so-fancy | less --tabs=1,3
+  show-branch = true
+  status = true
+  diff = diff-so-fancy | less --tabs=1,3
+  show = diff-so-fancy | less --tabs=1,3
 ```
 
 ---
@@ -938,17 +955,26 @@ Check-out my [git/config](https://github.com/rafi/.config/blob/master/git/config
 in my [github.com/rafi/.config](https://github.com/rafi/.config) repository.
 
 ---
+
 ## Other Great Tools
 
+* [kitty](https://github.com/kovidgoyal/kitty)
+* [neovim](https://neovim.io)
 * [lf](https://github.com/gokcehan/lf)
-* [entr](http://entrproject.org)
+* [fd](https://github.com/sharkdp/fd)
 * [ttyd](https://github.com/tsl0922/ttyd)
 * [pass](https://www.passwordstore.org) and [pineentry-mac](https://github.com/GPGTools/pinentry-mac)
-* [fd](https://github.com/sharkdp/fd)
+* [entr](http://entrproject.org)
 * [editorconfig](https://editorconfig.org)
 * [rclone](https://rclone.org)
 * [task](https://taskwarrior.org)
-* [kitty](https://github.com/kovidgoyal/kitty)
-* [neovim](https://neovim.io)
 
 ---
+
+Thank you.
+
+Rafael Bodill
+
+![Bob](./img/bob.png)
+
+justRafi at da g mail dot com
