@@ -72,6 +72,10 @@ const config = {
     ],
   ],
 
+  plugins: [
+    './src/plugins/featured-posts'
+  ],
+
   // See https://docusaurus.io/docs/api/docusaurus-config#themeConfig
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
