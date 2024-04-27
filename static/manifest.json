@@ -1,0 +1,20 @@
+{
+  "name": "Rafael's personal web corner",
+  "short_name": "~rafi",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3eaf7c",
+  "icons": [
+    {
+      "src": "/img/favicon/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/img/favicon/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

@@ -1,5 +1,0 @@
----
-category: linux
----
-
-# Linux

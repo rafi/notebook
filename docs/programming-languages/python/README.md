@@ -1,3 +1,0 @@
-# Python
-
-<!-- <RecentPosts :children=true /> -->
