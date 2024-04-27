@@ -1,0 +1,30 @@
+.reveal {
+	height: 100%;
+}
+
+.reveal pre {
+	line-height: 1;
+}
+
+.reveal pre code {
+	font-size: 1.4rem;
+	padding: 1rem;
+}
+
+.reveal pre,
+.reveal code {
+	overflow: auto !important;
+}
+
+.reveal pre {
+	box-shadow: none;
+}
+
+/* .hljs { */
+/* 	background: none; */
+/* } */
+
+.hljs-title,
+.hljs-keyword {
+	font-weight: normal;
+}

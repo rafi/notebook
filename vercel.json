@@ -24,7 +24,7 @@
 		},
 		{
 			"source": "/terminal/apps/req8_postman_alternative",
-			"destination": "/req8_postman_alternative"
+			"destination": "/req8-postman-alternative"
 		},
 		{
 			"source": "/operating-systems/macos/setup",

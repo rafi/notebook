@@ -1,0 +1,102 @@
+div.toc {
+	display: block;
+	padding: var(--sk-page-padding-top) var(--sk-page-padding-side) 0 0;
+	width: min(280px,calc(var(--sidebar-width) - var(--sk-page-padding-side)));
+	height: calc(100vh - var(--sidebar-height) - var(--sk-page-padding-top));
+	top: var(--sidebar-height);
+	left: calc(100vw - (var(--sidebar-width)));
+	scrollbar-width: none;
+	position: fixed;
+	overflow-y: auto;
+}
+
+html[color-scheme='light'] {
+	--border: 240 6% 10%;
+	--border-input: 240 6% 10% / .17;
+	--border-input-hover: 240 6% 10% / .4;
+	--border-card: 240 6% 10% / .1;
+}
+
+html[color-scheme='dark'] {
+	--border: 0 0% 96%;
+	--border-input: 0 0% 96% / .17;
+	--border-input-hover: 0 0% 96% / .4;
+	--border-card: 0 0% 96% / .1;
+}
+
+div.toc h2 {
+	font-size: 1.0rem;
+	margin-top: 0;
+	outline: none !important;
+	margin-bottom: 1rem;
+	text-transform: uppercase;
+}
+
+div.toc ul {
+	list-style-type: none;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	/* color: rgb(23, 23, 23); */
+}
+
+div.toc ul li {
+	display: list-item;
+	list-style-type: none;
+	list-style: none;
+
+	font-size: 0.875rem;
+}
+
+div.toc li.parent {
+	border: 0px solid hsl(var(--border-card));
+	border-left-width: 1px;
+}
+
+div.toc li div {
+	transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+	transition-timing-function: cubic-bezier(.4,0,.2,1);
+	transition-duration: .15s;
+	text-decoration-line: none;
+
+	display: inline-flex;
+	padding-left: 1rem;
+	padding-bottom: .5rem;
+	margin-left: -1px;
+	margin-right: -1px;
+
+	/* border-style: solid; */
+	/* border-width: 0; */
+	/* border-left-width: 1px; */
+	/* --tw-border-opacity: 1; */
+	/* border-left-color: hsl(var(--color-text-light) / var(--tw-border-opacity)); */
+}
+
+div.toc li ul li div {
+	padding-left: 2rem;
+}
+
+.text-muted-foreground {
+	color: hsl(var(--muted-foreground));
+}
+
+div.toc div.list-item.active {
+	border-style: solid;
+	border-width: 0;
+	border-left-width: 1px;
+	--tw-border-opacity: 1;
+	border-left-color: var(--color-text);
+}
+
+div.toc li a {
+	color: inherit;
+	text-decoration: none;
+}
+
+div.toc a[data-active] {
+	color: var(--color-text);
+}
+
+div.toc a:hover {
+	background-color: inherit;
+}

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<link rel="icon" href="%sveltekit.assets%/img/favicon/favicon.png" />
+	<script>
+		let theme = localStorage.getItem('color-scheme');
+		if (!theme) {
+			const preferDark =
+				window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+			theme = preferDark ? 'dark' : 'light';
+		}
+		document.documentElement.setAttribute('color-scheme', theme);
+	</script>
+
+	%sveltekit.head%
+</head>
+
+<!--<body data-sveltekit-preload-data="hover">-->
+<body>
+	<div style="display: contents">%sveltekit.body%</div>
+</body>
+
+</html>
