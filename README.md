@@ -1,55 +1,73 @@
-# Website
+# RAFI.IO
 
-## Plugins
+> Personal website
 
-- theme: https://github.com/rowfishjs/rowfish
-- theme: https://github.com/dailydotdev/docs
-- https://github.com/saucelabs/docusaurus-theme-github-codeblock
-- https://github.com/rdilweb/docusaurus-plugin-remote-content
-- https://github.com/praveenn77/docusaurus-lunr-search
-- https://github.com/cmfcmf/docusaurus-search-local
-- https://github.com/easyops-cn/docusaurus-search-local
+## Overview
 
-This website is built using [Docusaurus 2](https://docusaurus.io/), a modern
-static website generator.
+Throughout the years, I've had many iterations of my personal website. However,
+I didn't contribute any real worthy reading material to it, I enjoyed keeping up
+with front-end technologies and evolution of static-site-generators (SSG).
 
-### Installation
+Jekyll,
+GitBook,
+Hugo,
+Gatsby,
+mdBook,
+GitBook,
+VuePress,
+Docusaurus,
+and (finally) [SvelteKit].
 
-```sh
-yarn
-```
+I've come to enjoy the simplicity of [Svelte] and "No Batteries
+Included" approach of [SvelteKit]. It's a great fit for my character, I like to
+tinker and configure things to my liking.
+It's like [Arch Linux], but for web. :)
 
-### Local Development
 
-```sh
-yarn start
-```
+## Tech Stack
 
-This command starts a local development server and opens up a browser window.
-Most changes are reflected live without having to restart the server.
+- [SvelteKit] and [TypeScript] languages.
+- [MDsveX], [remark], [rehype], and [Shiki].
+- [MeltUI], [Lucide], and [Inconsolata] font.
+- [Custom CSS](./src/styles/).
 
-### Build
+## Deployment
 
-```sh
-yarn build
-```
+Site uses [Vercel](https://vercel.com) for deployment and hosting, powered by
+SvelteKit's
+[@sveltejs/adapter-vercel](https://www.npmjs.com/package/@sveltejs/adapter-vercel).
 
-This command generates static content into the `build` directory and can be
-served using any static contents hosting service.
+See
+[kit.svelte.dev/docs/adapter-vercel](https://kit.svelte.dev/docs/adapter-vercel)
+for more information regarding the adapter.
 
-### Deployment
+## Development
 
-Using SSH:
+Use [`package.json`](./package.json) scripts or [`justfile`](./justfile)
+targets.
 
-```sh
-USE_SSH=true yarn deploy
-```
+| Command               | Description              |
+|-----------------------|--------------------------|
+| `npm run dev`           | Run dev server           |
+| `npm run dev -- --open` | Expose dev server        |
+| `npm run dev -- --host` | Expose dev server        |
+| `npm run build`         | Build the site           |
+| `npm run preview`       | Preview production build |
+| `npm run lint`          | Lint the code            |
+| `npm run format`        | Format the code          |
 
-Not using SSH:
+## Copyright
 
-```sh
-GIT_USER=<Your GitHub username> yarn deploy
-```
+(c) 2024 [Rafael Bodill](https://rafi.io), unless otherwise stated.
 
-If you are using GitHub pages for hosting, this command is a convenient way to
-build the website and push to the `gh-pages` branch.
+[Svelte]: https://svelte.dev/
+[SvelteKit]: https://kit.svelte.dev/
+[TypeScript]: https://www.typescriptlang.org/
+[MDsveX]: https://github.com/pngwn/mdsvex
+[MeltUI]: https://github.com/melt-ui/melt-ui
+[Lucide]: https://github.com/lucide-icons/lucide
+[Inconsolata]: https://levien.com/type/myfonts/inconsolata.html
+[Shiki]: https://github.com/shikijs/shiki
+[remark]: https://github.com/remarkjs/remark
+[rehype]: https://github.com/rehypejs/rehype
+[Arch Linux]: https://archlinux.org/
