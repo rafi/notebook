@@ -1,32 +1,34 @@
 {
-  "redirects" : [
-    {
-      "source" : "/containers/develop-with-containers.html",
-      "destination" : "/operating-systems/containers/develop-with-containers"
-    },
-    {
-      "source" : "/shell/pimp-up-your-shell/",
-      "destination" : "/operating-systems/linux/shell/bash/pimp-up-your-shell/"
-    },
-    {
-      "source" : "/containers/kubernetes-ingress-istio-workshop.html",
-      "destination" : "/operating-systems/containers/kubernetes-ingress-istio-workshop"
-    },
-    {
-      "source" : "/gui/best_macos_apps.html",
-      "destination" : "/operating-systems/macos/best_macos_apps"
-    },
-    {
-      "source" : "/terminal/apps/pass/pass-free-password-manager.html",
-      "destination" : "/terminal/apps/pass/pass-free-password-manager"
-    },
-    {
-      "source" : "/terminal/apps/req8_postman_alternative.html",
-      "destination" : "/terminal/apps/req8_postman_alternative"
-    },
-    {
-      "source" : "/workstation/macos.html",
-      "destination" : "/operating-systems/macos/setup"
-    }
-  ]
+	"trailingSlash": false,
+
+	"redirects": [
+		{
+			"source": "/operating-systems/containers/develop-with-containers",
+			"destination": "develop-with-containers"
+		},
+		{
+			"source": "/operating-systems/linux/shell/bash/pimp-up-your-shell/",
+			"destination": "/pimp-up-your-shell"
+		},
+		{
+			"source": "/operating-systems/containers/kubernetes-ingress-istio-workshop",
+			"destination": "/kubernetes-ingress-istio-workshop"
+		},
+		{
+			"source": "/operating-systems/macos/best_macos_apps",
+			"destination": "/best-macos-apps"
+		},
+		{
+			"source": "/terminal/apps/pass/pass-free-password-manager",
+			"destination": "/pass-free-password-manager"
+		},
+		{
+			"source": "/terminal/apps/req8_postman_alternative",
+			"destination": "/req8_postman_alternative"
+		},
+		{
+			"source": "/operating-systems/macos/setup",
+			"destination": "/macos-setup"
+		}
+	]
 }
