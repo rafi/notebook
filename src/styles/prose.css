@@ -1,0 +1,133 @@
+/* .prose article { */
+/* 	max-inline-size: var(--size-content-3); */
+/* 	margin-inline: auto; */
+/* } */
+
+.prose h1 {
+	text-transform: capitalize;
+}
+
+.prose h1 + p {
+	margin-top: 1rem;
+	margin-bottom: 0;
+}
+
+.prose hgroup p {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: baseline;
+}
+
+.prose .tags {
+	display: flex;
+	padding: 1rem;
+	margin: 0;
+}
+
+.prose .tags > * {
+	padding: 0.3rem 0.5rem;
+	margin-right: 1rem;
+	border-radius: 3px;
+	background-color: var(--color-bg-2);
+}
+
+.prose h1 {
+	margin: 1rem 0;
+	font-size: 2.4em;
+	/* text-align: center; */
+}
+
+.prose a {
+	padding: 0.1rem 0;
+}
+
+.prose hr {
+	background: none;
+	padding: 0;
+	margin: 3rem 0 2rem;
+	border-width: 1px 0 0 0;
+	border-style: solid;
+	border-color: var(--color-bg-0);
+}
+
+.prose figure {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 2rem 0;
+}
+
+.prose figcaption {
+	margin-top: 0.5rem;
+	background-color: var(--color-hover);
+	padding: 0.3rem 0.2rem;
+}
+
+.prose table {
+	border-top: 1px solid var(--color-bg-0);
+	border-left: 1px solid var(--color-bg-0);
+	margin: 0;
+	padding: 0;
+}
+.prose table thead th {
+	background-color: var(--color-bg-2);
+	border-bottom: 1px solid var(--color-bg-0);
+	border-right: 1px solid var(--color-bg-0);
+	margin: 0;
+	padding: 0.3rem 0.8rem;
+}
+.prose table tbody td {
+	border-bottom: 1px solid var(--color-bg-0);
+	border-right: 1px solid var(--color-bg-0);
+	margin: 0;
+	padding: 0.3rem 0.8rem;
+}
+.prose table tbody tr {
+	margin: 0;
+	padding: 0;
+}
+
+.prose code {
+	font-family: var(--font-mono);
+	background-color: var(--code-background);
+	border-radius: 2px;
+	padding: 0.1rem 0.3rem;
+}
+
+.prose pre {
+	padding: 0.8rem 1rem;
+	border-radius: 3px;
+	box-shadow: -2px 2px 0 var(--color-bg-1);
+	/* border: 1px solid var(--code-background); */
+	overflow-x: auto;
+}
+.prose pre code {
+	padding: 0;
+	line-height: 1.2rem;
+	/* font-size: 0.875rem; */
+	font-family: var(--font-mono);
+	background-color: transparent;
+}
+
+.prose small {
+	color: var(--color-text-light);
+}
+
+.prose blockquote {
+	margin: 1rem 0.2rem;
+	padding: 0 1rem;
+	border-left: 1px solid var(--color-theme-1);
+}
+
+@media (max-width: 480px) {
+	.prose pre code {
+		font-size: 0.875em;
+	}
+}
+
+@media (max-width: 760px) {
+	.prose h1 {
+		font-size: 2em;
+	}
+}
