@@ -1,11 +1,14 @@
 {
 	"default": true,
 	"first-header-h1": { "level": 1 },
+	"single-title": { "front_matter_title": "" },
+	"line-length": false,
 	"no-inline-html": false,
 	"no-bare-urls": false,
 	"single-h1": false,
 	"first-line-h1": false,
 	"first-heading-h1": false,
 	"no-trailing-punctuation": false,
-	"line-length": false
+	"no-trailing-spaces": true,
+	"no-multiple-blanks": true
 }
