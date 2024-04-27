@@ -1,5 +1,0 @@
----
-title: Year
----
-
-# Year
