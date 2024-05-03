@@ -23,7 +23,6 @@ Included" approach of [SvelteKit]. It's a great fit for my character, I like to
 tinker and configure things to my liking.
 It's like [Arch Linux], but for web. :)
 
-
 ## Tech Stack
 
 - [SvelteKit] and [TypeScript] languages.

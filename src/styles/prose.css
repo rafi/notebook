@@ -67,7 +67,8 @@
 .prose table {
 	border-top: 1px solid var(--color-bg-0);
 	border-left: 1px solid var(--color-bg-0);
-	margin: 0;
+	margin: 0 auto;
+	min-width: 60%;
 	padding: 0;
 }
 .prose table thead th {

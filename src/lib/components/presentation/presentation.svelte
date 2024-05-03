@@ -18,28 +18,24 @@
 			autoAnimateDuration: 1,
 			controls: true,
 			progress: true,
-			// TODO: Slides won't appear when clicking back button?
-			hash: true,
+			// TODO: Slides won't appear when clicking back button
+			//       probably due to hash change. Avoid using `history.pushState(...)`
+			//       and `history.replaceState(...)` as these will conflict with
+			//       SvelteKit's router. Use the `pushState` and `replaceState`
+			//       imports from `$app/navigation` instead.
+			hash: false,
 		});
-
-		const main = document.querySelector('main');
-		if (main) {
-			main.classList.add('main-present');
-		}
 
 		deckRef.initialize();
 
 		return () => {
+			// Cleanup reveal.js
 			if (deckRef) {
 				deckRef.destroy();
 				deckRef = null;
 			}
 			document.body.classList.remove('reveal-scroll');
 			document.querySelector('.scrollbar')?.remove();
-			const main = document.querySelector('main');
-			if (main) {
-				main.classList.remove('main-present');
-			}
 		};
 	});
 

@@ -1,10 +1,10 @@
 <script lang="ts">
-	import type { Post } from '$lib/types';
+	import type { ImportedFile } from '$lib/types';
 	import { formatDate } from '$lib/util/time';
 	import { TableOfContents } from '$lib/components/toc';
-	import { Images } from 'lucide-svelte';
+	import { ImagesIcon } from 'lucide-svelte';
 
-	export let data: { url: string; slug: string; meta: Post; content: any };
+	export let data: { url: string } & ImportedFile;
 </script>
 
 <svelte:head>
@@ -20,12 +20,14 @@
 	<hgroup>
 		<h1>{data.meta.title}</h1>
 		<p>
-			Published at {formatDate(data.meta.date)}{#if data.meta.updated},
-				updated at {formatDate(data.meta.updated)}
+			{#if data.meta.date}
+				Published at {formatDate(data.meta.date)}{#if data.meta.updated},
+					updated at {formatDate(data.meta.updated)}
+				{/if}
 			{/if}
-			{#if data.meta.slideshow}
+			{#if data.meta.presentation}
 				<a href="{data.url.replace(/\/$/, '')}/slides">
-					<Images size="16" />
+					<ImagesIcon size="16" />
 					<span>better viewed as a</span> slideshow
 				</a>
 			{/if}
@@ -33,11 +35,13 @@
 	</hgroup>
 
 	<!-- Tags -->
-	<div class="tags">
-		{#each data.meta.categories as category}
-			<span>&num;{category}</span>
-		{/each}
-	</div>
+	{#if data.meta.categories}
+		<div class="tags">
+			{#each data.meta.categories as category}
+				<span>&num;{category}</span>
+			{/each}
+		</div>
+	{/if}
 
 	<!-- Post -->
 	<div class="prose">

@@ -19,7 +19,12 @@
 <div class="toc">
 	<nav>
 		{#key $headingsTree}
-			<Tree tree={$headingsTree} activeHeadingIdxs={$activeHeadingIdxs} {item} {isActive} />
+			<Tree
+				tree={$headingsTree}
+				activeHeadingIdxs={$activeHeadingIdxs}
+				{item}
+				{isActive}
+			/>
 		{/key}
 	</nav>
 </div>
