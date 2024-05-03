@@ -1,27 +1,29 @@
 import type * as config from '$lib/config';
 
-export type Post = {
-	title: string
-	description: string
+export type ImportedFile = {
 	slug: string
-	published: string
-	date: string
-	updated: string
-	slideshow: boolean
-	categories: string[]
-	search: {
-		keywords: string[]
-	}
-	series?: string
-	draft?: string
+	meta: Omit<Post, 'slug'>
+	content: string
+}
+
+export type Post = Frontmatter & {
+	slug: string
 }
 
 export type Frontmatter = {
 	title?: string
 	description?: string
-	slug?: string
-	published?: string
-	category?: string
+	published?: boolean
+	date?: string
+	updated?: string
+	presentation?: boolean
+	categories?: string[]
+	search?: {
+		keywords?: string[]
+	}
+
+	series?: string
+	draft?: string
 }
 
 export type Fetch = (

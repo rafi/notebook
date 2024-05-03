@@ -1,31 +1,20 @@
-import type { Post } from '$lib/types'
+import type { Post, ImportedFile } from '$lib/types'
 
-export async function getPosts(dir: string) {
+// Parse markdown files.
+export function parseFiles(paths: Record<string, any>, subPath: string = '') {
 	let posts: Post[] = []
-	let paths: Record<string, any> = {}
-
-	switch (dir) {
-		case 'blog':
-			paths = import.meta.glob('/content/blog/*.md', { eager: true })
-			break
-		case 'neovim':
-			paths = import.meta.glob('/content/neovim/*.md', { eager: true })
-			break
-		case 'wiki':
-			paths = import.meta.glob('/content/wiki/*.md', { eager: true })
-			break
-		default:
-			return posts
-	}
-
-	// Find all markdown files in the right content directory.
 	for (const path in paths) {
 		const file = paths[path]
-		let slug = path.split('/').at(-1)?.replace('.md', '')
-		if (dir == 'wiki') {
-			slug = `/wiki/` + slug
-		} else if (dir == 'neovim') {
-			slug = `/neovim/` + slug
+
+		// Create a slug from the file path.
+		// Remove the first two sub-paths and extension. (xxx/yyy/zzz.md -> zzz)
+		let slug = path.split('/')
+			.filter((v, i) => v && i > 2)
+			.join('/')
+			.replace('.md', '')
+
+		if (subPath) {
+			slug = `${subPath}/${slug}`
 		}
 
 		if (file && typeof file === 'object' && 'metadata' in file && slug) {
@@ -35,9 +24,65 @@ export async function getPosts(dir: string) {
 		}
 	}
 
-	posts = posts.sort((first, second) =>
-		new Date(second.date).getTime() - new Date(first.date).getTime()
-	)
-
+	posts = posts.sort((first, second) => {
+		if (!first.date || !second.date) return 0
+		return new Date(second.date).getTime() - new Date(first.date).getTime()
+	})
 	return posts
+}
+
+function asPost(slug: string, post: any): ImportedFile {
+	return {
+		slug,
+		content: post.default,
+		meta: post.metadata as Omit<Post, 'slug'>,
+	}
+}
+
+export async function getPost(slug: string) {
+	let post = await import(`../../content/blog/${slug}.md`)
+	return asPost(slug, post)
+}
+
+export async function getWikiPage(slug: string) {
+	let post = await import(`../../content/wiki/${slug}.md`)
+	return asPost(slug, post)
+}
+
+export async function getNeovimPage(slug: string) {
+	let post = await import(`../../content/neovim/${slug}.md`)
+	return asPost(slug, post)
+}
+
+export async function getNeovimBlogPost(slug: string) {
+	let post = await import(`../../content/neovim/blog/${slug}.md`)
+	return asPost(slug, post)
+}
+
+export async function getNeovimConfigPage(slug: string) {
+	let post = await import(`../../content/neovim/config/${slug}.md`)
+	return asPost(slug, post)
+}
+
+export async function getNeovimPluginPage(slug: string) {
+	let post = await import(`../../content/neovim/plugins/${slug}.md`)
+	return asPost(slug, post)
+}
+
+export async function getNeovimExtrasPage(slug: string) {
+	let post: any
+	const parts = slug.split('/')
+	switch (parts.length) {
+		case 1:
+			post = await import(`../../content/neovim/extras/${parts[0]}.md`)
+			return asPost(slug, post)
+		case 2:
+			post = await import(`../../content/neovim/extras/${parts[0]}/${parts[1]}.md`)
+			return asPost(slug, post)
+		case 3:
+			post = await import(`../../content/neovim/extras/${parts[0]}/${parts[1]}/${parts[2]}.md`)
+			return asPost(slug, post)
+		default:
+			throw new Error('slug nested too deep')
+	}
 }

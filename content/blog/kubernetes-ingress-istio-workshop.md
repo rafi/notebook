@@ -2,7 +2,7 @@
 title: 'Kubernetes, Nginx Ingress and Istio Workshop'
 date: '2018-11-07'
 published: true
-slideshow: true
+presentation: true
 categories: [ containers ]
 search:
   keywords: ['docker', 'kubernetes', 'containers', 'istio', 'ingress']

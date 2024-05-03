@@ -2,7 +2,7 @@
 title: 'Docker & Kubernetes 101'
 date: 2018-12-20T00:00:00.000Z
 published: true
-slideshow: true
+presentation: true
 categories: [ containers ]
 search:
   keywords: [ docker, kubernetes, containers ]

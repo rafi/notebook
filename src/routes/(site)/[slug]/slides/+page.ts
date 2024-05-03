@@ -5,6 +5,7 @@ import jsYaml from 'js-yaml';
 import * as config from '$lib/config';
 import type { Frontmatter } from '$lib/types';
 
+export const prerender = false
 export const ssr = false
 export const csr = true
 

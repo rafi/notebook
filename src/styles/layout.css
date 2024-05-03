@@ -80,6 +80,7 @@ html[color-scheme='dark'] {
 html[color-scheme='dark'] .shiki span {
 	color: var(--shiki-dark);
 }
+
 html[color-scheme='dark'] .shiki {
 	background-color: var(--shiki-dark-bg);
 }
@@ -87,6 +88,7 @@ html[color-scheme='dark'] .shiki {
 html[color-scheme='light'] .shiki {
 	background-color: var(--shiki-light-bg);
 }
+
 html[color-scheme='light'] .shiki span {
 	color: var(--shiki-light);
 }
@@ -110,7 +112,7 @@ html[color-scheme='light'] .shiki span {
 
 ::-webkit-scrollbar-thumb {
 	background-color: var(--color-text-light);
-	border-radius: 2.4rem;;
+	border-radius: 2.4rem;
 }
 
 .visually-hidden {
@@ -131,7 +133,12 @@ body {
 	background-color: var(--color-bg-1);
 }
 
-h1, h2, h3, h4, h5, h6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
 p {
 	font-weight: 400;
 }
@@ -141,12 +148,32 @@ h2 {
 	color: var(--color-text-dark);
 }
 
-p, ul li, ol li {
+p,
+ul li,
+ol li {
 	line-height: 1.5;
 }
 
 ul {
+	padding-inline-start: 2.5rem;
 	list-style-type: square;
+}
+
+ul ul {
+	padding-inline-start: 1.6rem;
+}
+
+kbd {
+	padding: 0.2em 0.3em;
+	border: 1px outset var(--color-bg-0);
+	border-radius: 3px;
+	background-color: var(--color-bg-2);
+	font-family: var(--font-mono);
+	font-size: 0.875rem;
+}
+
+details {
+	margin: 1rem 0 0;
 }
 
 main a {
@@ -187,6 +214,7 @@ a.hash-link {
 	margin-left: 0.3rem;
 	padding: 0 0.2em 0 !important;
 }
+
 h1:hover a.hash-link,
 h2:hover a.hash-link,
 h3:hover a.hash-link,

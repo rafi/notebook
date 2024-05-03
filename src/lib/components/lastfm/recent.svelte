@@ -89,7 +89,6 @@
 		flex-direction: column;
 		list-style-type: none;
 		padding-left: 1.5em;
-		height: 7.42em;
 		margin-bottom: 0;
 	}
 
@@ -118,7 +117,7 @@
 
 	li.loading {
 		align-items: flex-start;
-		margin-top: 1em;
+		margin: 2em 0 3rem;
 	}
 
 	li.now {

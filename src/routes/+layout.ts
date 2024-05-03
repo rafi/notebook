@@ -1,12 +1,11 @@
-import type { LayoutServerLoadEvent } from './$types';
+import type { LayoutLoadEvent } from './$types';
 
 // Serve as a static page in production.
 export const prerender = true;
 
 export const trailingSlash = 'never';
 
-/** @type {import('./$types').LayoutServerLoad} */
-export function load({ url }: LayoutServerLoadEvent) {
+export function load({ url }: LayoutLoadEvent) {
 	return {
 		url: url.pathname,
 	};

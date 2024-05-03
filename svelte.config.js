@@ -30,8 +30,14 @@ const config = {
 		adapter: adapter({
 			split: true,
 			// Use server-side rendering in Vercel's Node.js 18.x serverless runtime
-			runtime: 'nodejs18.x', // for ISR
+			runtime: 'nodejs18.x',
 		}),
+
+		alias: {
+			$components: './src/lib/components',
+			$styles: './src/styles',
+			$utils: './src/lib/utils',
+		},
 	},
 
 	// vitePlugin: {

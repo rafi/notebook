@@ -27,9 +27,10 @@
 
 <h2>Profile</h2>
 <p>
-	Rafael is a programming veteran, highly motivated and passionate about software development.
-	Long-time PC enthusiast, pcboard sysop in the early 90s, web developer in the 00s, DevOps
-	aficionado, and perpetual backend developer. Currently using Go and Python.
+	Rafael is a programming veteran, highly motivated and passionate about
+	software development. Long-time PC enthusiast, pcboard sysop in the early 90s,
+	web developer in the 00s, DevOps aficionado, and perpetual backend developer.
+	Currently using Go and Python.
 </p>
 
 <p>
@@ -42,12 +43,13 @@
 	</li>
 	<li>
 		<time>2017-2021:</time>
-		Developed Cloud-native controllers & operators with Golang and led large-scale Kubernetes adoption.
+		Developed Cloud-native controllers & operators with Golang and led large-scale
+		Kubernetes adoption.
 	</li>
 	<li>
 		<time>2015-2017:</time>
-		Tech lead in the user-behavior analytics team. Large-scale Python development using queues, containers
-		cloud-computing.
+		Tech lead in the user-behavior analytics team. Large-scale Python development
+		using queues, containers cloud-computing.
 	</li>
 	<li>
 		<time>2010-2015:</time>
@@ -67,8 +69,8 @@
 	</li>
 	<li>
 		<time>1997-2000:</time>
-		Developed an e-commerce platform (ShopMind), analyzing, defining and developing modules in a DNA2000
-		(XML/XSL, Com+, Asp, Ado) environment.
+		Developed an e-commerce platform (ShopMind), analyzing, defining and developing
+		modules in a DNA2000 (XML/XSL, Com+, Asp, Ado) environment.
 	</li>
 </ul>
 

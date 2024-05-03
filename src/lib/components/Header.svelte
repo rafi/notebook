@@ -1,58 +1,71 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { fly } from 'svelte/transition';
-	import { Moon, Sun, CassetteTape, FolderGit2, ChevronRight } from 'lucide-svelte';
+	import {
+		Moon,
+		Sun,
+		CassetteTape,
+		FolderGit2,
+		ChevronRight,
+	} from 'lucide-svelte';
 
 	import * as config from '$lib/config';
 	import { theme, toggleTheme } from '$lib/theme';
 
 	const iconSize = 28;
-
 	let scrollY: number;
-	$: fixed = scrollY > 0;
 
+	export let url: string | undefined = undefined;
+	export let title: string | undefined = undefined;
+	export let nav = true;
+
+	$: fixed = scrollY > 0;
 	$: pathname = $page.url.pathname;
 	$: isBlog =
 		!pathname.startsWith('/neovim') &&
 		!pathname.startsWith('/wiki') &&
 		!['/', '/about'].includes(pathname);
-
-	export let url: string;
 </script>
 
 <svelte:window bind:scrollY />
 
 <div class="wrapper" class:fixed>
 	<div class="lhs">
-		{#if !url.endsWith('/slides')}
+		{#if url}
+			<a href={url}>← Back</a>
+		{:else}
 			<a href={config.url}>
 				<ChevronRight /> <span>{config.social.github}</span>
 			</a>
-		{:else}
-			<a href={url.replace(/\/slides$/, '')}>← Back</a>
 		{/if}
 	</div>
 
-	<nav>
-		<ul>
-			<li aria-current={pathname === '/' ? 'page' : undefined}>
-				<a href="/" data-sveltekit-preload-code="false">Work</a>
-			</li>
-			<li aria-current={pathname === '/about' ? 'page' : undefined}>
-				<a href="/about" data-sveltekit-preload-code="false">About</a>
-			</li>
-			<li aria-current={isBlog ? 'page' : undefined}>
-				<a href="/blog" data-sveltekit-preload-code="false">Blog</a>
-			</li>
-		</ul>
-	</nav>
+	{#if nav}
+		<nav>
+			{#if title}{title}{/if}
+			<ul>
+				<li aria-current={pathname === '/' ? 'page' : undefined}>
+					<a href="/">Work</a>
+				</li>
+				<li aria-current={pathname === '/about' ? 'page' : undefined}>
+					<a href="/about">About</a>
+				</li>
+				<li aria-current={isBlog ? 'page' : undefined}>
+					<a href="/blog">Blog</a>
+				</li>
+			</ul>
+		</nav>
+	{/if}
 
 	<div class="rhs">
 		<a href={`https://github.com/${config.social.github}`} rel="external">
 			<FolderGit2 size={iconSize} />
 		</a>
 
-		<a href={`https://listenbrainz.org/user/${config.social.listenbrainz}/stats/?range=this_month`} rel="external">
+		<a
+			href={`https://listenbrainz.org/user/${config.social.listenbrainz}/stats/?range=this_month`}
+			rel="external"
+		>
 			<CassetteTape size={iconSize} />
 		</a>
 

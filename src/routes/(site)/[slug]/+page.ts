@@ -1,18 +1,8 @@
 import type { PageLoadEvent } from './$types';
-import { error } from '@sveltejs/kit';
+import { getPost } from '$lib/posts';
 
-export const csr = true
+export const prerender = 'auto'
 
 export async function load({ params }: PageLoadEvent) {
-	try {
-		const post = await import(`../../../../content/blog/${params.slug}.md`)
-
-		return {
-			slug: params.slug,
-			meta: post.metadata,
-			content: post.default,
-		}
-	} catch (e) {
-		error(404, `Could not find ${params.slug}`)
-	}
+	return await getPost(params.slug);
 }
