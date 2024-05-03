@@ -3,7 +3,7 @@ import type * as config from '$lib/config';
 export type ImportedFile = {
 	slug: string
 	meta: Omit<Post, 'slug'>
-	content: string
+	content: any
 }
 
 export type Post = Frontmatter & {

@@ -97,7 +97,8 @@
 }
 
 .prose pre {
-	padding: 0.8rem 1rem;
+	padding: 0 1rem 0.8rem;
+	margin: 0 0 1rem;
 	border-radius: 3px;
 	box-shadow: -2px 2px 0 var(--color-bg-1);
 	/* border: 1px solid var(--code-background); */
