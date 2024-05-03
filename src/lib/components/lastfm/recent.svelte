@@ -47,11 +47,17 @@
 		</li>
 	{:then data}
 		{#each data.tracks.slice(0, 3) as track, i}
-			<li class="{track['@attr']?.nowplaying ? 'now' : ''}{track.loved ? ' loved' : ''}">
+			{@const now = track['@attr']?.nowplaying}
+			{@const loved = track.loved == 1}
+			<li class:now class:loved>
 				{#if i == 0}
 					<a href={track.artist.url + '/' + track.album['#text']}>
 						{#if track.image.length > 1}
-							<img src={track.image[1]['#text']} class="track" alt={track.album['#text']} />
+							<img
+								class="track"
+								src={track.image[1]['#text']}
+								alt={track.album['#text']}
+							/>
 						{:else}
 							N/A
 						{/if}
@@ -61,12 +67,12 @@
 				{/if}
 				<a href={track.url} class="name">{track.name}</a>
 				by <a href={track.artist.url} class="artist">{track.artist.name}</a>
-				{#if track.loved == 1}
+				{#if loved}
 					<a href="https://www.last.fm/user/{config.social.lastfm}/loved">
 						<img src={imgHeart} alt="love" />
 					</a>
 				{/if}
-				{#if track['@attr']?.nowplaying}
+				{#if now}
 					<a href="https://www.last.fm/user/{config.social.lastfm}">
 						<img src={imgNowPlaying} class="now-icon" alt="now playing" />
 					</a>

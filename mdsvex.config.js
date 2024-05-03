@@ -1,12 +1,15 @@
 import { escapeSvelte } from 'mdsvex';
+import { defineMDSveXConfig as defineConfig } from 'mdsvex';
 import { getHighlighter } from 'shiki';
 import { visit } from 'unist-util-visit';
 import toCamel from 'just-camel-case';
 import { h } from 'hastscript';
 import {
 	transformerNotationHighlight,
-	transformerNotationWordHighlight,
-	transformerNotationDiff
+	// transformerNotationWordHighlight,
+	// transformerNotationDiff,
+	transformerMetaHighlight,
+	transformerMetaWordHighlight,
 } from '@shikijs/transformers';
 
 // Remark / Rehype plugins
@@ -24,9 +27,10 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 
 // See https://mdsvex.pngwn.io/docs#use-it
 /** @type {import('mdsvex').MdsvexOptions} */
-export default {
+export default defineConfig({
 	extensions: ['.md'],
 	smartypants: true,
+	layout: './src/lib/components/code/layout.svelte',
 	remarkPlugins: [
 		remarkAdmonitions,
 		relativeImages,
@@ -53,7 +57,7 @@ export default {
 		}],
 	],
 	highlight: {
-		highlighter: async (code, lang = 'text') => {
+		highlighter: async (code, lang = 'text', meta) => {
 			const highlighter = await getHighlighter({
 				// See https://shiki.matsu.io/themes
 				themes: ['nord', 'min-light'],
@@ -62,7 +66,7 @@ export default {
 				langAlias: langAlias,
 			})
 			await highlighter.loadLanguage(...langs)
-			const html = escapeSvelte(highlighter.codeToHtml(code, {
+			const html = highlighter.codeToHtml(code, {
 				lang,
 				themes: {
 					light: 'min-light',
@@ -72,14 +76,28 @@ export default {
 				defaultColor: false,
 				transformers: [
 					transformerNotationHighlight(),
-					transformerNotationWordHighlight(),
-					transformerNotationDiff()
+					// transformerNotationWordHighlight(),
+					// transformerNotationDiff(),
+					transformerMetaHighlight(),
+					transformerMetaWordHighlight(),
+					// addCopyButton({ toggle: 2000 }),
 				],
-			}))
-			return `{@html \`${html}\` }`
+			})
+
+			// match attribute-like strings, and feed them into props
+			// for example: `src="adfjkl;" hello yourmom='sorry'`
+			// regex is unly sorry _please do it if there's a better way ;)_
+			const attrMatch = meta?.matchAll(/(?:\w+)(?:="[^"]*"|='[^']*')?(?:\s|$)/g) ?? [];
+
+			let attr = [...attrMatch].join("");
+			if (lang) attr += ` lang="${lang}"`;
+
+			// warp the html with custom component `codeblock` (see MdsvexLayout.svelte)
+			return `<Components.codeblock ${attr}>{@html \`${escapeSvelte(html)}\` }</Components.codeblock>`;
+			// return `{@html \`${html}\` }`;
 		}
 	},
-}
+})
 
 const langAlias = {
 	readline: 'shell',

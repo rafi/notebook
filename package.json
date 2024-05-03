@@ -36,6 +36,7 @@
 		"vite": "^5.2.10"
 	},
 	"dependencies": {
+		"@azurity/pure-nerd-font": "^3.0.3",
 		"@fontsource-variable/inconsolata": "^5.0.18",
 		"@fontsource/inconsolata": "^5.0.18",
 		"@shikijs/transformers": "^1.3.0",
