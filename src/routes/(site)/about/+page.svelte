@@ -1,6 +1,8 @@
-<script>
+<script lang="ts">
 	import Profile from '$lib/components/profile-card.svelte';
 	import { RecentTracks } from '$lib/components/lastfm';
+
+	export let data;
 </script>
 
 <svelte:head>
@@ -21,6 +23,10 @@
 <p>
 	This site happily lives at <a href="https://vercel.com">Vercel</a>
 	and powered by <a href="https://kit.svelte.dev/">SvelteKit</a>.
+	{#if data.gitSHA}
+		(<a href="https://github.com/rafi/vim-config/commit/{data.gitSHA}">
+			{data.gitSHA.substring(0, 7)}</a>)
+	{/if}
 </p>
 
 <p>

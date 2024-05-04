@@ -10,6 +10,9 @@ run:
 	npm run dev
 
 host:
+	#!/usr/bin/env bash
+	export VERCEL_GIT_COMMIT_REF="$(git rev-parse --abbrev-ref HEAD)"
+	export VERCEL_GIT_COMMIT_SHA="$(git rev-parse HEAD)"
 	npm run dev -- --host
 
 build:
@@ -20,6 +23,10 @@ lint:
 
 preview:
 	npm run preview
+
+logo:
+	toilet -f roman -F crop --html 'rafi.' \
+		-d "$(brew --prefix figlet)"/share/figlet/fonts
 
 favicon:
 	convert -resize x16 -gravity center -crop 16x16+0+0 -flatten -colors 256 {{ logo }} {{ icon_dir }}/output-16x16.ico

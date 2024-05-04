@@ -12,25 +12,22 @@
 
 	export let data;
 
-	$: isSlides = data.url.endsWith('/slides');
+	$: presenting = data.url.endsWith('/slides');
 </script>
 
 <Header
-	nav={!isSlides}
-	url={isSlides ? data.url.replace(/\/slides$/, '') : ''}
+	nav={!presenting}
+	url={presenting ? data.url.replace(/\/slides$/, '') : ''}
 />
 
 {#key data.url}
-	<main
-		class={isSlides ? 'main-present' : ''}
-		in:fly={{ x: 50, duration: 150, easing: sineIn }}
-	>
+	<main class:presenting in:fly={{ x: 50, duration: 150, easing: sineIn }}>
 		<div>
 			<slot />
 		</div>
 	</main>
 {/key}
-{#if !isSlides}
+{#if !presenting}
 	<Footer />
 {/if}
 
@@ -48,7 +45,7 @@
 		overflow: hidden;
 	}
 
-	.main-present {
+	main.presenting {
 		flex: 1 1 auto;
 		padding: 0 !important;
 		max-width: none !important;

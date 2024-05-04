@@ -70,7 +70,8 @@ html[color-scheme='dark'] {
 
 	--nav-background: #25272a;
 	--nav-border: #1a1b1e;
-	--border-color: #434343;
+	/* --border-color: #434343; */
+	--border-color: hsl(0 0% 100% / 0.1);
 
 	--muted: 10 5% 96%;
 	--muted-foreground: 255 0% 79% / .4;
@@ -188,7 +189,6 @@ main a {
 
 main a:hover {
 	background-color: var(--color-hover);
-	/* text-decoration: none; */
 }
 
 input,
@@ -224,6 +224,7 @@ h5:hover a.hash-link,
 h6:hover a.hash-link {
 	opacity: 1;
 }
+
 a.hash-link:before {
 	content: "#";
 }

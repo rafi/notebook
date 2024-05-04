@@ -1,9 +1,6 @@
-<script context="module" lang="ts">
+<script context="module">
 	import codeblock from './block.svelte';
-	// import alert from './Alert.svelte';
-	// import img from './Image.svelte';
 
-	// export { alert, codeblock, img };
 	export { codeblock };
 </script>
 

@@ -28,8 +28,8 @@
 
 		deckRef.initialize();
 
+		// Cleanup reveal.js when unmounting
 		return () => {
-			// Cleanup reveal.js
 			if (deckRef) {
 				deckRef.destroy();
 				deckRef = null;
