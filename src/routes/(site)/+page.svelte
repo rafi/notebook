@@ -76,7 +76,6 @@
 
 <h2>Projects</h2>
 <ul>
-	<!-- <li><a href="/neovim">neovim config</a></li> -->
 	<li><a href="https://github.com/rafi/gits">gits</a></li>
 	<li><a href="https://nester.co.il">nester</a></li>
 </ul>

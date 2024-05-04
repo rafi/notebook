@@ -1,6 +1,10 @@
 import type { Post, ImportedFile } from '$lib/types'
 
-// Parse markdown files.
+/**
+ * Parse Markdown files.
+ * @param paths - Imported files from vite's import.meta.glob(...)
+ * @param subPath - Optional sub-path to prepend to slug.
+ */
 export function parseFiles(paths: Record<string, any>, subPath: string = '') {
 	let posts: Post[] = []
 	for (const path in paths) {
@@ -35,7 +39,7 @@ function asPost(slug: string, post: any): ImportedFile {
 	return {
 		slug,
 		content: post.default,
-		meta: post.metadata as Omit<Post, 'slug'>,
+		meta: post.metadata as Omit<Post, 'slug'> || {},
 	}
 }
 

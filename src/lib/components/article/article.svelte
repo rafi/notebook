@@ -16,7 +16,6 @@
 </svelte:head>
 
 <article class="prose">
-	<!-- Title -->
 	<hgroup>
 		<h1>{data.meta.title}</h1>
 		<p>
@@ -34,7 +33,6 @@
 		</p>
 	</hgroup>
 
-	<!-- Tags -->
 	{#if data.meta.categories}
 		<div class="tags">
 			{#each data.meta.categories as category}
@@ -43,10 +41,7 @@
 		</div>
 	{/if}
 
-	<!-- Post -->
-	<div class="prose">
-		<svelte:component this={data.content} />
-	</div>
+	<svelte:component this={data.content} />
 </article>
 
 <TableOfContents />

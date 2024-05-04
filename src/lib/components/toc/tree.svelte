@@ -39,9 +39,11 @@
 			{@const node = heading.node.innerHTML}
 			{@const nodeWithoutSpan = node.replace(/<span.*<\/span>/g, '')}
 			<li class="mt-0 {level === 1 && 'parent'}">
-				<div class={'list-item text-muted-foreground ' + ($isActive(heading.id) && 'active ')}>
+				<div
+					class={'list-item text-muted-foreground ' +
+						($isActive(heading.id) && 'active ')}
+				>
 					<a href="#{heading.id}" use:melt={$item(heading.id)} use:hoverAction>
-						<!--  eslint-disable-next-line svelte/no-at-html-tags -->
 						{@html nodeWithoutSpan}
 					</a>
 				</div>
