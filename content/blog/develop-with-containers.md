@@ -620,15 +620,15 @@ directory and move `Dockerfile` and `app.py` there:
 
 :::info Directory structure
 
-```bash
+```bash {8}
 $ docker-compose down
 $ mkdir python
 $ mv Dockerfile app.py python/
-$ tree  # (Install tree with '**brew install tree**')
+$ tree  # (Install with `brew install tree` on macOS)
 .
 ├── Makefile
 ├── docker-compose.yml
-└── python  ← # (Our new directory for the Python service) // [!code highlight]
+└── python  # ← (Our new directory for the Python service)
    ├── Dockerfile
    └── app.py
 ```

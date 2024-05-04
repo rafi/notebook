@@ -11,18 +11,20 @@
 <h1><small>~</small>/blog</h1>
 
 <section>
-	<ul class="posts">
+	<ul class="cards">
 		{#await data.posts}
 			Loading posts...
 		{:then posts}
 			{#each posts as post}
-				<li class="post">
-					<a href={post.slug} class="title">{post.title}</a>
-					{#if post.date}
-						<p class="date">{formatDate(post.date)}</p>
-					{/if}
+				<li>
+					<a href={post.slug}>
+						{post.title}
+						{#if post.date}
+							<span class="date">{formatDate(post.date)}</span>
+						{/if}
+					</a>
 					{#if post.description}
-						<p class="description">{post.description}</p>
+						<span class="description">{post.description}</span>
 					{/if}
 				</li>
 			{/each}

@@ -4,7 +4,7 @@
 
 :root {
 	--font-body: 'Inconsolata Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-	--font-mono: 'Inconsolata', PureNerdFont, ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+	--font-mono: 'Inconsolata', ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace, PureNerdFont;
 
 	font-family: var(--font-body);
 	color: var(--color-text);
@@ -227,4 +227,41 @@ h6:hover a.hash-link {
 
 a.hash-link:before {
 	content: "#";
+}
+
+ul.cards {
+	grid-template-columns: repeat(2, 1fr);
+	display: grid;
+	gap: 1rem;
+	align-items: stretch;
+	list-style: none;
+	padding: 1rem;
+}
+
+ul.cards li {
+	display: block;
+	background-color: var(--nav-background);
+	border: solid 0.0625rem var(--border-color);
+	border-radius: 1rem;
+	padding: 0;
+	margin: 0;
+}
+
+ul.cards li:has(a:hover) {
+	background-color: var(--color-bg-2);
+}
+
+ul.cards li a {
+	min-block-size: max-content;
+	display: block;
+	margin: 0;
+	padding: 1rem 1.5rem;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+ul.cards li a span {
+	color: var(--color-text-dark);
+	display: block;
+	font-size: 0.875rem;
 }

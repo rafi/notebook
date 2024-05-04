@@ -8,14 +8,7 @@ Throughout the years, I've had many iterations of my personal website. However,
 I didn't contribute any real worthy reading material to it, I enjoyed keeping up
 with front-end technologies and evolution of static-site-generators (SSG).
 
-Jekyll,
-GitBook,
-Hugo,
-Gatsby,
-mdBook,
-GitBook,
-VuePress,
-Docusaurus,
+Jekyll, GitBook, Hugo, Gatsby, mdBook, GitBook, VuePress, NextJS, Docusaurus,
 and (finally) [SvelteKit].
 
 I've come to enjoy the simplicity of [Svelte] and "No Batteries

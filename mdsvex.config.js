@@ -5,9 +5,8 @@ import { visit } from 'unist-util-visit';
 import toCamel from 'just-camel-case';
 import { h } from 'hastscript';
 import {
-	transformerNotationHighlight,
-	// transformerNotationWordHighlight,
-	// transformerNotationDiff,
+	transformerNotationDiff,
+	transformerNotationErrorLevel,
 	transformerMetaHighlight,
 	transformerMetaWordHighlight,
 } from '@shikijs/transformers';
@@ -72,29 +71,26 @@ export default defineConfig({
 					light: 'min-light',
 					dark: 'nord',
 				},
+				meta: meta ? { __raw: meta } : undefined,
 				// Manage the color of the code block ourselves, see layout.css
 				defaultColor: false,
 				transformers: [
-					transformerNotationHighlight(),
-					// transformerNotationWordHighlight(),
-					// transformerNotationDiff(),
+					transformerNotationDiff(),
+					transformerNotationErrorLevel(),
 					transformerMetaHighlight(),
 					transformerMetaWordHighlight(),
-					// addCopyButton({ toggle: 2000 }),
 				],
 			})
 
-			// match attribute-like strings, and feed them into props
+			// Match attribute-like strings, and feed them into props
 			// for example: `src="adfjkl;" hello yourmom='sorry'`
-			// regex is unly sorry _please do it if there's a better way ;)_
 			const attrMatch = meta?.matchAll(/(?:\w+)(?:="[^"]*"|='[^']*')?(?:\s|$)/g) ?? [];
 
-			let attr = [...attrMatch].join("");
+			let attr = [...attrMatch].join('');
 			if (lang) attr += ` lang="${lang}"`;
 
-			// warp the html with custom component `codeblock` (see MdsvexLayout.svelte)
+			// Wrap the html with custom component `codeblock`
 			return `<Components.codeblock ${attr}>{@html \`${escapeSvelte(html)}\` }</Components.codeblock>`;
-			// return `{@html \`${html}\` }`;
 		}
 	},
 })
@@ -102,7 +98,6 @@ export default defineConfig({
 const langAlias = {
 	readline: 'shell',
 	dosbatch: 'bat',
-	log: 'shell',
 	Dockerfile: 'dockerfile',
 }
 
@@ -123,6 +118,7 @@ const langs = [
 	'java',
 	'javascript',
 	'json',
+	'log',
 	'lua',
 	'make',
 	'md',
