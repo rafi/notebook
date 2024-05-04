@@ -3,7 +3,7 @@
 	import Profile from '$lib/components/profile-card.svelte';
 	import { RecentTracks } from '$lib/components/lastfm';
 
-	import { Mailbox, GitCommitHorizontal, CassetteTape } from 'lucide-svelte';
+	import { Mailbox, GitMerge, CassetteTape } from 'lucide-svelte';
 </script>
 
 <svelte:head>
@@ -92,7 +92,7 @@
 	{/if}
 	{#if config.social.github}
 		<li>
-			<GitCommitHorizontal size="24" />
+			<GitMerge size="24" />
 			<a href={'https://github.com/' + config.social.github}>
 				github.com/{config.social.github}
 			</a>

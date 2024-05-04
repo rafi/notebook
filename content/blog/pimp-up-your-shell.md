@@ -2,6 +2,7 @@
 title: Pimp Up Your Shell
 date: '2018-12-23'
 published: true
+presentation: true
 categories: [ bash ]
 search:
   keywords: [shell, terminal, bash, linux]
@@ -112,7 +113,7 @@ macOS is a grandchild of BSD, and uses BSD tools.
 
 ---
 
-## GNU vs. BSD
+## Tools: GNU vs. BSD
 
 Let's install some GNU tools!
 
@@ -147,7 +148,7 @@ LH MOUSE.COM /Y
 
 ---
 
-### User Init Scripts
+## User Init Scripts
 
 - `~/.*profile` — set the environment for login shells.
 - `~/.*rc` — set the environment for interactive shells.
@@ -962,9 +963,9 @@ brew install ripgrep
 
 ## What's so great about Ripgrep?
 
-* It is an order of magnitude faster than ack.
-* It ignores file patterns from your .gitignore.
-* If there are files in your source repo you don't want to search, just add
+- It is an order of magnitude faster than ack.
+- It ignores file patterns from your .gitignore.
+- If there are files in your source repo you don't want to search, just add
   their patterns to a .ignore file. (\*cough\* \*.min.js \*cough\*)
 
 ---
@@ -1133,16 +1134,13 @@ in my [github.com/rafi/.config](https://github.com/rafi/.config) repository.
 
 ## Other Great Tools
 
-* [kitty](https://github.com/kovidgoyal/kitty) — Cross-platform, fast, feature-rich, GPU based terminal
-* [neovim](https://neovim.io) — Vim-fork focused on extensibility and usability
-* [fd](https://github.com/sharkdp/fd) — Simple, fast and user-friendly alternative to 'find'
-* [fzf](https://github.com/junegunn/fzf) —
-* [fx](https://github.com/antonmedv/fx) —
-* [bat](https://github.com/sharkdp/bat) —
-* [bottom](https://github.com/ClementTsang/bottom) —
-* [lazygit](https://github.com/jesseduffield/lazygit) — Simple terminal UI for git commands
-* [lf](https://github.com/gokcehan/lf) —
-* [pass](https://www.passwordstore.org) and [pineentry-mac](https://github.com/GPGTools/pinentry-mac)
+- [kitty](https://github.com/kovidgoyal/kitty) — Fast, feature-rich, GPU based terminal
+- [neovim](https://neovim.io) — Vim-fork focused on extensibility
+- [ripgrep](https://github.com/BurntSushi/ripgrep/) — Extremely fast `grep` alternative
+- [fd](https://github.com/sharkdp/fd) — Simple and fast alternative to `find`
+- [fzf](https://github.com/junegunn/fzf) — fuzzy find for the terminal
+- [bat](https://github.com/sharkdp/bat) — modern `cat`
+- [pass](https://www.passwordstore.org) and [pineentry-mac](https://github.com/GPGTools/pinentry-mac)
 
 ---
 
