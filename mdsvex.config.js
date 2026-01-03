@@ -16,6 +16,7 @@ import remarkToc from 'remark-toc';
 import rehypeSlug from 'rehype-slug';
 import rehypeRewrite from 'rehype-rewrite';
 import remarkAdmonitions from 'remark-admonitions';
+import emoji from 'remark-emoji';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 
 /** @type {BuiltinTheme} */
@@ -32,6 +33,7 @@ export default defineConfig({
 		relativeImages,
 		// See https://github.com/remarkjs/remark-toc#api
 		[remarkToc, { tight: true, maxDepth: 4 }],
+		emoji,
 	],
 	rehypePlugins: [
 		[rehypeRewrite, {
