@@ -1,6 +1,6 @@
 import { escapeSvelte } from 'mdsvex';
 import { defineMDSveXConfig as defineConfig } from 'mdsvex';
-import { getHighlighter } from 'shiki';
+import { createHighlighter } from 'shiki';
 import { visit } from 'unist-util-visit';
 import toCamel from 'just-camel-case';
 import { h } from 'hastscript';
@@ -18,18 +18,15 @@ import rehypeRewrite from 'rehype-rewrite';
 import remarkAdmonitions from 'remark-admonitions';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 
-// import { rehypeGithubAlerts } from 'rehype-github-alerts'; // WORKS!
-// import remarkAlerts from 'remark-alerts'; // bad
-// import { remarkAlert } from 'remark-github-blockquote-alert'; // bad
-// import remarkGitHubAlerts from 'remark-github-beta-blockquote-admonitions'; // bad
-// import remarkGithubAlerts from 'remark-github-alerts'; // bad
+/** @type {BuiltinTheme} */
+export const DEFAULT_THEME = "github-dark";
 
 // See https://mdsvex.pngwn.io/docs#use-it
 /** @type {import('mdsvex').MdsvexOptions} */
 export default defineConfig({
 	extensions: ['.md'],
 	smartypants: true,
-	layout: './src/lib/components/code/layout.svelte',
+	layout: import.meta.dirname + '/src/lib/components/code/layout.svelte',
 	remarkPlugins: [
 		remarkAdmonitions,
 		relativeImages,
@@ -43,7 +40,6 @@ export default defineConfig({
 					if (!node.properties.src.endsWith('Svg}')) {
 						node.tagName = 'enhanced:img';
 					}
-					// node.properties['sizes'] = '';
 					node.properties['class'] = `post-img ${node.properties['class'] ?? ''}`.trimEnd();
 				}
 			}
@@ -57,19 +53,11 @@ export default defineConfig({
 	],
 	highlight: {
 		highlighter: async (code, lang = 'text', meta) => {
-			const highlighter = await getHighlighter({
-				// See https://shiki.matsu.io/themes
-				themes: ['nord', 'min-light'],
-				// See https://shiki.matsu.io/languages
-				langs: langs,
-				langAlias: langAlias,
-			})
-			await highlighter.loadLanguage(...langs)
-			const html = highlighter.codeToHtml(code, {
+			const returned = shiki.codeToHtml(code, {
 				lang,
 				themes: {
-					light: 'min-light',
-					dark: 'nord',
+					light: 'github-light',
+					dark: DEFAULT_THEME,
 				},
 				meta: meta ? { __raw: meta } : undefined,
 				// Manage the color of the code block ourselves, see layout.css
@@ -80,7 +68,7 @@ export default defineConfig({
 					transformerMetaHighlight(),
 					transformerMetaWordHighlight(),
 				],
-			})
+			});
 
 			// Match attribute-like strings, and feed them into props
 			// for example: `src="adfjkl;" hello yourmom='sorry'`
@@ -90,7 +78,8 @@ export default defineConfig({
 			if (lang) attr += ` lang="${lang}"`;
 
 			// Wrap the html with custom component `codeblock`
-			return `<Components.codeblock ${attr}>{@html \`${escapeSvelte(html)}\` }</Components.codeblock>`;
+			const html = escapeSvelte(returned);
+			return `<Components.codeblock ${attr}>{@html \`${html}\` }</Components.codeblock>`;
 		}
 	},
 })
@@ -133,6 +122,12 @@ const langs = [
 	'typescript',
 	'yaml',
 ]
+
+const shiki = await createHighlighter({
+	themes: [DEFAULT_THEME, "github-light"],
+	langs,
+	langAlias,
+});
 
 // This is a modified version of the relative-images plugin from mdsvex.
 // Original: https://github.com/mattjennings/mdsvex-relative-images
@@ -199,9 +194,9 @@ function relativeImages() {
 		let scripts = '';
 		const urlParams = {
 			'enhanced': true,
-			'w': '200;400;700',
+			'w': '700',
+			'quality': '80',
 			'withoutEnlargement': true,
-			'withoutReduction': true,
 		};
 		const imageParams = new URLSearchParams(urlParams);
 		urls.forEach((x) => {
