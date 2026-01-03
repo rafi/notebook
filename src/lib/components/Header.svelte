@@ -143,6 +143,12 @@
 		margin-right: 1.7rem;
 	}
 
+	body.reveal-viewport .lhs a,
+	body.reveal-viewport .rhs a,
+	body.reveal-viewport .rhs button {
+		color: var(--color-text-light);
+	}
+
 	@media (max-width: 480px) {
 		.lhs {
 			flex-shrink: 0.5;

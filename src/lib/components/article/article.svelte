@@ -29,8 +29,8 @@
 					updated at {formatDate(data.meta.updated)}
 				{/if}
 			{/if}
-			{#if data.meta.presentation}
-				<a href="{data.url.replace(/\/$/, '')}/slides">
+			{#if data.meta.presentation && url}
+				<a href="{url.replace(/\/$/, '')}/slides">
 					<ImagesIcon size="16" />
 					<span>better viewed as a</span> slideshow
 				</a>

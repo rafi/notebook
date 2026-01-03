@@ -1,6 +1,17 @@
 import type { Post, ImportedFile } from '$lib/types'
 
 /**
+ * Convert content file path to slug.
+ * @param path - File path.
+ */
+export function slugFromPath(path: string): string {
+	return path.split('/')
+		// Remove first folder (content), and for main blog, remove 'blog'.
+		.filter((v, i) => v && i > 0 && !(i == 1 && v == 'blog'))
+		.join('/')
+}
+
+/**
  * Parse Markdown files.
  * @param paths - Imported files from vite's import.meta.glob(...)
  * @param subPath - Optional sub-path to prepend to slug.
