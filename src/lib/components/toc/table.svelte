@@ -2,7 +2,11 @@
 	import { createTableOfContents } from '@melt-ui/svelte';
 	import Tree from './tree.svelte';
 
-	export let selector = '.prose';
+	interface Props {
+		selector?: string;
+	}
+
+	let { selector = '.prose' }: Props = $props();
 
 	const {
 		elements: { item },

@@ -39,18 +39,23 @@
 		};
 	});
 
-	export let url = '';
-	export let external = false;
+	interface Props {
+		url?: string;
+		external?: boolean;
+		children?: import('svelte').Snippet;
+	}
+
+	let { url = '', external = false, children }: Props = $props();
 </script>
 
 <div class="reveal">
 	<div class="slides">
 		{#if external}
-			<section data-markdown={url} />
+			<section data-markdown={url}></section>
 		{:else}
 			<section data-markdown>
 				<div data-template>
-					<slot />
+					{@render children?.()}
 				</div>
 			</section>
 		{/if}

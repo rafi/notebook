@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import * as config from '$lib/config';
 
-	let dt = new Date();
+	let dt = $state(new Date());
 
 	// Update time every minute
 	onMount(() => {

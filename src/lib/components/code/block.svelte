@@ -1,15 +1,28 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import { CopyIcon, CheckIcon } from 'lucide-svelte';
 
-	export let lang = '';
-	export let title = '';
 
-	// Whether to display copy button
-	export let nocopy = false;
+	
+	interface Props {
+		lang?: string;
+		title?: string;
+		// Whether to display copy button
+		nocopy?: boolean;
+		children?: import('svelte').Snippet;
+	}
 
-	let copyButton: HTMLButtonElement;
-	let copiedTimeout: NodeJS.Timeout | undefined;
-	let copied = false;
+	let {
+		lang = '',
+		title = '',
+		nocopy = false,
+		children
+	}: Props = $props();
+
+	let copyButton: HTMLButtonElement = $state();
+	let copiedTimeout: NodeJS.Timeout | undefined = $state();
+	let copied = $state(false);
 
 	function copy() {
 		const preElement = copyButton.nextElementSibling;
@@ -19,10 +32,12 @@
 		}
 	}
 
-	$: if (copied) {
-		clearTimeout(copiedTimeout);
-		copiedTimeout = setTimeout(() => (copied = false), 1000);
-	}
+	run(() => {
+		if (copied) {
+			clearTimeout(copiedTimeout);
+			copiedTimeout = setTimeout(() => (copied = false), 1000);
+		}
+	});
 </script>
 
 <div>
@@ -36,7 +51,7 @@
 		<button
 			class="copy"
 			bind:this={copyButton}
-			on:click={copy}
+			onclick={copy}
 			aria-label="copy"
 		>
 			{#if !copied}
@@ -47,7 +62,7 @@
 		</button>
 	{/if}
 
-	<slot />
+	{@render children?.()}
 </div>
 
 <style>

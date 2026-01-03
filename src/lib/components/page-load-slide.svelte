@@ -1,5 +1,6 @@
+<!-- @migration task: review uses of `navigating` -->
 <script lang="ts">
-	import { navigating } from '$app/stores';
+	import { navigating } from '$app/state';
 	import { expoOut } from 'svelte/easing';
 	import { slide, type SlideParams } from 'svelte/transition';
 
@@ -19,7 +20,7 @@
 	};
 </script>
 
-{#if $navigating}
+{#if navigating}
 	<div class="navigation-loader" in:slide={transitionOpts}></div>
 {/if}
 

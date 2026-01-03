@@ -2,7 +2,7 @@
 	import Profile from '$lib/components/profile-card.svelte';
 	import { RecentTracks } from '$lib/components/lastfm';
 
-	export let data;
+	let { data } = $props();
 </script>
 
 <svelte:head>

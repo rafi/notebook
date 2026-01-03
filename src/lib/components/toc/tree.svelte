@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Tree from './tree.svelte';
 	import {
 		type TableOfContents,
 		type TableOfContentsElements,
@@ -6,11 +7,21 @@
 		melt,
 	} from '@melt-ui/svelte';
 
-	export let tree: TableOfContentsItem[] = [];
-	export let activeHeadingIdxs: number[];
-	export let item: TableOfContentsElements['item'];
-	export let level = 1;
-	export let isActive: TableOfContents['helpers']['isActive'];
+	interface Props {
+		tree?: TableOfContentsItem[];
+		activeHeadingIdxs: number[];
+		item: TableOfContentsElements['item'];
+		level?: number;
+		isActive: TableOfContents['helpers']['isActive'];
+	}
+
+	let {
+		tree = [],
+		activeHeadingIdxs,
+		item,
+		level = 1,
+		isActive
+	}: Props = $props();
 
 	function hoverAction(node: HTMLElement) {
 		function handleMouseEnter() {
@@ -49,7 +60,7 @@
 				</div>
 
 				{#if heading.children && heading.children.length}
-					<svelte:self
+					<Tree
 						tree={heading.children}
 						level={level + 1}
 						{activeHeadingIdxs}

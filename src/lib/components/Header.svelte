@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import { fly } from 'svelte/transition';
 	import {
 		Moon,
@@ -13,18 +13,22 @@
 	import { theme, toggleTheme } from '$lib/theme';
 
 	const iconSize = 28;
-	let scrollY: number;
+	let scrollY: number = $state();
 
-	export let url: string | undefined = undefined;
-	export let title: string | undefined = undefined;
-	export let nav = true;
+	interface Props {
+		url?: string | undefined;
+		title?: string | undefined;
+		nav?: boolean;
+	}
 
-	$: fixed = scrollY > 0;
-	$: pathname = $page.url.pathname;
-	$: isBlog =
-		!pathname.startsWith('/neovim') &&
+	let { url = undefined, title = undefined, nav = true }: Props = $props();
+
+	let fixed = $derived(scrollY > 0);
+	let pathname = $derived(page.url.pathname);
+	let isBlog =
+		$derived(!pathname.startsWith('/neovim') &&
 		!pathname.startsWith('/wiki') &&
-		!['/', '/about'].includes(pathname);
+		!['/', '/about'].includes(pathname));
 </script>
 
 <svelte:window bind:scrollY />
@@ -69,7 +73,7 @@
 			<CassetteTape size={iconSize} />
 		</a>
 
-		<button on:click={toggleTheme} aria-label="Toggle theme">
+		<button onclick={toggleTheme} aria-label="Toggle theme">
 			{#if $theme === 'dark'}
 				<div in:fly={{ y: 10 }}>
 					<Sun size={iconSize} />

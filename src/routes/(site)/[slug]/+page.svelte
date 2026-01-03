@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Article } from '$lib/components/article';
-	export let data;
+
+	let { data } = $props();
 </script>
 
-<Article {data} />
+<Article data={data.post} url={data.url} />

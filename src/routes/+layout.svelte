@@ -1,7 +1,12 @@
-<script>
+<script lang="ts">
 	import PageLoadSlide from '$lib/components/page-load-slide.svelte';
 
 	import '$styles/layout.css';
+	interface Props {
+		children?: import('svelte').Snippet;
+	}
+
+	let { children }: Props = $props();
 </script>
 
 <svelte:head>
@@ -29,7 +34,7 @@
 <PageLoadSlide />
 
 <div class="app">
-	<slot />
+	{@render children?.()}
 </div>
 
 <style>
