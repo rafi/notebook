@@ -48,6 +48,12 @@ export async function load({ params }: PageLoadEvent) {
 	}
 }
 
+/**
+ * Parse YAML frontmatter from markdown string
+ * @param text - markdown string
+ * @param opts - yaml load options
+ * @returns Object
+ */
 function parseYAMLMatter(text: string, opts: jsYaml.LoadOptions) {
 	const re = /^(-{3}(?:\n|\r)([\w\W]+?)(?:\n|\r)-{3})?([\w\W]*)*/
 	let results = re.exec(text)

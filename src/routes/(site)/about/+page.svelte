@@ -38,7 +38,7 @@
 <h2>SSGs I've tried</h2>
 
 <p>
-	Jekyll, GitBook, Hugo, Gatsby, mdBook, GitBook, VuePress, Docusaurus,
+	Jekyll, GitBook, Hugo, Gatsby, mdBook, GitBook, VuePress, Next.js, Docusaurus,
 	SvelteKit, ... who knows what the future holds ...
 </p>
 
