@@ -29,8 +29,9 @@ const config = {
 		// Also https://kit.svelte.dev/docs/adapters
 		adapter: adapter({
 			split: true,
-			// Use server-side rendering in Vercel's Node.js 18.x serverless runtime
-			runtime: 'nodejs18.x',
+			// Use server-side rendering in Vercel's Node.js serverless runtime
+			// https://vercel.com/docs/functions/runtimes/node-js/node-js-versions
+			runtime: 'nodejs24.x',
 		}),
 
 		alias: {
