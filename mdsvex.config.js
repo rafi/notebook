@@ -107,6 +107,8 @@ const langs = [
 	'java',
 	'javascript',
 	'json',
+	'json5',
+	'jsonc',
 	'log',
 	'lua',
 	'make',
@@ -116,10 +118,14 @@ const langs = [
 	'python',
 	'rust',
 	'shell',
+	'sql',
+	'ssh-config',
 	'svelte',
 	'swift',
+	'systemd',
 	'toml',
 	'typescript',
+	'viml',
 	'yaml',
 ]
 
