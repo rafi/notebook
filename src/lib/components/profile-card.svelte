@@ -1,14 +1,19 @@
 <script lang="ts">
 	import * as config from '$lib/config';
 
-	export let href: string;
+	interface Props {
+		href: string;
+		children?: import('svelte').Snippet;
+	}
+
+	let { href, children }: Props = $props();
 </script>
 
 <div class="profile">
 	<a {href}><img src={config.image} alt="Me" /></a>
 	<div class="info">
 		<h1>{config.name}</h1>
-		<p><slot /></p>
+		<p>{@render children?.()}</p>
 	</div>
 </div>
 

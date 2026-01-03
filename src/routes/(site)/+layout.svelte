@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { sineIn } from 'svelte/easing';
 	import { fly } from 'svelte/transition';
 
@@ -10,9 +10,9 @@
 	import '$styles/toc.css';
 	import '$styles/admonition.css';
 
-	export let data;
+	let { data, children } = $props();
 
-	$: presenting = data.url.endsWith('/slides');
+	let presenting = $derived(data.url.endsWith('/slides'));
 </script>
 
 <Header
@@ -23,7 +23,7 @@
 {#key data.url}
 	<main class:presenting in:fly={{ x: 50, duration: 150, easing: sineIn }}>
 		<div>
-			<slot />
+			{@render children?.()}
 		</div>
 	</main>
 {/key}
@@ -58,7 +58,7 @@
 	}
 
 	@media (max-width: 1250px) {
-		main:has(.toc) {
+		main:has(:global(.toc)) {
 			margin-left: 0;
 			margin-right: 0;
 		}

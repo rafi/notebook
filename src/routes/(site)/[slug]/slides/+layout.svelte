@@ -1,13 +1,18 @@
-<script>
+<script lang="ts">
 	// Reveal style-sheets
 	import 'reveal.js/dist/reveal.css';
 	import 'reveal.js/dist/theme/league.css';
 	import 'reveal.js/plugin/highlight/monokai.css';
 
 	import '$styles/reveal.css';
+	interface Props {
+		children?: import('svelte').Snippet;
+	}
+
+	let { children }: Props = $props();
 </script>
 
-<slot />
+{@render children?.()}
 
 <style>
 	/*

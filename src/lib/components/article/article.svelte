@@ -4,7 +4,12 @@
 	import { TableOfContents } from '$lib/components/toc';
 	import { ImagesIcon } from 'lucide-svelte';
 
-	export let data: { url: string } & ImportedFile;
+	interface Props {
+		data: ImportedFile;
+		url?: string | undefined;
+	}
+
+	let { data, url = undefined }: Props = $props();
 </script>
 
 <svelte:head>
@@ -41,7 +46,7 @@
 		</div>
 	{/if}
 
-	<svelte:component this={data.content} />
+	<data.content />
 </article>
 
 <TableOfContents />
