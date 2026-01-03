@@ -16,6 +16,7 @@
 		<link {...link?.attrs || {}} />
 	{/each}
 	<link rel="manifest" href="/manifest.json" />
+	<link rel="alternate" type="application/atom+xml" href="/rss.xml" />
 	<meta name="theme-color" content="#3eaf7c" />
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
