@@ -8,6 +8,7 @@
 	"single-h1": false,
 	"first-line-h1": false,
 	"first-heading-h1": false,
+	"no-hard-tabs": false,
 	"no-trailing-punctuation": false,
 	"no-trailing-spaces": true,
 	"no-multiple-blanks": true

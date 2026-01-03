@@ -6,23 +6,26 @@ icon_dir := static_dir + "/img/favicon"
 default:
 	@just --list --unsorted
 
+install:
+	pnpm install
+
 run:
-	npm run dev
+	pnpm run dev
 
 host:
 	#!/usr/bin/env bash
 	export VERCEL_GIT_COMMIT_REF="$(git rev-parse --abbrev-ref HEAD)"
 	export VERCEL_GIT_COMMIT_SHA="$(git rev-parse HEAD)"
-	npm run dev -- --host
+	pnpm run dev -- --host
 
 build:
-	npm run build
+	pnpm run build
 
 lint:
-	npm run lint
+	pnpm run lint
 
 preview:
-	npm run preview
+	pnpm run preview
 
 logo:
 	toilet -f roman -F crop --html 'rafi.' \
