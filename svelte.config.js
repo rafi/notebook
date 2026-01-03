@@ -10,7 +10,7 @@ import mdsvexOptions from './mdsvex.config.js';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-	extensions: ['.svelte', '.md', '.mdx'],
+	extensions: ['.svelte', '.md'],
 
 	preprocess: sequence([
 		vitePreprocess(),
