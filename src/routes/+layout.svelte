@@ -1,7 +1,9 @@
 <script lang="ts">
+	import { links } from 'unplugin-fonts/head';
 	import PageLoadSlide from '$lib/components/page-load-slide.svelte';
 
 	import '$styles/layout.css';
+	import 'unfonts.css';
 	interface Props {
 		children?: import('svelte').Snippet;
 	}
@@ -10,6 +12,9 @@
 </script>
 
 <svelte:head>
+	{#each links as link}
+		<link {...link?.attrs || {}} />
+	{/each}
 	<link rel="manifest" href="/manifest.json" />
 	<meta name="theme-color" content="#3eaf7c" />
 	<meta name="apple-mobile-web-app-capable" content="yes" />

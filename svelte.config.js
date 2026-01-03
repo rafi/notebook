@@ -40,6 +40,7 @@ const config = {
 		},
 	},
 
+	// https://github.com/sveltejs/vite-plugin-svelte/blob/main/docs/inspector.md
 	// vitePlugin: {
 	// 	inspector: {
 	// 		toggleKeyCombo: 'meta-shift',
