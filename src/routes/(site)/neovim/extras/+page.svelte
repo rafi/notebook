@@ -18,8 +18,7 @@
 </script>
 
 <div class="prose">
-	{@html `<style>${data.page.css.code}</style>`}
-	{@html data.page.html}
+	<data.content />
 
 	<section>
 		{#each Object.keys(categories) as category}

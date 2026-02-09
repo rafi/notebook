@@ -3,10 +3,11 @@ import { getNeovimExtrasPage } from '$lib/posts';
 
 export async function load() {
 	try {
+		const page = await getNeovimExtrasPage('index');
 		return {
-			page: (await getNeovimExtrasPage('index')).content.render(),
-		}
+			content: page.content,
+		};
 	} catch (e) {
-		error(404, (e as Error).message)
+		error(404, (e as Error).message);
 	}
 }

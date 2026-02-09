@@ -3,6 +3,5 @@
 </script>
 
 <div class="prose">
-	{@html `<style>${data.page.css.code}</style>`}
-	{@html data.page.html}
+	<data.content />
 </div>
