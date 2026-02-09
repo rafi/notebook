@@ -1,19 +1,17 @@
 <script lang="ts">
-	import { run } from 'svelte/legacy';
-
 	import type { Post } from '$lib/types';
 	import { formatDate } from '$lib/util/time';
 
 	let { data } = $props();
 
-	let categories: Record<string, Post[]> = $state({});
-
-	run(() => {
-		data.posts.map((p) => {
+	const categories = $derived.by(() => {
+		const cats: Record<string, Post[]> = {};
+		for (const p of data.posts) {
 			const category = p.slug.split('/')[1];
-			if (!categories[category]) categories[category] = [];
-			categories[category].push(p);
-		});
+			if (!cats[category]) cats[category] = [];
+			cats[category].push(p);
+		}
+		return cats;
 	});
 </script>
 

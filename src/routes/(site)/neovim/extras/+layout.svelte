@@ -2,10 +2,9 @@
 	import { PageNavigation } from '$lib/components/article';
 
 	let { data, children } = $props();
-	let slug: string = $derived(uri.join('/'));
-	let prefix: string | undefined = $derived(uri.shift());
-
 	let uri = $derived(data.url.replace(/^\//, '').split('/'));
+	let prefix: string | undefined = $derived(uri[0]);
+	let slug: string = $derived(uri.slice(1).join('/'));
 	
 	
 </script>

@@ -1,10 +1,6 @@
 <script lang="ts">
-	import { run } from 'svelte/legacy';
-
 	import { CopyIcon, CheckIcon } from 'lucide-svelte';
 
-
-	
 	interface Props {
 		lang?: string;
 		title?: string;
@@ -20,22 +16,21 @@
 		children
 	}: Props = $props();
 
-	let copyButton: HTMLButtonElement = $state();
-	let copiedTimeout: NodeJS.Timeout | undefined = $state();
+	let copyButton: HTMLButtonElement | undefined = $state();
 	let copied = $state(false);
 
 	function copy() {
-		const preElement = copyButton.nextElementSibling;
+		const preElement = copyButton?.nextElementSibling;
 		if (preElement instanceof HTMLElement) {
 			navigator.clipboard.writeText(preElement.innerText);
 			copied = true;
 		}
 	}
 
-	run(() => {
+	$effect(() => {
 		if (copied) {
-			clearTimeout(copiedTimeout);
-			copiedTimeout = setTimeout(() => (copied = false), 1000);
+			const t = setTimeout(() => (copied = false), 1000);
+			return () => clearTimeout(t);
 		}
 	});
 </script>

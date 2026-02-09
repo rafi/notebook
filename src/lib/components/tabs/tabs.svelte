@@ -1,7 +1,7 @@
 <script lang="ts" module>
 	import type { Writable } from 'svelte/store';
 	export type TabsContext = Writable<{
-		content: ReturnType<typeof createTabs>['elements']['content'];
+		content: any;
 		triggers: Map<string, string>;
 	}>;
 </script>
