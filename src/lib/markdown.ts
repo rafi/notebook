@@ -1,0 +1,123 @@
+/*
+import { unified } from 'unified'
+import fromMarkdown from 'remark-parse'
+import fromMarkdownToHtml from 'remark-rehype'
+import parseHtmlAndMarkdown from 'rehype-raw'
+import toHtml from 'rehype-stringify'
+import matter from 'gray-matter'
+
+// plugins
+import remarkGfm from 'remark-gfm'
+import remarkSmartypants from 'remark-smartypants'
+import remarkToc from 'remark-toc'
+import rehypeSlug from 'rehype-slug'
+import rehypePrism from 'rehype-prism-plus'
+import rehypeHeadings from 'rehype-autolink-headings'
+import rehypeCodeTitles from 'rehype-code-titles'
+// import { rehypeCopyCode, rehypeUnwrapImages } from './plugins'
+
+import * as config from './config'
+import type { Frontmatter } from '$lib/types'
+
+type ContentType = {
+	content: string
+	frontmatter: Frontmatter
+}
+
+function searchAndReplace(content: string, slug: string): string {
+	const embed = /{% embed src="(.*?)" title="(.*?)" %}/g
+	const video = /{% video src="(.*?)" %}/g
+	const image = /{% img src="(.*?)" alt="(.*?)" %}/g
+	const youtube = /{% youtube id="(.*?)" title="(.*?)" %}/g
+
+	return content
+		.replace(embed, (_, src, title) => {
+			return `
+				<iframe
+					title="${title}"
+					src="${src}"
+					loading="lazy"
+				></iframe>
+			`.trim()
+		})
+		.replace(video, (_, src) => {
+			return `
+				<video controls>
+					<source
+						src="${config.imageBaseURL}/${slug}/images/${src}"
+						type="video/mp4"
+					/>
+				</video>
+			`.trim()
+		})
+		.replace(image, (_, src, alt) => {
+			return `
+				<img
+					src="${config.imageBaseURL}/${slug}/images/${src}"
+					alt="${alt}"
+					loading="lazy"
+				/>
+			`.trim()
+		})
+		.replace(youtube, (_, id, title) => {
+			return `
+				<lite-youtube videoid="${id}" playlabel="${title}"></lite-youtube>
+			`.trim()
+		})
+}
+
+export async function markdownToHTML(markdown: string): Promise<ContentType> {
+	const { content, data } = matter(markdown)
+
+	// I could use `compile` from mdsvex to get
+	// Svelte components working inside Markdown
+	const result = await unified()
+		.use(fromMarkdown)
+		.use([
+			// GitHub flavored Markdown
+			remarkGfm,
+
+			// Typographic punctuation like real quotes
+			remarkSmartypants,
+
+			// Generates table of contents from headings
+			// `tight` removes <p> from <li> when nested
+			[remarkToc, { tight: true }],
+		])
+
+		// To be able to parse a mix of Markdown and HTML
+		// `remark-rehype` is required with `rehype-raw`
+		// https://github.com/rehypejs/rehype-raw
+		.use(fromMarkdownToHtml, { allowDangerousHtml: true })
+
+		// Adds code titles above code blocks
+		.use(rehypeCodeTitles)
+
+		// Unique identifier for headings
+		.use(rehypeHeadings)
+
+			// Links for headings
+		.use(rehypeSlug)
+
+		// Adds syntax highlight, line numbers and higlight
+		.use(rehypePrism)
+
+		// For further processing turn content into a regular syntax tree
+		.use(parseHtmlAndMarkdown)
+
+		// Remove paragraph around images
+		// .use(rehypeUnwrapImages)
+
+		// Copy code to clipboard
+		// .use(rehypeCopyCode)
+
+		.use(toHtml)
+		.process(searchAndReplace(content, data.slug))
+	const processedMarkdown = result.value
+
+	return {
+		content: processedMarkdown as string,
+		frontmatter: data as Frontmatter,
+	}
+}
+*/

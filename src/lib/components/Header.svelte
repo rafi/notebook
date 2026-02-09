@@ -57,6 +57,14 @@
 				<li aria-current={isBlog ? 'page' : undefined}>
 					<a href="/blog">Blog</a>
 				</li>
+				<li aria-current={pathname.startsWith('/neovim') ? 'page' : undefined}>
+					<a href="/neovim">Neovim</a>
+				</li>
+				<!--
+				<li aria-current={pathname.startsWith('/wiki') ? 'page' : undefined}>
+					<a href="/wiki">Wiki</a>
+				</li>
+				-->
 			</ul>
 		</nav>
 	{/if}
@@ -197,6 +205,10 @@
 	.wrapper.fixed ul {
 		background: none;
 		border: 0;
+		/*
+		box-shadow: 0 0 2px 1px hsl(0 0% 0% / 20%);
+		backdrop-filter: blur(20px);
+		*/
 		transition:
 			background-color 0.3s ease,
 			color 0.3s ease;

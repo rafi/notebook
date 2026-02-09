@@ -12,6 +12,8 @@ export async function GET() {
 	const paths = import.meta.glob(
 		[
 			'../../../content/blog/**/*.md',
+			'../../../content/neovim/blog/**/*.md',
+			// '../../../content/wiki/**/*.md',
 		],
 		{ eager: true }
 	)
