@@ -33,7 +33,7 @@
 		"mdsvex": "^0.12.6",
 		"prettier": "^3.7.4",
 		"prettier-plugin-svelte": "^3.4.1",
-		"svelte": "^5.45.6",
+		"svelte": "^5.53.0",
 		"svelte-check": "^4.3.4",
 		"typescript": "^5.9.3",
 		"unplugin-fonts": "^1.4.0",
