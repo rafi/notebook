@@ -50,7 +50,7 @@
 		"js-yaml": "^4.1.1",
 		"just-camel-case": "^6.2.0",
 		"lucide-svelte": "^0.562.0",
-		"npm": "^11.7.0",
+		"npm": "^11.10.1",
 		"rehype-autolink-headings": "^7.1.0",
 		"rehype-rewrite": "^4.0.4",
 		"rehype-slug": "^6.0.0",
