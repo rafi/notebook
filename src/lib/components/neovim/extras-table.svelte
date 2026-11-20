@@ -40,18 +40,25 @@ so without it the full table shows.
 		);
 	});
 
-	// Rows grouped by category, in the order posts come (sorted by name).
-	// Posts without a category (core plugins) form one group without heading.
+	// Rows grouped by category, in the order each category first appears
+	// (posts come sorted by name). Posts without a category (core plugins)
+	// form one group without heading.
 	let groups = $derived.by(() => {
-		const out: [string, Post[]][] = [];
+		const order: string[] = [];
+		const byKey: Record<string, Post[]> = {};
 		for (const post of shown) {
 			const key = post.category ?? '';
-			const last = out.at(-1);
-			if (last && last[0] === key) last[1].push(post);
-			else out.push([key, [post]]);
+			if (!byKey[key]) {
+				byKey[key] = [];
+				order.push(key);
+			}
+			byKey[key].push(post);
 		}
-		return out;
+		return order.map((key) => [key, byKey[key]] as const);
 	});
+
+	// Description text and `code` spans, alternating.
+	const spans = (text = '') => text.split('`');
 </script>
 
 {#if filterable && hydrated}
@@ -80,16 +87,26 @@ so without it the full table shows.
 				</button>
 			{/each}
 		</div>
-		<p class="count">{shown.length} extras</p>
+		<p class="count" role="status">
+			{shown.length}
+			{shown.length === 1 ? 'extra' : 'extras'}
+		</p>
 	</div>
 {/if}
 
 <table>
-	<tbody>
-		{#each groups as [group, rows] (group)}
+	<thead class="visually-hidden">
+		<tr>
+			<th scope="col">Name</th>
+			<th scope="col">Description</th>
+			{#if showDefault}<th scope="col">Enabled by default</th>{/if}
+		</tr>
+	</thead>
+	{#each groups as [group, rows] (group)}
+		<tbody>
 			{#if group}
 				<tr class="category" id={group}>
-					<th colspan={showDefault ? 3 : 2}>{label(group)}</th>
+					<th colspan={showDefault ? 3 : 2} scope="rowgroup">{label(group)}</th>
 				</tr>
 			{/if}
 			{#each rows as post (post.slug)}
@@ -103,7 +120,11 @@ so without it the full table shows.
 								)}{:else}{post.title}{/if}
 						</a>
 					</td>
-					<td>{post.description}</td>
+					<td>
+						{#each spans(post.description) as part, i (i)}
+							{#if i % 2}<code>{part}</code>{:else}{part}{/if}
+						{/each}
+					</td>
 					{#if showDefault}
 						<td class="default">
 							{#if post.default_enabled}<span title="Enabled by default">
@@ -113,8 +134,8 @@ so without it the full table shows.
 					{/if}
 				</tr>
 			{/each}
-		{/each}
-	</tbody>
+		</tbody>
+	{/each}
 </table>
 
 <style>
@@ -172,6 +193,10 @@ so without it the full table shows.
 		padding: 0.3rem 0.5rem;
 		border-bottom: 1px solid var(--border-color);
 		vertical-align: top;
+	}
+
+	td code {
+		font-size: inherit;
 	}
 
 	td.name {

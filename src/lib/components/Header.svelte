@@ -45,7 +45,7 @@
 	</div>
 
 	{#if nav}
-		<nav>
+		<nav aria-label="Site">
 			{#if title}{title}{/if}
 			<ul>
 				<li aria-current={pathname === '/' ? 'page' : undefined}>

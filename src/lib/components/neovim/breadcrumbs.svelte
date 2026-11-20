@@ -28,7 +28,7 @@ extra's category links to its heading in the extras table.
 {#if crumbs.length > 1}
 	<nav class="crumbs" aria-label="Breadcrumbs">
 		{#each crumbs as crumb, i (i)}
-			{#if i > 0}<span class="sep">/</span>{/if}
+			{#if i > 0}<span class="sep" aria-hidden="true">/</span>{/if}
 			{#if crumb.href}
 				<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -- href is built with resolve() -->
 				<a href={crumb.href}>{crumb.name}</a>
