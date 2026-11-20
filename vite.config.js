@@ -1,7 +1,6 @@
 import adapter from '@sveltejs/adapter-vercel';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import { mdsvex } from 'mdsvex';
-import { preprocessMeltUI, sequence } from '@melt-ui/pp';
 import mdsvexOptions from './mdsvex.config.js';
 import { sveltekit } from '@sveltejs/kit/vite';
 import { enhancedImages } from '@sveltejs/enhanced-img';
@@ -13,12 +12,11 @@ export default defineConfig({
 		enhancedImages(),
 		sveltekit({
 			extensions: ['.svelte', '.md'],
-			preprocess: sequence([
+			preprocess: [
 				vitePreprocess(),
 				// mdsvex 0.x types predate Svelte 5's optional `filename`.
 				/** @type {import('svelte/compiler').PreprocessorGroup} */ (mdsvex(mdsvexOptions)),
-				preprocessMeltUI(),
-			]),
+			],
 			adapter: adapter({
 				split: true,
 				// Use server-side rendering in Vercel's Node.js serverless runtime

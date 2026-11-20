@@ -1,10 +1,9 @@
 <script lang="ts">
 	import Tree from './tree.svelte';
-	import {
-		type TableOfContents,
-		type TableOfContentsElements,
-		type TableOfContentsItem,
-		melt,
+	import type {
+		TableOfContents,
+		TableOfContentsElements,
+		TableOfContentsItem,
 	} from '@melt-ui/svelte';
 
 	interface Props {
@@ -54,7 +53,8 @@
 					class={'list-item text-muted-foreground ' +
 						($isActive(heading.id) && 'active ')}
 				>
-					<a href="#{heading.id}" use:melt={$item(heading.id)} use:hoverAction>
+					<a href="#{heading.id}" {...$item(heading.id)} use:item use:hoverAction>
+						<!-- eslint-disable-next-line svelte/no-at-html-tags -- heading markup from our own posts -->
 						{@html nodeWithoutSpan}
 					</a>
 				</div>
