@@ -6,15 +6,22 @@ categories: [ containers ]
 search:
   keywords: ['docker', 'kubernetes', 'containers', 'istio', 'ingress']
 ---
+
+[changelog]: https://github.com/kubernetes/kubernetes/tree/master/CHANGELOG
+
+[clusterlint]: https://github.com/digitalocean/clusterlint
+
 # Kubernetes Upgrade Notes
 
 ## Prerequisite
 
 1. Upgrade to the latest minor release. e.g. you are using 1.9.3, upgrade to
    latest 1.9.x
-2. Read the [CHANGELOG] of the target version. Watch out for sections:
-  * Action Required
-  * Deprecations and Removals
+2. Read the [CHANGELOG][] of the target version. Watch out for sections:
+
+- Action Required
+- Deprecations and Removals
+
 3. Consider etcd backup.
 
 ## Upgrade
@@ -28,23 +35,23 @@ search:
 
 ## 1.14 -> 1.15 Case-study
 
-For target version [CHANGELOG], the minimal MUST read:
+For target version [CHANGELOG][], the minimal MUST read:
 
 - [Known Issues](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.15.md#known-issues)
 - [Urgent Upgrade Notes](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.15.md#urgent-upgrade-notes)
 - [Deprecations and Removals](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.15.md#deprecations-and-removals)
 
-There's also searchable release notes: https://relnotes.k8s.io/?releaseVersions=1.15.0
+There's also searchable release notes: <https://relnotes.k8s.io/?releaseVersions=1.15.0>
 
 Deprecated API versions in 1.15:
 
-- **Ingress**: migrate to `networking.k8s.io/v1beta1`
-- **NetworkPolicy**: migrate to `networking.k8s.io/v1`
-- **PodSecurityPolicy**: migrate to `policy/v1beta1`
-- **DaemonSet**: migrate to `apps/v1`
-- **Deployment**: migrate to `apps/v1`
-- **ReplicaSet**: migrate to `apps/v1`
-- **PriorityClass**: migrate to `scheduling.k8s.io/v1`
+- *Ingress*: migrate to `networking.k8s.io/v1beta1`
+- *NetworkPolicy*: migrate to `networking.k8s.io/v1`
+- *PodSecurityPolicy*: migrate to `policy/v1beta1`
+- *DaemonSet*: migrate to `apps/v1`
+- *Deployment*: migrate to `apps/v1`
+- *ReplicaSet*: migrate to `apps/v1`
+- *PriorityClass*: migrate to `scheduling.k8s.io/v1`
 
 Check currently used objects:
 
@@ -72,14 +79,11 @@ kubectl get priorityclasses.scheduling.k8s.io -A
 
 ## Cluster List
 
-DigitalOcean has a CLI tool, [clusterlint] and a knowledge-base for common
+DigitalOcean has a CLI tool, [clusterlint][] and a knowledge-base for common
 issues & fixes:
-https://www.digitalocean.com/docs/kubernetes/resources/clusterlint-errors/
+<https://www.digitalocean.com/docs/kubernetes/resources/clusterlint-errors/>
 
 ## Resources
 
-- https://www.tauceti.blog/post/kubernetes-the-not-so-hard-way-with-ansible-upgrading-kubernetes/
-- https://www.tauceti.blog/post/kubernetes-upgrade-nodes-1.14-1.15/
-
-[CHANGELOG]: https://github.com/kubernetes/kubernetes/tree/master/CHANGELOG
-[clusterlint]: https://github.com/digitalocean/clusterlint
+- <https://www.tauceti.blog/post/kubernetes-the-not-so-hard-way-with-ansible-upgrading-kubernetes/>
+- <https://www.tauceti.blog/post/kubernetes-upgrade-nodes-1.14-1.15/>

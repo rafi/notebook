@@ -13,13 +13,18 @@ tags:
 Running `systemctl`, optionally specify `--system` or `--user`.
 
 ## Services
+
 ## Sockets
+
 ## Control
+
 ## List
+
 See everything systemd controls: `systemctl` or `systemctl --user`. Add `--all`
 to see everything, running or not.
 
 List all available services:
+
 ```sh
 # System-wide:
 sudo systemctl list-units -t service --all
@@ -29,11 +34,13 @@ systemctl --user list-units -t service --all
 ```
 
 Listing running processes with `ps` and cgroups:
+
 ```sh
 ps xawf -eo pid,user,cgroup,args
 ```
 
 ## Analyze
+
 Like `systemctl`, optionally specify `--system` or `--user`.
 
 - Boot process duration: `systemd-analyze`
@@ -47,7 +54,9 @@ Like `systemctl`, optionally specify `--system` or `--user`.
 - Follow logs in real-time: `journalctl -f`
 
 # Appendix: `hostnamectl`
+
 Nifty "who's this computer?".
+
 ```
 $ hostnamectl
 

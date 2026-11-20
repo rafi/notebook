@@ -8,7 +8,7 @@ search:
   keywords: [ docker, containers, develop ]
 ---
 
-:::info Please note
+:::info[Please note]
 This article guide is intended for advanced users with knowledge of creating and
 running Docker containers locally. If you are new to containers or Docker,
 please refer to the [Docker & K8s 101](./docker-and-kubernetes-101/) article.
@@ -179,18 +179,18 @@ layers into one.
 ### 10 Tips for Better `Dockerfile`s
 
 1. Combine `RUN` statements.
-1. Clean after yourself.
-1. Don't copy your entire application directory in one line. Separate the
+2. Clean after yourself.
+3. Don't copy your entire application directory in one line. Separate the
    dependencies before.
-1. Use `.dockerignore` file to reduce the context Docker needs to copy.
-1. Use `COPY` instead of `ADD`. `COPY` is simple, `ADD` has some magic
+4. Use `.dockerignore` file to reduce the context Docker needs to copy.
+5. Use `COPY` instead of `ADD`. `COPY` is simple, `ADD` has some magic
    under-hood.
-1. Create a non-root user. A good preventive security practice.
-1. Don't run multiple services in one container.
-1. Don't use external services during build e.g. database migration.
-1. Declare cheap commands as late as possible (`EXPOSE`, `ENV`, `ARG`, etc.).
-1. Pin software versions. Never, ever, use `:latest` tags. It can lead to
-   unexpected disasters.
+6. Create a non-root user. A good preventive security practice.
+7. Don't run multiple services in one container.
+8. Don't use external services during build e.g. database migration.
+9. Declare cheap commands as late as possible (`EXPOSE`, `ENV`, `ARG`, etc.).
+10. Pin software versions. Never, ever, use `:latest` tags. It can lead to
+    unexpected disasters.
 
 ## 3rd-Party Service Dependencies and Docker Compose
 
@@ -199,7 +199,7 @@ MySQL, PostgreSQL, Redis, Elasticsearch, Kafka, RabbitMQ etc.
 
 Running all these services on your personal workstation can be very cumbersome
 and complex. Just imagine project A needs MongoDB 2.x and project B needs
-MongoDB 4.x -- this used to be a real pain until Docker made it real easy.
+MongoDB 4.x --- this used to be a real pain until Docker made it real easy.
 
 Docker-compose is an invaluable tool for development, it defines a composition
 of services that can be created & destroyed in matter of seconds. Let's review
@@ -618,7 +618,7 @@ to create a new service that will communicate with our existing Python service.
 Before continuing, let's stop any running containers and create a `python`
 directory and move `Dockerfile` and `app.py` there:
 
-:::info Directory structure
+:::info[Directory structure]
 
 ```bash {8}
 $ docker-compose down
@@ -737,23 +737,23 @@ load-balancing and will match our Python container internal network IP.
 
 ## Lessons Learned
 
-* Containers can improve our development work-flow. From dependency isolation
+- Containers can improve our development work-flow. From dependency isolation
   and caching, to spinning up complex distributed application schemas locally.
-* Leveraging Docker cache layers is a tremendous time-saver. Puritans won't
+- Leveraging Docker cache layers is a tremendous time-saver. Puritans won't
   argue otherwise in aspect of day-to-day development.
-* Combining `RUN` commands in the project's `Dockerfile` and cleaning garbage
+- Combining `RUN` commands in the project's `Dockerfile` and cleaning garbage
   _in the same line_ will reduce image size significantly.
-* Using a `docker-compose.yml` file in a every project introduces a
+- Using a `docker-compose.yml` file in a every project introduces a
   reproducible set of distributed 3rd-party services your project needs during
   development. New developer ramp-up time decreases dramatically, and other
   teams will quickly spawn your project up to freely _use_.
-* Containers are not only for production. They offer a separate dimension of
+- Containers are not only for production. They offer a separate dimension of
   abilities & features that can prove worthy for development & debugging cycles.
-* `make` is an extremely popular build automation tool pre-installed in many
+- `make` is an extremely popular build automation tool pre-installed in many
   Unix environments. It can also be used as a shortcut recipe for installing,
   building, and distributing in each project as a `Makefile` file.
 
 ## Related Articles
 
-* [Docker & Kubernetes 101](./docker-and-kubernetes-101/)
-* [Kubernetes & Ingress Workshop](./kubernetes-ingress-istio-workshop)
+- [Docker & Kubernetes 101](./docker-and-kubernetes-101/)
+- [Kubernetes & Ingress Workshop](./kubernetes-ingress-istio-workshop)

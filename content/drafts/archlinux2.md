@@ -8,6 +8,7 @@ tags:
 - linux
 - pacman
 ---
+
 # ArchLinux Installation
 
 ## Preparation
@@ -28,12 +29,12 @@ Boot from USB/SD card and establish internet connection.
 
 Partition table:
 
-| Device    | Size | Type
-|-----------|------|------------
-| /dev/sda1 | 512M | EFI System
-| /dev/sda2 |  30G | Linux root (x86-64)
-| /dev/sda2 |   4G | Linux swap
-| /dev/sda2 | 897G | Linux home
+| Device | Size | Type |
+| --- | --- | --- |
+| /dev/sda1 | 512M | EFI System |
+| /dev/sda2 | 30G | Linux root (x86-64) |
+| /dev/sda2 | 4G | Linux swap |
+| /dev/sda2 | 897G | Linux home |
 
 ```bash
 fdisk /dev/sda
@@ -172,30 +173,6 @@ yay -S tmux-mem-cpu-load-git tmux-xpanes tidy-html5-git
 yay -S ttyrec ttyd icdiff git-cal-git git-extras
 yay -S unversal-ctags-git yaml2json
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 - git-extras-git (aur)
 - vim-spell-en

@@ -2,16 +2,17 @@
 title: Archey3 - system information in the terminal
 date: 2018-01-25
 ---
+
 # Archey3
 
 System information in the terminal.
 
 ## Installation
 
-| OS        |                       |
-|-----------|-----------------------|
-| Archlinux | `pacman -S archey3`   |
-| macOS     | `brew install archey` |
+| OS |  |
+| --- | --- |
+| Archlinux | `pacman -S archey3` |
+| macOS | `brew install archey` |
 
 ## Screenshot
 

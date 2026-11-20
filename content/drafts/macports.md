@@ -4,16 +4,17 @@ date: '2018-09-30'
 search:
   keywords: ['osx', 'provision', 'mac', 'macports']
 ---
+
 # Macports
 
 <!-- vim-markdown-toc GFM -->
 
-* [Base Ports](#base-ports)
-* [Custom Ports](#custom-ports)
-* [Defaults](#defaults)
-* [Python Utilities](#python-utilities)
-* [Development Environments](#development-environments)
-  * [Apache 2.2, PHP 5.6, and MySQL 5.5 or Percona](#apache-22-php-56-and-mysql-55-or-percona)
+- [Base Ports](#base-ports)
+- [Custom Ports](#custom-ports)
+- [Defaults](#defaults)
+- [Python Utilities](#python-utilities)
+- [Development Environments](#development-environments)
+  - [Apache 2.2, PHP 5.6, and MySQL 5.5 or Percona](#apache-22-php-56-and-mysql-55-or-percona)
 
 <!-- vim-markdown-toc -->
 
@@ -59,7 +60,7 @@ by default to distinguish them from the BSD commands. If you want to use
 the GNU tools by default, add this directory to the front of your PATH:
 `/opt/local/libexec/gnubin/`
 
-To use bash completion, add the following lines at the end of your .bash_profile:
+To use bash completion, add the following lines at the end of your .bash\_profile:
 
 ```bash
   if [ -f /opt/local/etc/profile.d/bash_completion.sh ]; then
@@ -103,7 +104,7 @@ pip3 install --user Pygments python-mpd2 pipdeptree proselint yamllint
 
 ### Apache 2.2, PHP 5.6, and MySQL 5.5 or Percona
 
-First disable built-in Apache: _System Preferences_ **->** _Sharing_
+First disable built-in Apache: _System Preferences_ *->* _Sharing_
 and uncheck the "Personal Web sharing". Or, from terminal:
 
 ```bash

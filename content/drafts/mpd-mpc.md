@@ -14,11 +14,12 @@ tags:
 - musicpd
 ---
 
-MPD and MPC
----
+## MPD and MPC
+
 Instal via Macports or compile manually.
 
 ### Macports
+
 ```sh
 sudo port install mpd mpc
 
@@ -27,7 +28,8 @@ sudo port load mpd
 ```
 
 ### Compile `mpd`
-Download `mpd` from http://www.musicpd.org/download.html
+
+Download `mpd` from <http://www.musicpd.org/download.html>
 
 ```sh
 sudo port install boost icu sqlite3 yajl libmpdclient libsamplerate
@@ -51,7 +53,8 @@ make install
 ```
 
 ### Compile `mpc`
-Download `mpc` from http://www.musicpd.org/clients/mpc/
+
+Download `mpc` from <http://www.musicpd.org/clients/mpc/>
 
 ```sh
 ./configure \
@@ -62,8 +65,8 @@ Download `mpc` from http://www.musicpd.org/clients/mpc/
 make install
 ```
 
-Compile `mpdscribble`
----
+## Compile `mpdscribble`
+
 ```sh
 git clone git://git.musicpd.org/master/mpdscribble.git
 cd mpdscribble
@@ -71,8 +74,8 @@ cd mpdscribble
 make install
 ```
 
-Compile `ympd`
----
+## Compile `ympd`
+
 ```sh
 git clone git://github.com/notandy/ympd.git
 cd ympd
@@ -83,12 +86,11 @@ make
 make install
 ```
 
-Compile `ncmpcpp`
----
+## Compile `ncmpcpp`
+
 ```sh
 port install boost
 env LIBS=-L/opt/local/lib BOOST_LIB_SUFFIX="-mt" \
   CPPFLAGS=-I/opt/local/include LDFLAGS=-s \
   ./configure --prefix=/opt/local
 ```
-

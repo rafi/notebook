@@ -12,17 +12,22 @@ tags:
 As Root:
 
 ## Add swap
-https://www.digitalocean.com/community/tutorials/how-to-add-swap-on-ubuntu-12-04
+
+<https://www.digitalocean.com/community/tutorials/how-to-add-swap-on-ubuntu-12-04>
 
 ## Set hostname
+
 ```
 echo "plato" > /etc/hostname
 hostname -F /etc/hostname
 ```
-If `/etc/default/dhcpcd` exists, disable "#SET_HOSTNAME"
+
+If `/etc/default/dhcpcd` exists, disable "#SET\_HOSTNAME"
 
 ## Update /etc/hosts
+
 For example:
+
 ```
 127.0.0.1       localhost.localdomain   localhost
 127.0.1.1       ubuntu
@@ -30,12 +35,15 @@ For example:
 ```
 
 ## Set timezone
+
 For example, UTC:
+
 ```
 ln -sf /usr/share/zoneinfo/UTC /etc/localtime
 ```
 
 ## Update and Add Users
+
 ```
 apt-get update
 apt-get upgrade --show-upgraded
@@ -54,6 +62,7 @@ useradd -m -G developers johnny -s /bin/bash
 ```
 
 ## SSH Keys
+
 ```
 cd ~
 mkdir .ssh
@@ -67,6 +76,7 @@ vim authorized_keys
 ```
 
 ## SSHD
+
 ```
 vim /etc/ssh/sshd_config
 # Change settings for security
@@ -80,6 +90,7 @@ service ssh restart
 ```
 
 ## Sudoers
+
 ```
 # Edit sudoers configuration
 vim /etc/sudoers
@@ -92,6 +103,7 @@ vim /etc/sudoers
 ```
 
 ## Software
+
 ```
 # Install Web stack
 apt-get install apache2 php5 libapache2-mod-php5 php5-curl php5-gd php5-mcrypt php5-memcache php5-sqlite php5-tidy php5-xmlrpc php5-json sqlite3
@@ -118,6 +130,7 @@ apt-get install libsqlite3-dev make
 ```
 
 ## SMTP
+
 ```
 apt-get install msmtp ca-certificates
 
@@ -157,6 +170,7 @@ vim /etc/logrotate.d/msmtp
 ```
 
 ## PostgreSQL
+
 ```
 su - postgres createuser -s your-user-name
 su - postgres createuser -D -P app-name-user
@@ -170,6 +184,7 @@ GRANT ALL PRIVILEGES ON DATABASE app to user;
 ```
 
 ## Apache
+
 ```
 a2enmod rewrite
 a2enmod expires
@@ -182,7 +197,9 @@ service apache2 restart
 ```
 
 ## Git User
+
 Create a user for git repositories:
+
 ```
 useradd -r --shell /usr/bin/git-shell -c 'git version control' -m --home-dir /home/git git
 usermod -a -G developers git
@@ -192,16 +209,21 @@ cp -r /usr/share/doc/git/contrib/git-shell-commands /home/git/
 chmod u+x /home/git/git-shell-commands/{list,help} -R
 chown -R git:git git-shell-commands
 ```
+
 Follow _SSH Keys_ and add public keys for users with access to git repositories
 
 ## Setup
+
 Update software related commands
+
 ```
 updatedb
 ```
 
 ## User configuration
+
 Login as your regular user and configure software:
+
 ```
 # Create a ranger filescope config for your user
 ranger --copy-config=scope
@@ -210,7 +232,9 @@ ranger --copy-config=scope
 # Project Setup
 
 ## Git Repository
+
 Create a new detached git repo to push deploys:
+
 ```
 sudo mkdir /srv/http/app
 sudo chown git:developers /srv/http/app
@@ -238,7 +262,9 @@ sudo chown -R git:developers app.git
 ```
 
 ## Apache vhost
+
 Create a new host for your domain app:
+
 ```
 vim /etc/apache2/sites-available/app.conf
 cd /etc/apache2/sites-enabled
@@ -246,7 +272,9 @@ sudo ln -s ../sites-available/app.conf app.conf
 ```
 
 ## Post-push setup
+
 After pushing the first time:
+
 ```
 cd /srv/http/app
 sudo chgrp -R developers .

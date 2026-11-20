@@ -42,4 +42,4 @@ the hard disk size. Since I'm using the external hard disk solely as a storage,
 I set this to 0 so I can also use those 5% for storage. The `-L` option is for
 labeling the filesystem.
 
-Source: http://blag.borap.net/2011/08/10/formatting-an-external-hard-disk-with-ext4/
+Source: <http://blag.borap.net/2011/08/10/formatting-an-external-hard-disk-with-ext4/>

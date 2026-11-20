@@ -21,13 +21,13 @@ git config core.bare false
 git config core.worktree /home/rafi   ; NO TRAILING SLASH!
 ```
 
-Make sure to create ~/.gitignore that will at least include `/.config/config.git` among other garbage you don't want collected by Git.
+Make sure to create \~/.gitignore that will at least include `/.config/config.git` among other garbage you don't want collected by Git.
 
-Prepare an alias in ~/.bash_aliases or ~/.bashrc:
+Prepare an alias in \~/.bash\_aliases or \~/.bashrc:
 
 ```bash
 alias gith='git --git-dir=/home/rafi/.config/config.git'
 ```
 
-Now cd into your home folder, and run `gith status`, notice the *h* ;).
+Now cd into your home folder, and run `gith status`, notice the _h_ ;).
 You can now start treating your home folder like a Git repository, using `gith`.

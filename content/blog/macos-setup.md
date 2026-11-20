@@ -6,25 +6,26 @@ categories: ['macos']
 search:
   keywords: ['osx', 'provision', 'mac', 'homebrew']
 ---
+
 # Mac OSX provisioning
 
 <!-- vim-markdown-toc GFM -->
 
-* [Xcode](#xcode)
-* [Homebrew](#homebrew)
-* [Sensible hacker defaults](#sensible-hacker-defaults)
-* [Homebrew](#homebrew)
-* [Python Utilities](#python-utilities)
-* [NodeJS Utilities](#nodejs-utilities)
-* [Compile `neovim`](#compile-neovim)
+- [Xcode](#xcode)
+- [Homebrew](#homebrew)
+- [Sensible hacker defaults](#sensible-hacker-defaults)
+- [Homebrew](#homebrew)
+- [Python Utilities](#python-utilities)
+- [NodeJS Utilities](#nodejs-utilities)
+- [Compile `neovim`](#compile-neovim)
 
 <!-- vim-markdown-toc -->
 
 ## Xcode
 
-* Install Xcode
-* Install Xcode command line tools: `xcode-select --install`
-* Agree to Xcode license in Terminal: `sudo xcodebuild -license`
+- Install Xcode
+- Install Xcode command line tools: `xcode-select --install`
+- Agree to Xcode license in Terminal: `sudo xcodebuild -license`
 
 ## Sensible hacker defaults
 

@@ -28,17 +28,17 @@ sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.serve
 
 You might need to reboot your laptop after this. 🙄
 
-Check-out https://mths.be/macos for awesome ways to configure your macOS.
+Check-out <https://mths.be/macos> for awesome ways to configure your macOS.
 
 ---
 
 ## Most Frequently Used Shells
 
-1. **Bash** — (Bourne Again Shell) Default on many Linux distros.
-2. **Tcsh** — Enhanced C shell.
-3. **Ksh** — Korn shell.
-4. **Zsh** — Incorporates many features of other Unix/GNU Linux shells.
-5. **Fish** — Friendly interactive shell.
+1. *Bash* — (Bourne Again Shell) Default on many Linux distros.
+2. *Tcsh* — Enhanced C shell.
+3. *Ksh* — Korn shell.
+4. *Zsh* — Incorporates many features of other Unix/GNU Linux shells.
+5. *Fish* — Friendly interactive shell.
 
 ---
 
@@ -48,7 +48,7 @@ Since around 2020, apple has switched to ZSH.
 
 This tutorial will show-case both Bash and ZSH crafting.
 
-Follow **ONLY** the parts that are relevant to your shell.
+Follow *ONLY* the parts that are relevant to your shell.
 
 ---
 
@@ -153,10 +153,10 @@ LH MOUSE.COM /Y
 - `~/.*profile` — set the environment for login shells.
 - `~/.*rc` — set the environment for interactive shells.
 
-| Bash             | ZSH            |
-|------------------|----------------|
-| `.bash_profile`  | `.zprofile`    |
-| `.bashrc`        | `.zshrc`       |
+| Bash | ZSH |
+| --- | --- |
+| `.bash_profile` | `.zprofile` |
+| `.bashrc` | `.zshrc` |
 
 ---
 
@@ -164,8 +164,8 @@ LH MOUSE.COM /Y
 
 Bash behaviour can be altered depending on how it is invoked. If Bash is
 spawned by login in a TTY, an SSH daemon, or similar, it is considered
-a **login shell**. This mode can also be engaged using the `-l`/`--login`
-option. Bash is considered an **interactive shell** when its standard input
+a *login shell*. This mode can also be engaged using the `-l`/`--login`
+option. Bash is considered an *interactive shell* when its standard input
 and error are connected to a terminal, and it is not started with `-c` option.
 
 All interactive shells source `~/.bashrc`, while interactive _login_ shells
@@ -192,7 +192,7 @@ open -a 'Visual Studio Code.app'  # (6)
 
 ## Bash: Fresh New Shell Init Scripts
 
-Lets backup our .bashrc and .bash_profile and start a new fresh beginning.
+Lets backup our .bashrc and .bash\_profile and start a new fresh beginning.
 
 ```bash
 cd ~
@@ -366,7 +366,7 @@ export EDITOR="$VISUAL"
 export PAGER=less
 ```
 
-ℹ️ Generate new token for Homebrew at https://github.com/settings/tokens
+ℹ️ Generate new token for Homebrew at <https://github.com/settings/tokens>
 
 ---
 
@@ -734,7 +734,7 @@ But I want it now.™
 
 ---
 
-## Bash: Use the PROMPT_COMMAND!
+## Bash: Use the PROMPT\_COMMAND!
 
 Preserve bash history in multiple terminal windows:
 
@@ -756,7 +756,7 @@ Now open a few terminals, and test it!
 
 ---
 
-## ZSH: Use SHARE_HISTORY!
+## ZSH: Use SHARE\_HISTORY!
 
 Replace `setopt INC_APPEND_HISTORY` in `~/.zshrc` with this:
 
@@ -788,7 +788,7 @@ colors in which the filenames are to be displayed.
 
 ---
 
-## Find a Cool LS_COLORS Theme
+## Find a Cool LS\_COLORS Theme
 
 [Find a cool theme](https://www.google.com/search?q=cool+LS_COLORS)
 on the internet and move it to `~/.dircolors`
@@ -800,7 +800,7 @@ mv .dir_colors ~/.config/bash/dircolors
 
 ---
 
-## Apply LS_COLORS
+## Apply LS\_COLORS
 
 Append to your `~/.bashrc`
 
@@ -829,7 +829,7 @@ lsd -al
 ```
 
 To turn `lsd` on by default, append to `~/.zaliases` or `~/.bash_aliases`
-**AFTER** the line `hash gls 2>/dev/null && LSCMD='gls'`:
+*AFTER* the line `hash gls 2>/dev/null && LSCMD='gls'`:
 
 ```bash
 hash lsd 2>/dev/null && LSCMD='lsd'

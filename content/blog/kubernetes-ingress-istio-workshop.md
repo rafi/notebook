@@ -74,7 +74,7 @@ Use the [Chocolaty](https://chocolatey.org/) package manager:
 choco install kubernetes-cli kubernetes-helm
 ```
 
-https://github.com/kubernetes/minikube/releases
+<https://github.com/kubernetes/minikube/releases>
 
 Download the minikube-windows-amd64.exe file,
 rename it to minikube.exe and add it to your path.
@@ -150,7 +150,7 @@ kubectl get -n kube-system pods | grep tiller
 
 ## Install a Helm Chart
 
-https://github.com/helm/charts/tree/master/stable/ghost#configuration
+<https://github.com/helm/charts/tree/master/stable/ghost#configuration>
 
 ```bash
 helm install stable/ghost --name ghost --set serviceType=NodePort,ghostUsername=admin,ghostPassword=password123,mariadb.db.password=testghost,ghostHost=dev.ghost.local
@@ -175,9 +175,9 @@ open http://localhost:8001/api/v1/namespaces/default/services/http:ghost:80/prox
 
 Handle external traffic
 
-* Service IP
-* Node IP
-* Service Port
+- Service IP
+- Node IP
+- Service Port
 
 Access NodePort service directly:
 
@@ -193,18 +193,18 @@ open http://`minikube ip`:`kubectl get -o jsonpath="{.spec.ports[0].nodePort}" s
 
 ## Ingress Services
 
-* (Cloud) Load-balancer?
-* NGINX
-* Istio
-* Traefik
-* HAProxy
-* And more...
+- (Cloud) Load-balancer?
+- NGINX
+- Istio
+- Traefik
+- HAProxy
+- And more...
 
 ---
 
 ## NGINX Ingress
 
-https://kubernetes.github.io/ingress-nginx/
+<https://kubernetes.github.io/ingress-nginx/>
 
 Use Helm to install NGINX ingress
 
@@ -515,14 +515,14 @@ kubectl exec -it ghost-97d8bf485-p25r2 -- tail /var/log/apt/history.log
 kubectl get all --all-namespaces
 ```
 
-<br />
+<br/>
 Thanks!
-<br />
-<br />
+<br/>
+<br/>
 
 ---
 
 ## Related Articles
 
-* [Docker & Kubernetes 101](./docker-and-kubernetes-101)
-* [Developing with Docker containers](./develop-with-containers)
+- [Docker & Kubernetes 101](./docker-and-kubernetes-101)
+- [Developing with Docker containers](./develop-with-containers)

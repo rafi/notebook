@@ -9,6 +9,8 @@ search:
     - postcss
 ---
 
+[postcss 8 compatibility issues]: https://tailwindcss.com/docs/installation#post-css-7-compatibility-build
+
 ## Setup Rollup
 
 ```sh
@@ -30,7 +32,7 @@ plugin.
 
 ### PostCSS
 
-See [PostCSS 8 compatibility issues].
+See [PostCSS 8 compatibility issues][].
 
 ```sh
 yarn add -D postcss@^7 postcss-nesting autoprefixer@^9
@@ -61,5 +63,3 @@ This will create a `tailwind.config.js` file at the root of your project:
 ```sh
 npx tailwindcss init
 ```
-
-[PostCSS 8 compatibility issues]: https://tailwindcss.com/docs/installation#post-css-7-compatibility-build

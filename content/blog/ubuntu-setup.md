@@ -13,7 +13,7 @@ As Root:
 
 ## Add swap
 
-https://www.digitalocean.com/community/tutorials/how-to-add-swap-on-ubuntu-12-04
+<https://www.digitalocean.com/community/tutorials/how-to-add-swap-on-ubuntu-12-04>
 
 ## Set hostname
 
@@ -22,7 +22,7 @@ echo "plato" > /etc/hostname
 hostname -F /etc/hostname
 ```
 
-If `/etc/default/dhcpcd` exists, disable "#SET_HOSTNAME"
+If `/etc/default/dhcpcd` exists, disable "#SET\_HOSTNAME"
 
 ## Update /etc/hosts
 

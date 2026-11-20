@@ -36,7 +36,7 @@ First, ensure you are using an up-to-date docker engine.
 In the terminal,
 
 1. Run `docker info` and check for any errors
-1. Run `docker --version` and ensure you have version >=17.06
+2. Run `docker --version` and ensure you have version >=17.06
 
 ---
 
@@ -319,10 +319,10 @@ Now it's better.
 
 ## Images vs. Containers
 
-Docker **images** are executable packages that include everything needed to run
+Docker *images* are executable packages that include everything needed to run
 an application — the code, a runtime, libraries, environment variables, etc.
 
-Docker **containers** are a runtime instance of an image — what the image
+Docker *containers* are a runtime instance of an image — what the image
 becomes in memory when executed.
 
 ---
@@ -559,11 +559,11 @@ docker exec -it scene-05_redis_1 redis-cli GET /
 
 ## More on Docker-Compose
 
-* `docker-compose ps` - Lists all services in network.
-* `docker-compose up` - Brings up the network & services.
-* `docker-compose stop` - Stops the network, saves state of services.
-* `docker-compose start` - Restarts the services.
-* `docker-compose down` - Burn it all down! Destroy network & services.
+- `docker-compose ps` - Lists all services in network.
+- `docker-compose up` - Brings up the network & services.
+- `docker-compose stop` - Stops the network, saves state of services.
+- `docker-compose start` - Restarts the services.
+- `docker-compose down` - Burn it all down! Destroy network & services.
 
 ---
 
@@ -573,7 +573,7 @@ docker exec -it scene-05_redis_1 redis-cli GET /
 
 ## Kubernetes (K8S) 101
 
-https://docs.google.com/presentation/d/1BhUfwkiRTQZsvN9kCpxpbT09kpWFTiuAprOfGemrf6Q
+<https://docs.google.com/presentation/d/1BhUfwkiRTQZsvN9kCpxpbT09kpWFTiuAprOfGemrf6Q>
 
 ---
 
@@ -596,7 +596,7 @@ fi
 
 ## Setup kubectl Context
 
-_Cluster_ + _User_ = *Context*
+_Cluster_ + _User_ = _Context_
 
 ```bash
 ## Integration
@@ -695,5 +695,5 @@ $ kubectl exec -it myapp-649887b547-fh7vw sh
 
 ## Related Articles
 
-* [Developing with Docker Containers](../develop-with-containers)
-* [Kubernetes & Ingress Workshop](../kubernetes-ingress-istio-workshop)
+- [Developing with Docker Containers](../develop-with-containers)
+- [Kubernetes & Ingress Workshop](../kubernetes-ingress-istio-workshop)

@@ -3,32 +3,35 @@ title: Aria2 - ultra fast download client & server
 date: 2018-01-25
 featured: true
 ---
+
 # Aria2
 
 Ultra fast download client & server utility that utilizes your maximum download
 bandwidth. Aria2 supports HTTP(S), S(FTP), BitTorrent and Metalink.
 
-* Official website: https://aria2.github.io/
-* Source: https://github.com/aria2/aria2
+- Official website: <https://aria2.github.io/>
+- Source: <https://github.com/aria2/aria2>
 
 ## Installation
 
-| OS        |                       |
-|-----------|-----------------------|
-| Archlinux | `pacman -S aria2`     |
-| macOS     | `port install aria2`  |
-| Ubuntu    | `apt install aria2`   |
+| OS |  |
+| --- | --- |
+| Archlinux | `pacman -S aria2` |
+| macOS | `port install aria2` |
+| Ubuntu | `apt install aria2` |
 
 ## Usage
 
 ### Client
 
 Download torrent via magnet link with 3 maximum connections per server:
+
 ```sh
 aria2c -x3 http://oracle.com/downloads/jdk
 ```
 
 Download torrent via magnet link:
+
 ```sh
 aria2c magnet:?xt=urn:btih:1234...
 ```
@@ -83,8 +86,8 @@ bt-detach-seed-only=true
 
 ### Web Clients
 
-* Web interface for aria2, https://github.com/ziahamza/webui-aria2
-* Modern web frontend for aria2, https://github.com/mayswind/AriaNg
+- Web interface for aria2, <https://github.com/ziahamza/webui-aria2>
+- Modern web frontend for aria2, <https://github.com/mayswind/AriaNg>
 
 ### Tips
 

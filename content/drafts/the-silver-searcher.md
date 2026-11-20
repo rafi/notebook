@@ -2,11 +2,11 @@
 
 ## Installation
 
-| OS        |                       |
-|-----------|-----------------------|
+| OS |  |
+| --- | --- |
 | Archlinux | `pacman -S the_silver_searcher` |
-| macOS     | `port install the_silver_searcher` |
-| Ubuntu    | `apt install silversearcher-ag` |
+| macOS | `port install the_silver_searcher` |
+| Ubuntu | `apt install silversearcher-ag` |
 
 ## Screenshot
 

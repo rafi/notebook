@@ -7,6 +7,7 @@ categories:
 tags:
 - ext4
 ---
+
 # Provision Partition with Ext4
 
 First, delete the existing partition and create a new
@@ -24,14 +25,16 @@ front-end for the different `mkfs.fstype` tools:
 `mkfs -t ext4 /dev/sdb1`
 
 Finally, use `tune2fs` to adjust some parameters:
+
 ```
 tune2fs -m 0 /dev/sdb1
 tune2fs -L bakap01 /dev/sdb1
 ```
+
 The `-m` option is for adjusting the percentage of reserved blocks.
 The reserved blocks are used by privileged processes which is by default 5% of
 the hard disk size. Since I'm using the external hard disk solely as a storage,
 I set this to 0 so I can also use those 5% for storage. The `-L` option is for
 labeling the filesystem.
 
-Source: http://blag.borap.net/2011/08/10/formatting-an-external-hard-disk-with-ext4/
+Source: <http://blag.borap.net/2011/08/10/formatting-an-external-hard-disk-with-ext4/>

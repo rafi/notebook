@@ -8,23 +8,24 @@ categories:
 search:
   keywords: ['osx', 'provision', 'mac', 'macports']
 ---
+
 # Mac OSX provisioning
 
 <!-- vim-markdown-toc GFM -->
 
-* [Xcode](#xcode)
-* [Macports](#macports)
-* [Sensible hacker defaults](#sensible-hacker-defaults)
-* [X11 .serverauth files](#x11-serverauth-files)
-* [Base Ports](#base-ports)
-* [Custom Ports](#custom-ports)
-* [Defaults](#defaults)
-* [Python Utilities](#python-utilities)
-* [NodeJS Utilities](#nodejs-utilities)
-* [Compile `neovim`](#compile-neovim)
-* [Development Environments](#development-environments)
-  * [Apache 2.2, PHP 5.6, and MySQL 5.5 or Percona](#apache-22-php-56-and-mysql-55-or-percona)
-* [Dependency Reference](#dependency-reference)
+- [Xcode](#xcode)
+- [Macports](#macports)
+- [Sensible hacker defaults](#sensible-hacker-defaults)
+- [X11 .serverauth files](#x11-serverauth-files)
+- [Base Ports](#base-ports)
+- [Custom Ports](#custom-ports)
+- [Defaults](#defaults)
+- [Python Utilities](#python-utilities)
+- [NodeJS Utilities](#nodejs-utilities)
+- [Compile `neovim`](#compile-neovim)
+- [Development Environments](#development-environments)
+  - [Apache 2.2, PHP 5.6, and MySQL 5.5 or Percona](#apache-22-php-56-and-mysql-55-or-percona)
+- [Dependency Reference](#dependency-reference)
 
 <!-- vim-markdown-toc -->
 
@@ -85,7 +86,7 @@ by default to distinguish them from the BSD commands. If you want to use
 the GNU tools by default, add this directory to the front of your PATH:
 `/opt/local/libexec/gnubin/`
 
-To use bash completion, add the following lines at the end of your .bash_profile:
+To use bash completion, add the following lines at the end of your .bash\_profile:
 
 ```sh
   if [ -f /opt/local/etc/profile.d/bash_completion.sh ]; then
@@ -157,7 +158,7 @@ make install
 
 ### Apache 2.2, PHP 5.6, and MySQL 5.5 or Percona
 
-First disable built-in Apache: _System Preferences_ **->** _Sharing_
+First disable built-in Apache: _System Preferences_ *->* _Sharing_
 and uncheck the "Personal Web sharing". Or, from terminal:
 
 ```sh

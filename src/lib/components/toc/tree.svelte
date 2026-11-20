@@ -41,13 +41,19 @@
 			},
 		};
 	}
+
+	// A heading's markup for its TOC entry, without the heading's own anchor
+	// link, which would nest a link inside the entry's link.
+	function entryHtml(node: HTMLElement): string {
+		const clone = node.cloneNode(true) as HTMLElement;
+		clone.querySelectorAll('a.hash-link').forEach((a) => a.remove());
+		return clone.innerHTML;
+	}
 </script>
 
 <ul class="m-0 list-none">
 	{#if tree && tree.length}
 		{#each tree as heading, i (i)}
-			{@const node = heading.node.innerHTML}
-			{@const nodeWithoutSpan = node.replace(/<span.*<\/span>/g, '')}
 			<li class="mt-0 {level === 1 && 'parent'}">
 				<div
 					class={'list-item text-muted-foreground ' +
@@ -60,7 +66,7 @@
 						use:hoverAction
 					>
 						<!-- eslint-disable-next-line svelte/no-at-html-tags -- heading markup from our own posts -->
-						{@html nodeWithoutSpan}
+						{@html entryHtml(heading.node)}
 					</a>
 				</div>
 

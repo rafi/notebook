@@ -27,7 +27,7 @@ started becoming an expensive solution.
 I dabbled with KeePass and KeePassX for a while until I gave up, browser
 integration was far from perfect.
 
-*****
+---
 
 ## The Beauty of Password-Store
 
@@ -44,36 +44,36 @@ Using other Unix commands like tree, git, etc. pass provides an extremely easy &
 secure workflow with passwords, and optionally wraps around git for automatic
 commits and human-readable history diff. And it’s open-source.
 
-* Site: [http://www.passwordstore.org/](http://www.passwordstore.org/)
-* Man page:
-[http://git.zx2c4.com/password-store/about/](http://git.zx2c4.com/password-store/about/)
+- Site: <http://www.passwordstore.org/>
+- Man page:
+  <http://git.zx2c4.com/password-store/about/>
 
 ### Tips
 
-* [Official integrations](https://www.passwordstore.org/#migration) offer many
-colorful clients, even for mobile.
-* There are official [contrib
-importers](http://git.zx2c4.com/password-store/tree/contrib/importers) for all
-sorts of programs you’d be wanting to migrate from.
-* For the sticklers: When editing multi-line entries with your favorite editor,
-make sure it doesn’t write swap/undo/backup data for `pass` temp files. Here’s a
-[vim
-script](https://git.zx2c4.com/password-store/tree/contrib/vim/noplaintext.vim)
-that does just that.
+- [Official integrations](https://www.passwordstore.org/#migration) offer many
+  colorful clients, even for mobile.
+- There are official [contrib
+  importers](http://git.zx2c4.com/password-store/tree/contrib/importers) for all
+  sorts of programs you’d be wanting to migrate from.
+- For the sticklers: When editing multi-line entries with your favorite editor,
+  make sure it doesn’t write swap/undo/backup data for `pass` temp files. Here’s a
+  [vim
+  script](https://git.zx2c4.com/password-store/tree/contrib/vim/noplaintext.vim)
+  that does just that.
 
 ### Getting Started With Password-Store
 
 #### Setup GPG
 
 1. Download [gnupg.org](https://www.gnupg.org/download/) or
-[gpgtools.org](https://gpgtools.org/).
-1. Depending which suite you download, you’ll need to generate a new key pair.
-1. I recommend to increase the key size to the maximum of 4096.
-1. Enter your real Email
-1. Use a secure passphrase
+   [gpgtools.org](https://gpgtools.org/).
+2. Depending which suite you download, you’ll need to generate a new key pair.
+3. I recommend to increase the key size to the maximum of 4096.
+4. Enter your real Email
+5. Use a secure passphrase
 
 Use the graphical interface of [gnupg](https://www.gnupg.org/download/) or
-[gpgtools](https://gpgtools.org/), **or** the command-line:
+[gpgtools](https://gpgtools.org/), *or* the command-line:
 
 ```bash
 gpg --gen-key
@@ -90,7 +90,7 @@ gpg --armor --export
 #### Setup Password-Store
 
 Make sure to install `git` and `tree` if you don’t have them already. And,
-depending on your operating-system, choose the **one** for you:
+depending on your operating-system, choose the *one* for you:
 
 ```bash
 brew install pass      # Mac OSX with Homebrew
@@ -123,16 +123,16 @@ Don’t forget to integrate and use `pass`'s bash/zsh completion support.
 
 #### Password-Store Browser Integration
 
-*password-store* has many [Client
+_password-store_ has many [Client
 integrations](https://www.passwordstore.org/#other), and even
 [extensions](https://www.passwordstore.org/#extensions). The best browser
 integration I found is
 [browserpass](https://github.com/dannyvankooten/browserpass). You will need to
 first install its package client, and then the Chrome or Firefox extension.
 
-![in-browser multiple matches](./img/browserpass-dialog.png '*browserpass* is smart enough to find multiple matches for current site.')
+![in-browser multiple matches](./img/browserpass-dialog.png "*browserpass* is smart enough to find multiple matches for current site.")
 
-I bind `Alt` + `p` to *browserpass*, so I can quickly search, filter, and apply
+I bind `Alt` + `p` to _browserpass_, so I can quickly search, filter, and apply
 credentials to a form, and auto-submit.
 
 ![in-browser search](./img/browserpass-shortcut.png)
@@ -148,7 +148,7 @@ There are many clients for different devices out there.
 amazing. It allows management of passwords and auto-typing into forms in my
 mobile Chrome, what a pleasure!
 
-![android client](./img/browserpass-android.png 'Android Password Store in action.')
+![android client](./img/browserpass-android.png "Android Password Store in action.")
 
 #### iOS App
 
@@ -160,13 +160,13 @@ nice.
 What about other windows? Browsers aren't the only applications that require
 passwords from the user at times.
 
-We’ll create a global keyboard shortcut to grab current window’s *title* and
+We’ll create a global keyboard shortcut to grab current window’s _title_ and
 show pass entry information, without the password. The password is copied to
 clipboard for 45 seconds.
 
-Run Automator, and create a new **service**:
+Run Automator, and create a new *service*:
 
-* Add "Run AppleScript" with:
+- Add "Run AppleScript" with:
 
 ```applescript
 on run {input, parameters}
@@ -188,15 +188,17 @@ on run {input, parameters}
 end run
 ```
 
-* Add "Run Shell Script", select "Pass input [as arguments]", with:
+- Add "Run Shell Script", select "Pass input \[as arguments\]", with:
 
   ```sh
   ~/.local/bin/urlpass "$@"
   ```
 
-* Save service.
-* Assign keyboard shortcut in *System Preferences* / *Keyboard* / *Shortcuts*.
-* Create `~/.local/bin/urlpass`:
+- Save service.
+
+- Assign keyboard shortcut in _System Preferences_ / _Keyboard_ / _Shortcuts_.
+
+- Create `~/.local/bin/urlpass`:
 
 ```bash
 #!/usr/bin/env bash
@@ -214,7 +216,7 @@ do
 done
 ```
 
-* Set execute permissions: `chmod ug+x ~/.local/bin/urlpass`
+- Set execute permissions: `chmod ug+x ~/.local/bin/urlpass`
 
 Try it out by saving a password called `apps/somename` and click your shortcut
 once focused on the app. You’ll now find the password copied to your clipboard.

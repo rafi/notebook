@@ -14,7 +14,7 @@ My notes
 
 ## Overview
 
-> Svelte is a tool for building fast web applications. [Svelte has a] crucial
+> Svelte is a tool for building fast web applications. \[Svelte has a\] crucial
 > difference to React, Vue or Angular, Svelte converts your app into ideal
 > JavaScript at build time, rather than interpreting your application code at
 > run time. This means you don't pay the performance cost of the framework's
@@ -130,6 +130,6 @@ let string = `this string contains some <strong>HTML!!!</strong>`;
 
 ## References
 
-- Official tutorial https://svelte.dev/tutorial
-- API Docs https://svelte.dev/docs
-- Examples https://svelte.dev/examples
+- Official tutorial <https://svelte.dev/tutorial>
+- API Docs <https://svelte.dev/docs>
+- Examples <https://svelte.dev/examples>
