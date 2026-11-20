@@ -488,6 +488,18 @@ local function keymaps()
 	return rows
 end
 
+---Record repository URLs quoted in the file, in source order. Plugins a
+---file adds inside a function that runs on first use (a keymap, a command)
+---are never added during the capture. A quoted URL of exactly
+---host/owner/repo is a plugin source; longer URLs and comments are not.
+local function record_quoted_repos()
+	local text = table.concat(vim.fn.readfile(file), '\n')
+	local pattern = '[\'"](https://[%w%.%-]+/[%w%._%-]+/[%w%._%-]+)[\'"]'
+	for url in text:gmatch(pattern) do
+		record_plugin(url)
+	end
+end
+
 local function main()
 	local first = vim.fn.readfile(file, '', 1)[1] or ''
 	if not first:match('^%-%-') then
@@ -497,6 +509,7 @@ local function main()
 	install_stubs()
 	dofile(file)
 	fire_events()
+	record_quoted_repos()
 	local lang = read_lang()
 	---@type docs.Capture
 	local ret = {

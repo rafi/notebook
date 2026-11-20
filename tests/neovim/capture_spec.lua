@@ -167,4 +167,12 @@ T.plugin_commands_are_ignored = function()
 	assert(m['<leader>q'], 'code after plugin commands did not run')
 end
 
+T.lazy_plugins_listed = function()
+	eq(ok_capture('lazy_plugin.lua').plugins, {
+		'https://github.com/c/eager',
+		'https://github.com/a/lazy.nvim',
+		'https://codeberg.org/b/dep',
+	}, 'plugins')
+end
+
 return T
