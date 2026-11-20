@@ -3,6 +3,10 @@
 
 	"redirects": [
 		{
+			"source": "/img/project/:path*",
+			"destination": "https://raw.githubusercontent.com/rafi/assets/main/repo/:path*"
+		},
+		{
 			"source": "/operating-systems/containers/develop-with-containers",
 			"destination": "develop-with-containers"
 		},
