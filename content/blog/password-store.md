@@ -67,7 +67,7 @@ Run Automator, and create a new *service*:
        end run
    ```
 
-   Note: For other browsers, see this [get\_url gist][]
+   Note: For other browsers, see this [get_url gist][]
 
 1. Add "Run Shell Script", select "Pass input \[as arguments\]", with:
 
