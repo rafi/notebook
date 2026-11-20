@@ -3,13 +3,7 @@
 	"compilerOptions": {
 		"sourceMap": true,
 		"strict": true,
-		"types": [
-			"$app/types",
-			"unplugin-fonts/client"
-		]
+		"types": ["$app/types", "unplugin-fonts/client"]
 	},
-	"include": [
-		"src",
-		"vite.config.js"
-	]
+	"include": ["src", "vite.config.js"]
 }

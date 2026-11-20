@@ -9,12 +9,7 @@
 		children?: import('svelte').Snippet;
 	}
 
-	let {
-		lang = '',
-		title = '',
-		nocopy = false,
-		children
-	}: Props = $props();
+	let { lang = '', title = '', nocopy = false, children }: Props = $props();
 
 	let copyButton: HTMLButtonElement | undefined = $state();
 	let copied = $state(false);

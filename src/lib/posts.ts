@@ -1,14 +1,17 @@
-import type { Post, ImportedFile } from '#lib/types/index.ts'
+import type { Post, ImportedFile } from '#lib/types/index.ts';
 
 /**
  * Convert content file path to slug.
  * @param path - File path.
  */
 export function slugFromPath(path: string): string {
-	return path.split('/')
-		// Remove first folder (content), and for main blog, remove 'blog'.
-		.filter((v, i) => v && i > 0 && !(i == 1 && v == 'blog'))
-		.join('/')
+	return (
+		path
+			.split('/')
+			// Remove first folder (content), and for main blog, remove 'blog'.
+			.filter((v, i) => v && i > 0 && !(i == 1 && v == 'blog'))
+			.join('/')
+	);
 }
 
 /**
@@ -17,44 +20,45 @@ export function slugFromPath(path: string): string {
  * @param subPath - Optional sub-path to prepend to slug.
  */
 export function parseFiles(paths: Record<string, any>, subPath: string = '') {
-	let posts: Post[] = []
+	let posts: Post[] = [];
 	for (const path in paths) {
-		const file = paths[path]
+		const file = paths[path];
 
 		// Create a slug from the file path.
 		// Remove the first two sub-paths and extension. (xxx/yyy/zzz.md -> zzz)
-		let slug = path.split('/')
+		let slug = path
+			.split('/')
 			.filter((v, i) => v && i > 2)
 			.join('/')
-			.replace('.md', '')
+			.replace('.md', '');
 
 		if (subPath) {
-			slug = `${subPath}/${slug}`
+			slug = `${subPath}/${slug}`;
 		}
 
 		if (file && typeof file === 'object' && 'metadata' in file && slug) {
-			const metadata = file.metadata as Omit<Post, 'slug'>
-			const post = { ...metadata, slug } satisfies Post
-			post.published && posts.push(post)
+			const metadata = file.metadata as Omit<Post, 'slug'>;
+			const post = { ...metadata, slug } satisfies Post;
+			post.published && posts.push(post);
 		}
 	}
 
 	posts = posts.sort((first, second) => {
-		if (!first.date || !second.date) return 0
-		return new Date(second.date).getTime() - new Date(first.date).getTime()
-	})
-	return posts
+		if (!first.date || !second.date) return 0;
+		return new Date(second.date).getTime() - new Date(first.date).getTime();
+	});
+	return posts;
 }
 
 function asPost(slug: string, post: any): ImportedFile {
 	return {
 		slug,
 		content: post.default,
-		meta: post.metadata as Omit<Post, 'slug'> || {},
-	}
+		meta: (post.metadata as Omit<Post, 'slug'>) || {},
+	};
 }
 
 export async function getPost(slug: string) {
-	let post = await import(`../../content/blog/${slug}.md`)
-	return asPost(slug, post)
+	let post = await import(`../../content/blog/${slug}.md`);
+	return asPost(slug, post);
 }

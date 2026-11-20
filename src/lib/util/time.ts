@@ -5,7 +5,7 @@ export function formatDate(
 	dateStyle: DateStyle = 'medium',
 	locales = 'en'
 ) {
-	if (!date) return ''
+	if (!date) return '';
 
 	const dateToFormat = Date.parse(date);
 	const dateFormatter = new Intl.DateTimeFormat(locales, { dateStyle });

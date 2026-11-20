@@ -5,21 +5,21 @@ import { load as loadYaml, type LoadOptions } from 'js-yaml';
 import * as config from '#lib/config.js';
 import type { Frontmatter } from '#lib/types/index.ts';
 
-export const prerender = false
-export const ssr = false
-export const csr = true
+export const prerender = false;
+export const ssr = false;
+export const csr = true;
 
 const reMarkdownImage = /!\[([^\]]+)\]\(\.\/([^)]+)\)/g;
 
 type MarkdownRaw = {
-	meta: Frontmatter
-	body: string
-}
+	meta: Frontmatter;
+	body: string;
+};
 
 export async function load({ params }: PageLoadEvent) {
 	// Vite import assset as string
 	// https://vitejs.dev/guide/assets.html#importing-asset-as-string
-	let raw = await import(`../../../../../content/blog/${params.slug}.md?raw`)
+	let raw = await import(`../../../../../content/blog/${params.slug}.md?raw`);
 
 	// Prepend base path to images in slides.
 	raw = raw.default.replace(
@@ -35,16 +35,16 @@ export async function load({ params }: PageLoadEvent) {
 	// 	.use(remarkParseFrontmatter)
 
 	// Split meta and body
-	const data = parseYAMLMatter(raw, {})
+	const data = parseYAMLMatter(raw, {});
 	raw = `# ${data.meta.title}\n\n---\n\n` + data.body;
 
 	try {
 		return {
 			slug: params.slug,
 			raw: raw,
-		}
+		};
 	} catch (e) {
-		error(404, `Could not find ${params.slug}`)
+		error(404, `Could not find ${params.slug}`);
 	}
 }
 
@@ -55,15 +55,15 @@ export async function load({ params }: PageLoadEvent) {
  * @returns Object
  */
 function parseYAMLMatter(text: string, opts: LoadOptions) {
-	const re = /^(-{3}(?:\n|\r)([\w\W]+?)(?:\n|\r)-{3})?([\w\W]*)*/
-	let results = re.exec(text)
+	const re = /^(-{3}(?:\n|\r)([\w\W]+?)(?:\n|\r)-{3})?([\w\W]*)*/;
+	let results = re.exec(text);
 
-	let data: MarkdownRaw = { meta: {}, body: '' }
+	let data: MarkdownRaw = { meta: {}, body: '' };
 	if (results === null) {
-		return data
+		return data;
 	}
 	if (results.length > 1 && results[2]) {
-		const str = results[2]
+		const str = results[2];
 		if (str.charAt(0) === '{') {
 			data.meta = JSON.parse(str);
 		} else {
@@ -74,4 +74,4 @@ function parseYAMLMatter(text: string, opts: LoadOptions) {
 		data.body = results[3];
 	}
 	return data;
-};
+}

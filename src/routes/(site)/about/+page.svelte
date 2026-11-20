@@ -25,7 +25,8 @@
 	and powered by <a href="https://kit.svelte.dev/">SvelteKit</a>.
 	{#if data.gitSHA}
 		(<a href="https://github.com/rafi/vim-config/commit/{data.gitSHA}">
-			{data.gitSHA.substring(0, 7)}</a>)
+			{data.gitSHA.substring(0, 7)}
+		</a>)
 	{/if}
 </p>
 

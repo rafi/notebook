@@ -23,7 +23,7 @@ import emoji from 'remark-emoji';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 
 /** @type {BuiltinTheme} */
-export const DEFAULT_THEME = "github-dark";
+export const DEFAULT_THEME = 'github-dark';
 
 // See https://mdsvex.pngwn.io/docs#use-it
 /** @type {import('mdsvex').MdsvexOptions} */
@@ -39,22 +39,32 @@ export default defineConfig({
 		emoji,
 	],
 	rehypePlugins: [
-		[rehypeRewrite, {
-			rewrite: (node) => {
-				if (node.type == 'element' && node.tagName == 'img') {
-					if (!node.properties.src.endsWith('Svg}')) {
-						node.tagName = 'enhanced:img';
+		[
+			rehypeRewrite,
+			{
+				rewrite: (node) => {
+					if (node.type == 'element' && node.tagName == 'img') {
+						if (!node.properties.src.endsWith('Svg}')) {
+							node.tagName = 'enhanced:img';
+						}
+						node.properties['class'] =
+							`post-img ${node.properties['class'] ?? ''}`.trimEnd();
 					}
-					node.properties['class'] = `post-img ${node.properties['class'] ?? ''}`.trimEnd();
-				}
-			}
-		}],
+				},
+			},
+		],
 		rehypeFigure,
 		rehypeSlug,
-		[rehypeAutolinkHeadings, {
-			behavior: 'append',
-			properties: { className: 'hash-link', ariaLabel: 'Link to this section' },
-		}],
+		[
+			rehypeAutolinkHeadings,
+			{
+				behavior: 'append',
+				properties: {
+					className: 'hash-link',
+					ariaLabel: 'Link to this section',
+				},
+			},
+		],
 	],
 	highlight: {
 		highlighter: async (code, lang = 'text', meta) => {
@@ -77,7 +87,8 @@ export default defineConfig({
 
 			// Match attribute-like strings, and feed them into props
 			// for example: `src="adfjkl;" hello yourmom='sorry'`
-			const attrMatch = meta?.matchAll(/(?:\w+)(?:="[^"]*"|='[^']*')?(?:\s|$)/g) ?? [];
+			const attrMatch =
+				meta?.matchAll(/(?:\w+)(?:="[^"]*"|='[^']*')?(?:\s|$)/g) ?? [];
 
 			let attr = [...attrMatch].join('');
 			if (lang) attr += ` lang="${lang}"`;
@@ -85,15 +96,15 @@ export default defineConfig({
 			// Wrap the html with custom component `codeblock`
 			const html = escapeSvelte(returned);
 			return `<Components.codeblock ${attr}>{@html \`${html}\` }</Components.codeblock>`;
-		}
+		},
 	},
-})
+});
 
 const langAlias = {
 	readline: 'shell',
 	dosbatch: 'bat',
 	Dockerfile: 'dockerfile',
-}
+};
 
 // See https://shiki.matsu.io/languages
 const langs = [
@@ -132,10 +143,10 @@ const langs = [
 	'typescript',
 	'viml',
 	'yaml',
-]
+];
 
 const shiki = await createHighlighter({
-	themes: [DEFAULT_THEME, "github-light"],
+	themes: [DEFAULT_THEME, 'github-light'],
 	langs,
 	langAlias,
 });
@@ -154,7 +165,7 @@ function relativeImages() {
 
 		// Replace relative URLs with module imports.
 		function transformUrl(url) {
-			url = decodeURIComponent(url)
+			url = decodeURIComponent(url);
 
 			if (url.startsWith('.')) {
 				// Filenames can start with digits, prepend underscore to guarantee
@@ -204,16 +215,16 @@ function relativeImages() {
 		// See https://github.com/JonasKruckenberg/imagetools/blob/main/docs/directives.md
 		let scripts = '';
 		const urlParams = {
-			'enhanced': true,
-			'w': '700',
-			'quality': '80',
-			'withoutEnlargement': true,
+			enhanced: true,
+			w: '700',
+			quality: '80',
+			withoutEnlargement: true,
 		};
 		const imageParams = new URLSearchParams(urlParams);
 		urls.forEach((x) => {
-			scripts += `import ${x.id} from "${x.path}`
+			scripts += `import ${x.id} from "${x.path}`;
 			if (!x.path.endsWith('.svg')) {
-				scripts += `?${imageParams}`
+				scripts += `?${imageParams}`;
 			}
 			scripts += '";\n';
 		});
@@ -241,8 +252,8 @@ function relativeImages() {
 // Convert images wrapped in <p> tags to <figure> tags, and add caption.
 // Reference: https://github.com/josestg/rehype-figure
 function rehypeFigure(option) {
-	const className = (option && option.className) || 'rehype-figure'
-	const imgTagName = (option && option.imgTagName) || 'enhanced:img'
+	const className = (option && option.className) || 'rehype-figure';
+	const imgTagName = (option && option.imgTagName) || 'enhanced:img';
 
 	function buildFigure({ properties }) {
 		const figure = h('figure', { class: className }, [
@@ -250,27 +261,26 @@ function rehypeFigure(option) {
 			properties.title && properties.title.trim().length > 0
 				? h('figcaption', properties.title)
 				: '',
-		])
-		return figure
+		]);
+		return figure;
 	}
 
-	return function(tree) {
+	return function (tree) {
 		visit(tree, { tagName: 'p' }, (node, index) => {
-
 			const images = node.children
 				.filter((n) => n.tagName === imgTagName)
-				.map((img) => buildFigure(img))
+				.map((img) => buildFigure(img));
 
-			if (images.length === 0) return
+			if (images.length === 0) return;
 
 			tree.children[index] =
 				images.length === 1
 					? images[0]
 					: (tree.children[index] = h(
-						'div',
-						{ class: `${className}-container` },
-						images
-					))
-		})
-	}
+							'div',
+							{ class: `${className}-container` },
+							images
+						));
+		});
+	};
 }

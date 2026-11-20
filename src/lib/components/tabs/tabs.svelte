@@ -41,8 +41,10 @@
 						class="tabs-button"
 						class:is-selected={$value === id}
 						{...$trigger(id)}
-						use:trigger>{title}</button
+						use:trigger
 					>
+						{title}
+					</button>
 				</li>
 			{/each}
 		</ul>

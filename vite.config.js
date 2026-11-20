@@ -15,13 +15,15 @@ export default defineConfig({
 			preprocess: [
 				vitePreprocess(),
 				// mdsvex 0.x types predate Svelte 5's optional `filename`.
-				/** @type {import('svelte/compiler').PreprocessorGroup} */ (mdsvex(mdsvexOptions)),
+				/** @type {import('svelte/compiler').PreprocessorGroup} */ (
+					mdsvex(mdsvexOptions)
+				),
 			],
 			adapter: adapter({
 				split: true,
 				// Use server-side rendering in Vercel's Node.js serverless runtime
 				// https://vercel.com/docs/functions/runtimes/node-js/node-js-versions
-				runtime: 'nodejs24.x'
+				runtime: 'nodejs24.x',
 			}),
 		}),
 
@@ -49,7 +51,7 @@ export default defineConfig({
 						src: './node_modules/@azurity/pure-nerd-font/PureNerdFont.woff2',
 					},
 				],
-			}
+			},
 		}),
 	],
 	server: {

@@ -3,8 +3,8 @@ import { error } from '@sveltejs/kit';
 
 export async function load({ fetch }: LayoutLoadEvent) {
 	try {
-		return { posts: (await fetch('/api/blog')).json() }
+		return { posts: (await fetch('/api/blog')).json() };
 	} catch (e) {
-		error(404, (e as Error).message)
+		error(404, (e as Error).message);
 	}
 }

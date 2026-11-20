@@ -1,5 +1,5 @@
 import { parseFiles, slugFromPath } from '#lib/posts.ts';
-import type { Post } from '#lib/types/index.ts'
+import type { Post } from '#lib/types/index.ts';
 import * as config from '#lib/config.js';
 import { formatDate } from '#lib/util/time.ts';
 
@@ -9,14 +9,16 @@ export const prerender = true;
  * @type {import('@sveltejs/kit').RequestHandler}
  */
 export async function GET() {
-	const paths = import.meta.glob('../../../content/blog/**/*.md', { eager: true })
-	const posts = parseFiles(paths)
+	const paths = import.meta.glob('../../../content/blog/**/*.md', {
+		eager: true,
+	});
+	const posts = parseFiles(paths);
 
 	const body = xml(posts);
 	const headers = {
 		'Cache-Control': 'max-age=0, s-maxage=3600',
-		'Content-Type': 'application/xml'
-	}
+		'Content-Type': 'application/xml',
+	};
 	return new Response(body, { headers });
 }
 
@@ -36,8 +38,10 @@ const xml = (posts: Post[]) =>
 		<title>${config.title}</title>
 		<link>${config.url}</link>
 		<description>${config.description}</description>
-		${posts.map((post) =>
-		`<item>
+		${posts
+			.map(
+				(post) =>
+					`<item>
 			<guid>${config.url}/${slugFromPath(post.slug)}</guid>
 			<title>${post.title ? post.title.replace(/&/, '&amp;') : post.slug}</title>
 			<link>${config.url}/${slugFromPath(post.slug)}</link>
@@ -47,6 +51,8 @@ const xml = (posts: Post[]) =>
 				<h1><a href="${config.url}/${slugFromPath(post.slug)}">${post.title}</a></h1>
 			]]></content:encoded>
 		</item>
-		`).join('')}
+		`
+			)
+			.join('')}
 	</channel>
 </rss>`;

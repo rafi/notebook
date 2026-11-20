@@ -10,7 +10,7 @@ const trackCount = 3;
 export async function GET({ setHeaders }: RequestEvent) {
 	setHeaders({
 		'Access-Control-Allow-Origin': config.url,
-	})
+	});
 
 	const user = config.social.lastfm;
 	const result = await getRecentTracks(user);
@@ -30,7 +30,7 @@ async function getRecentTracks(user: string): Promise<RecentTracksResponse> {
 		api_key: LASTFM_API_KEY,
 		limit: trackCount.toString(),
 		extended: '1',
-	}
+	};
 	const urlParams = new URLSearchParams(params);
 	const response = await fetch(lastfmAPI + '?' + urlParams.toString());
 

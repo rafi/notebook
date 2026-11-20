@@ -63,11 +63,7 @@
 						<GitMerge size="12" />
 					</a>
 				{/if}
-				<a
-					target="_blank"
-					href="/rss.xml"
-					data-sveltekit-preload-code="false"
-				>
+				<a target="_blank" href="/rss.xml" data-sveltekit-preload-code="false">
 					<RssIcon size="12" />
 				</a>
 			</p>

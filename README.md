@@ -38,15 +38,15 @@ for more information regarding the adapter.
 Use [`package.json`](./package.json) scripts or [`justfile`](./justfile)
 targets.
 
-| Command           | Description                        |
-|-------------------|------------------------------------|
-| `pnpm dev`        | Run dev server                     |
-| `pnpm dev --open` | Run dev server and open browser    |
-| `pnpm dev --host` | Expose dev server on the network   |
-| `pnpm build`      | Build the site                     |
-| `pnpm preview`    | Preview production build           |
-| `pnpm lint`       | Lint the code                      |
-| `pnpm format`     | Format the code                    |
+| Command           | Description                      |
+| ----------------- | -------------------------------- |
+| `pnpm dev`        | Run dev server                   |
+| `pnpm dev --open` | Run dev server and open browser  |
+| `pnpm dev --host` | Expose dev server on the network |
+| `pnpm build`      | Build the site                   |
+| `pnpm preview`    | Preview production build         |
+| `pnpm lint`       | Lint the code                    |
+| `pnpm format`     | Format the code                  |
 
 ## Copyright
 

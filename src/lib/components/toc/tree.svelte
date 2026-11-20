@@ -19,7 +19,7 @@
 		activeHeadingIdxs,
 		item,
 		level = 1,
-		isActive
+		isActive,
 	}: Props = $props();
 
 	function hoverAction(node: HTMLElement) {
@@ -53,7 +53,12 @@
 					class={'list-item text-muted-foreground ' +
 						($isActive(heading.id) && 'active ')}
 				>
-					<a href="#{heading.id}" {...$item(heading.id)} use:item use:hoverAction>
+					<a
+						href="#{heading.id}"
+						{...$item(heading.id)}
+						use:item
+						use:hoverAction
+					>
 						<!-- eslint-disable-next-line svelte/no-at-html-tags -- heading markup from our own posts -->
 						{@html nodeWithoutSpan}
 					</a>
