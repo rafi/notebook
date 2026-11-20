@@ -84,7 +84,7 @@ intricate JSON structures.
 
 ## Demo
 
-![req8 demo](./img/req8-demo.gif "Reproduce HTTP requests with “req8”")
+![req8 demo](/img/blog/req8-demo.gif "Reproduce HTTP requests with “req8”")
 
 ## Closing Notes
 

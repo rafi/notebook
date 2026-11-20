@@ -922,7 +922,7 @@ $ pwd
 
 ---
 
-![Very Nice!](./img/borat-very-nice.gif)
+![Very Nice!](/img/blog/borat-very-nice.gif)
 
 ---
 
