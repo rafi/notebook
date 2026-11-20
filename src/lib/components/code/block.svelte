@@ -59,7 +59,7 @@
 <style>
 	div {
 		position: relative;
-		background-color: var(--code-background);
+		background-color: var(--code-block-background);
 	}
 
 	span {
