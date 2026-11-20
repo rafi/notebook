@@ -8,6 +8,7 @@ node_modules
 .vercel/
 /build
 /.cache/
+/.nvim/
 /.superpowers/
 /.svelte-kit/
 /package

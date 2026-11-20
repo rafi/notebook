@@ -27,6 +27,13 @@ lint:
 preview:
 	pnpm preview
 
+# Generate content/neovim from rafi/vim-config (VIM_CONFIG_DIR for a local checkout)
+neovim:
+	scripts/build_docs.sh
+
+test-neovim:
+	nvim --headless --clean -l tests/neovim/run.lua
+
 logo:
 	toilet -f roman -F crop --html 'rafi.' \
 		-d "$(brew --prefix figlet)"/share/figlet/fonts
