@@ -1,0 +1,13 @@
+-- Autocmds load right after rafi.config.autocmds.
+-- Defaults that are always set:
+-- https://github.com/rafi/vim-config/blob/master/lua/rafi/config/autocmds.lua
+-- Add your own autocmds here.
+
+-- For example, turn spell checking off in Markdown buffers:
+-- vim.api.nvim_create_autocmd('FileType', {
+-- 	group = vim.api.nvim_create_augroup('user.markdown', {}),
+-- 	pattern = 'markdown',
+-- 	callback = function()
+-- 		vim.opt_local.spell = false
+-- 	end,
+-- })

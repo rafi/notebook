@@ -176,6 +176,46 @@ local function page_path(info)
 	return ('extras/%s/%s.md'):format(info.category, file)
 end
 
+---The customize page: lua/templates/customize.md with its markers filled.
+---`<!-- config:<name> -->` becomes tabs of the user template next to
+---vim-config's default file, `<!-- examples -->` the blocks of
+---lua/templates/examples.lua (as lazyvim.github.io does with recipes).
+---@param config_dir string
+---@return string
+function M.customize(config_dir)
+	local templates = root .. '/lua/templates'
+	local page = read(templates .. '/customize.md')
+	page = page:gsub('<!%-%- config:(%w+) %-%->', function(name)
+		return table.concat(
+			render.tabs({
+				{
+					label = ('Your lua/config/%s.lua'):format(name),
+					lang = 'lua',
+					code = read(('%s/config/%s.lua'):format(templates, name)),
+				},
+				{
+					label = 'Default rafi.config.' .. name,
+					lang = 'lua',
+					code = read(('%s/lua/rafi/config/%s.lua'):format(config_dir, name)),
+				},
+			}),
+			'\n'
+		)
+	end)
+	local examples = {}
+	for _, ex in ipairs(render.parse_examples(read(templates .. '/examples.lua'))) do
+		table.insert(examples, '### ' .. ex.title)
+		if ex.desc ~= '' then
+			vim.list_extend(examples, { '', render.escape(ex.desc) })
+		end
+		vim.list_extend(examples, { '', '```lua', ex.code, '```', '' })
+	end
+	page = page:gsub('<!%-%- examples %-%->', function()
+		return vim.trim(table.concat(examples, '\n'))
+	end)
+	return page
+end
+
 ---Capture every file of vim-config and write all pages, or write nothing
 ---and error with every failing file.
 ---@param opts? { out_dir?: string }
@@ -201,6 +241,7 @@ function M.update(opts)
 		pages[page_path(info)] = render.page(caps[info.path], info, text)
 	end
 	pages['keymaps.md'] = render.keymaps_page(caps[keymaps_path])
+	pages['customize.md'] = M.customize(src.dir)
 	pages['generated.json'] = vim.json.encode({ commit = src.sha }) .. '\n'
 	M.write(out_dir, pages)
 	print(('%d pages from vim-config@%s'):format(vim.tbl_count(pages), src.sha))

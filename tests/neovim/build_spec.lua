@@ -81,4 +81,24 @@ T.failure_writes_nothing = function()
 	eq(files, {}, 'files written')
 end
 
+T.customize_has_tabs = function()
+	local page = build.customize(vim.env.VIM_CONFIG_DIR)
+	local _, groups = page:gsub('\n:::tabs\n', '')
+	eq(groups, 3, ':::tabs groups')
+	for _, name in ipairs({ 'options', 'keymaps', 'autocmds' }) do
+		assert(
+			page:find(('```lua [Your lua/config/%s.lua]'):format(name), 1, true),
+			'user tab for ' .. name
+		)
+		assert(
+			page:find(('```lua [Default rafi.config.%s]'):format(name), 1, true),
+			'default tab for ' .. name
+		)
+	end
+	assert(not page:find('<!--', 1, true), 'marker left in page')
+	assert(page:find('\ngenerated: true\n', 1, true), 'frontmatter')
+	assert(page:find('\n### ', 1, true), 'examples')
+	assert(not page:lower():find('lazy.nvim', 1, true), 'lazy.nvim mention')
+end
+
 return T

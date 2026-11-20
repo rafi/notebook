@@ -163,6 +163,9 @@ T.examples_parse = function()
 		'',
 		'',
 		'-- ## Second',
+		'-- Desc.',
+		'',
+		'-- Code comment',
 		'local a = 1',
 		'',
 	}, '\n'))
@@ -172,7 +175,11 @@ T.examples_parse = function()
 		desc = 'Install it with vim.pack. Then set it up.',
 		code = "vim.pack.add({ 'x' })",
 	}, 'first')
-	eq(blocks[2], { title = 'Second', desc = '', code = 'local a = 1' }, 'second')
+	eq(blocks[2], {
+		title = 'Second',
+		desc = 'Desc.',
+		code = '-- Code comment\nlocal a = 1',
+	}, 'second')
 end
 
 return T

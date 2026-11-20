@@ -354,7 +354,7 @@ function M.parse_examples(src)
 		return {
 			title = b.title,
 			desc = table.concat(b.desc, ' '),
-			code = (table.concat(b.code, '\n'):gsub('\n+$', '')),
+			code = (table.concat(b.code, '\n'):gsub('^\n+', ''):gsub('\n+$', '')),
 		}
 	end, blocks)
 end
