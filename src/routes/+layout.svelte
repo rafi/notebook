@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { links } from 'unplugin-fonts/head';
-	import PageLoadSlide from '$lib/components/page-load-slide.svelte';
+	import PageLoadSlide from '#lib/components/page-load-slide.svelte';
 
-	import '$styles/layout.css';
+	import '#styles/layout.css';
 	import 'unfonts.css';
 	interface Props {
 		children?: import('svelte').Snippet;

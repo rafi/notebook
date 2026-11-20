@@ -1,9 +1,8 @@
 import type { RequestEvent } from './$types';
-import { json as jsonResponse } from '@sveltejs/kit';
 
-import { LASTFM_API_KEY } from '$env/static/private'
-import * as config from '$lib/config';
-import type { RecentTracksResponse } from '$lib/components/lastfm';
+import { LASTFM_API_KEY } from '$app/env/private';
+import * as config from '#lib/config.js';
+import type { RecentTracksResponse } from '#lib/components/lastfm/index.ts';
 
 const lastfmAPI = 'https://ws.audioscrobbler.com/2.0/';
 const trackCount = 3;
@@ -15,7 +14,7 @@ export async function GET({ setHeaders }: RequestEvent) {
 
 	const user = config.social.lastfm;
 	const result = await getRecentTracks(user);
-	return jsonResponse(result);
+	return Response.json(result);
 }
 
 /**

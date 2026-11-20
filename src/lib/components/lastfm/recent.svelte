@@ -4,7 +4,7 @@
 	import type { Track } from './types';
 	import imgNowPlaying from './now-playing.gif';
 	import imgHeart from './heart.png';
-	import * as config from '$lib/config';
+	import * as config from '#lib/config.js';
 
 	const cache_millis = 60 * 1000;
 

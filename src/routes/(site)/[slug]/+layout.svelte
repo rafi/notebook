@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { PageNavigation } from '$lib/components/article';
+	import { PageNavigation } from '#lib/components/article/index.ts';
 
 	let { data, children } = $props();
 	let slug: string = $derived(data.url.replace(/^\//, ''));

@@ -2,13 +2,13 @@
 	import { sineIn } from 'svelte/easing';
 	import { fly } from 'svelte/transition';
 
-	import Header from '$lib/components/Header.svelte';
-	import Footer from '$lib/components/Footer.svelte';
+	import Header from '#lib/components/Header.svelte';
+	import Footer from '#lib/components/Footer.svelte';
 
-	import '$styles/layout.css';
-	import '$styles/prose.css';
-	import '$styles/toc.css';
-	import '$styles/admonition.css';
+	import '#styles/layout.css';
+	import '#styles/prose.css';
+	import '#styles/toc.css';
+	import '#styles/admonition.css';
 
 	let { data, children } = $props();
 

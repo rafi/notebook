@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Profile from '$lib/components/profile-card.svelte';
-	import { RecentTracks } from '$lib/components/lastfm';
+	import Profile from '#lib/components/profile-card.svelte';
+	import { RecentTracks } from '#lib/components/lastfm/index.ts';
 
 	let { data } = $props();
 </script>

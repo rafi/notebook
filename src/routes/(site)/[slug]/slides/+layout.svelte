@@ -4,7 +4,7 @@
 	import 'reveal.js/theme/league.css';
 	import 'reveal.js/plugin/highlight/monokai.css';
 
-	import '$styles/reveal.css';
+	import '#styles/reveal.css';
 	interface Props {
 		children?: import('svelte').Snippet;
 	}

@@ -1,7 +1,7 @@
-import { parseFiles, slugFromPath } from '$lib/posts';
-import type { Post } from '$lib/types'
-import * as config from '$lib/config';
-import { formatDate } from '$lib/util/time';
+import { parseFiles, slugFromPath } from '#lib/posts.ts';
+import type { Post } from '#lib/types/index.ts'
+import * as config from '#lib/config.js';
+import { formatDate } from '#lib/util/time.ts';
 
 export const prerender = true;
 

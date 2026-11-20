@@ -1,4 +1,4 @@
-import type { Post, ImportedFile } from '$lib/types'
+import type { Post, ImportedFile } from '#lib/types/index.ts'
 
 /**
  * Convert content file path to slug.

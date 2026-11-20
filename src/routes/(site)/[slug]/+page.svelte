@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Article } from '$lib/components/article';
+	import { Article } from '#lib/components/article/index.ts';
 
 	let { data } = $props();
 </script>

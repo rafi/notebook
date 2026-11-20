@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { ImportedFile } from '$lib/types';
-	import { formatDate } from '$lib/util/time';
-	import { TableOfContents } from '$lib/components/toc';
+	import type { ImportedFile } from '#lib/types/index.ts';
+	import { formatDate } from '#lib/util/time.ts';
+	import { TableOfContents } from '#lib/components/toc/index.ts';
 	import { ImagesIcon } from '@lucide/svelte';
 
 	interface Props {

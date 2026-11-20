@@ -5,6 +5,8 @@
 	import { onNavigate } from '$app/navigation';
 
 	onNavigate((navigation) => {
+		if (navigation.shallow && navigation.type === 'goto') return;
+
 		// @ts-ignore
 		if (!document.startViewTransition) return;
 

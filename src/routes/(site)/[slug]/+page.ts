@@ -1,5 +1,5 @@
 import type { PageLoadEvent } from './$types';
-import { getPost } from '$lib/posts';
+import { getPost } from '#lib/posts.ts';
 
 export const prerender = 'auto'
 

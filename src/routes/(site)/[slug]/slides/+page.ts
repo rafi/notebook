@@ -2,8 +2,8 @@ import type { PageLoadEvent } from './$types';
 import { error } from '@sveltejs/kit';
 import { load as loadYaml, type LoadOptions } from 'js-yaml';
 
-import * as config from '$lib/config';
-import type { Frontmatter } from '$lib/types';
+import * as config from '#lib/config.js';
+import type { Frontmatter } from '#lib/types/index.ts';
 
 export const prerender = false
 export const ssr = false

@@ -9,8 +9,8 @@
 		ChevronRight,
 	} from '@lucide/svelte';
 
-	import * as config from '$lib/config';
-	import { theme, toggleTheme } from '$lib/theme';
+	import * as config from '#lib/config.js';
+	import { theme, toggleTheme } from '#lib/theme.ts';
 
 	const iconSize = 28;
 	let scrollY = $state(0);

@@ -1,3 +1,6 @@
+// @ts-nocheck: vite.config.js now pulls this file into svelte-check, and the
+// remark/rehype plugin types don't line up with mdsvex 0.x's. Never checked
+// before SvelteKit 3; drop this when migrating to mdsvex 1.0.
 import { escapeSvelte } from 'mdsvex';
 import { defineMDSveXConfig as defineConfig } from 'mdsvex';
 import { createHighlighter } from 'shiki';

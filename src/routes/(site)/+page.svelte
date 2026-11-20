@@ -1,7 +1,7 @@
 <script lang="ts">
-	import * as config from '$lib/config';
-	import Profile from '$lib/components/profile-card.svelte';
-	import { RecentTracks } from '$lib/components/lastfm';
+	import * as config from '#lib/config.js';
+	import Profile from '#lib/components/profile-card.svelte';
+	import { RecentTracks } from '#lib/components/lastfm/index.ts';
 
 	import { Mailbox, GitMerge, CassetteTape } from '@lucide/svelte';
 </script>

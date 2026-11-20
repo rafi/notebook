@@ -1,4 +1,4 @@
-import type * as config from '$lib/config';
+import type * as config from '#lib/config.js';
 
 export type ImportedFile = {
 	slug: string

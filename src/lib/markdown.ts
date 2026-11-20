@@ -17,7 +17,7 @@ import rehypeCodeTitles from 'rehype-code-titles'
 // import { rehypeCopyCode, rehypeUnwrapImages } from './plugins'
 
 import * as config from './config'
-import type { Frontmatter } from '$lib/types'
+import type { Frontmatter } from '#lib/types/index.ts'
 
 type ContentType = {
 	content: string
