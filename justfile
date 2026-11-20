@@ -7,25 +7,25 @@ default:
 	@just --list --unsorted
 
 install:
-	npm install
+	pnpm install
 
 run:
-	npm run dev
+	pnpm dev
 
 host:
 	#!/usr/bin/env bash
 	export VERCEL_GIT_COMMIT_REF="$(git rev-parse --abbrev-ref HEAD)"
 	export VERCEL_GIT_COMMIT_SHA="$(git rev-parse HEAD)"
-	npm run dev -- --host
+	pnpm dev --host
 
 build:
-	npm run build
+	pnpm build
 
 lint:
-	npm run lint
+	pnpm lint
 
 preview:
-	npm run preview
+	pnpm preview
 
 logo:
 	toilet -f roman -F crop --html 'rafi.' \
