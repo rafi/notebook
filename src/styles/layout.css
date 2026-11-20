@@ -250,8 +250,14 @@ ul.cards li {
 	margin: 0;
 }
 
+/* Tint the whole card, not just its link, so the description area matches. */
 ul.cards li:has(a:hover) {
 	background-color: var(--color-bg-2);
+	background-image: linear-gradient(var(--color-hover), var(--color-hover));
+}
+
+ul.cards li a:hover {
+	background-color: transparent;
 }
 
 ul.cards li.gap {
@@ -290,8 +296,5 @@ ul.cards.page-nav li:last-child {
 
 ul.cards.page-nav li:has(a:hover) {
 	background-color: var(--nav-background);
-}
-
-ul.cards.page-nav li a:hover {
-	background-color: transparent;
+	background-image: none;
 }
