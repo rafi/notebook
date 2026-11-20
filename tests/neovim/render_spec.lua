@@ -55,6 +55,12 @@ T.kbd_cases = function()
 	eq(render.kbd('g<'), '<kbd>g</kbd><kbd>&lt;</kbd>', 'g<')
 end
 
+T.backslash_and_code_span_pipe = function()
+	eq(render.kbd('<C-\\>'), '<kbd>C-&#92;</kbd>', '<C-\\>')
+	eq(render.kbd('\\'), '<kbd>&#92;</kbd>', 'lone \\')
+	eq(render.escape('Run `a|b` now'), 'Run `a\\|b` now', '| in code span')
+end
+
 T.tabs_syntax = function()
 	eq(
 		render.tabs({ { label = 'A', lang = 'lua', code = 'x' } }),
@@ -132,6 +138,26 @@ T.page_sections = function()
 		),
 		'plugin link'
 	)
+end
+
+T.unreached_keymaps_noted = function()
+	local note = 'set by code that only runs later'
+	local only = render.page(cap({ unreached = { 54, 72 } }), info(), 'x')
+	assert(only:find('\n## Keymaps\n', 1, true), 'section for note')
+	assert(only:find(note, 1, true), 'note')
+	assert(only:find('lines 54 and 72', 1, true), 'line numbers')
+	local both = render.page(
+		cap({
+			keymaps = { { mode = { 'n' }, lhs = 'gD', desc = 'Def' } },
+			unreached = { 9 },
+		}),
+		info(),
+		'x'
+	)
+	assert(both:find('| Def |', 1, true), 'table kept')
+	assert(both:find('line 9 ', 1, true), 'single line wording')
+	local none = render.page(cap({ unreached = {} }), info(), 'x')
+	assert(not none:find(note, 1, true), 'note without unreached lines')
 end
 
 T.language_section = function()

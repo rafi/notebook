@@ -244,6 +244,17 @@ function M.update(opts)
 	pages['customize.md'] = M.customize(src.dir)
 	pages['generated.json'] = vim.json.encode({ commit = src.sha }) .. '\n'
 	M.write(out_dir, pages)
+	for _, info in ipairs(infos) do
+		local lines = caps[info.path].unreached or {}
+		if #lines > 0 then
+			print(
+				('note: %s: keymaps on lines %s never ran, page says so'):format(
+					info.path,
+					table.concat(lines, ', ')
+				)
+			)
+		end
+	end
 	print(('%d pages from vim-config@%s'):format(vim.tbl_count(pages), src.sha))
 end
 

@@ -30,21 +30,28 @@ local specials = {
 }
 
 ---Escape text that Markdown tables or Svelte would read as syntax: | ends a
----cell, { } start a Svelte expression, < starts a tag. `code spans` are
----left alone, mdsvex escapes those itself.
+---cell, { } start a Svelte expression, < starts a tag. Inside `code spans`
+---mdsvex escapes { and < itself and entities would show literally, so only
+---| is escaped there, as \| (GFM tables read it as a literal pipe).
 ---@param text string
 ---@return string
 function M.escape(text)
 	local parts = vim.split(text, '`', { plain = true })
-	for i = 1, #parts, 2 do
-		parts[i] = parts[i]:gsub('[|{}<]', specials)
+	for i = 1, #parts do
+		if i % 2 == 1 then
+			parts[i] = parts[i]:gsub('[|{}<]', specials)
+		else
+			parts[i] = parts[i]:gsub('|', '\\|')
+		end
 	end
 	return table.concat(parts, '`')
 end
 
+-- \ is escaped too, or mdsvex would read \< as an escaped <.
 local kbd_chars = vim.tbl_extend('force', specials, {
 	['>'] = '&gt;',
 	['`'] = '&#96;',
+	['\\'] = '&#92;',
 })
 
 ---Render a keymap's lhs as <kbd> keys: <C-n> is one key, other characters
@@ -66,7 +73,7 @@ function M.kbd(lhs)
 			key = lhs:sub(i, i + len - 1)
 			i = i + len
 		end
-		out[#out + 1] = '<kbd>' .. key:gsub('[|{}<>`]', kbd_chars) .. '</kbd>'
+		out[#out + 1] = '<kbd>' .. key:gsub('[|{}<>`\\]', kbd_chars) .. '</kbd>'
 	end
 	return table.concat(out)
 end
@@ -256,6 +263,26 @@ local function source_section(path, source)
 	}
 end
 
+---Says that some keymaps couldn't be listed: lines of the source that set
+---keymaps but never ran during the capture (code that runs only after a
+---plugin loads, or for a real LSP client).
+---@param lines integer[]
+---@return string
+local function unreached_note(lines)
+	local where
+	if #lines == 1 then
+		where = 'line ' .. lines[1]
+	else
+		local nums = vim.tbl_map(tostring, lines)
+		local last = table.remove(nums)
+		where = ('lines %s and %s'):format(table.concat(nums, ', '), last)
+	end
+	return (
+		'Some keymaps are set by code that only runs later, once its plugin'
+		.. " is loaded, and aren't listed here. See %s of the source below."
+	):format(where)
+end
+
 ---A page for one extra or core plugin file.
 ---@param cap docs.Capture
 ---@param info docs.FileInfo
@@ -276,10 +303,19 @@ function M.page(cap, info, source)
 		{ M.escape(cap.desc) },
 		toggle_section(info),
 	}
-	if #cap.keymaps > 0 then
+	local unreached = cap.unreached or {}
+	if #cap.keymaps > 0 or #unreached > 0 then
 		local lines = { '## Keymaps', '' }
-		sections[#sections + 1] =
+		if #cap.keymaps > 0 then
 			vim.list_extend(lines, M.keymap_table(cap.keymaps))
+		end
+		if #unreached > 0 then
+			if #cap.keymaps > 0 then
+				lines[#lines + 1] = ''
+			end
+			lines[#lines + 1] = unreached_note(unreached)
+		end
+		sections[#sections + 1] = lines
 	end
 	if cap.lang then
 		sections[#sections + 1] = lang_section(cap.lang)

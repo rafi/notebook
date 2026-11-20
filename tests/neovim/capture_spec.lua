@@ -3,8 +3,9 @@ local fixtures = root .. '/tests/neovim/fixtures/'
 
 ---Run lua/capture.lua on a fixture.
 ---@param name string Fixture file name
+---@param opts? vim.SystemOpts Extra vim.system options, e.g. env
 ---@return integer code, table? capture, string stderr
-local function capture(name)
+local function capture(name, opts)
 	local res = vim
 		.system({
 			'nvim',
@@ -14,15 +15,15 @@ local function capture(name)
 			root .. '/lua/capture.lua',
 			vim.env.VIM_CONFIG_DIR,
 			fixtures .. name,
-		}, { text = true, timeout = 30000 })
+		}, vim.tbl_extend('force', { text = true, timeout = 30000 }, opts or {}))
 		:wait()
 	local ok, data = pcall(vim.json.decode, res.stdout or '')
 	return res.code, ok and data or nil, res.stderr or ''
 end
 
 ---@return table capture
-local function ok_capture(name)
-	local code, data, stderr = capture(name)
+local function ok_capture(name, opts)
+	local code, data, stderr = capture(name, opts)
 	assert(code == 0, ('exit %d: %s'):format(code, stderr))
 	assert(data, 'no JSON on stdout')
 	return data
@@ -173,6 +174,72 @@ T.lazy_plugins_listed = function()
 		'https://github.com/a/lazy.nvim',
 		'https://codeberg.org/b/dep',
 	}, 'plugins')
+end
+
+-- Findings of the final review.
+
+T.runtime_ftplugin_maps_not_recorded = function()
+	eq(ok_capture('ftplugin.lua').keymaps, {}, 'keymaps')
+end
+
+T.environment_is_pinned = function()
+	local env = { PATH = vim.env.PATH, HOME = vim.env.HOME }
+	local c = ok_capture('env_gated.lua', { env = env, clear_env = true })
+	assert(by_lhs(c.keymaps)['<leader>gt'], 'TMUX/executable-gated map missing')
+end
+
+T.on_attach_is_called = function()
+	local m = by_lhs(ok_capture('on_attach.lua').keymaps)
+	assert(m[']h'], 'on_attach map missing')
+end
+
+T.command_load_runs_and_user_events_fire = function()
+	local m = by_lhs(ok_capture('command_load.lua').keymaps)
+	assert(m['<leader>fr'], 'map from command load + User event missing')
+end
+
+T.wildcard_filetype_fires = function()
+	local m = by_lhs(ok_capture('wildcard_filetype.lua').keymaps)
+	assert(m[']f'], 'pattern-less FileType map missing')
+	eq(m[']f'][1].ft, nil, 'no filetype note for any-filetype map')
+end
+
+T.lsp_attach_per_server = function()
+	local m = by_lhs(ok_capture('lsp_client.lua').keymaps)
+	assert(m['<leader>co'], 'jdtls LspAttach map missing')
+	eq(m['<leader>co'][1].server, 'jdtls', 'server')
+end
+
+T.scheduled_callbacks_run = function()
+	assert(by_lhs(ok_capture('scheduled.lua').keymaps)['<leader>sc'], 'missing')
+end
+
+T.buf_option_is_buffer_local = function()
+	local m = by_lhs(ok_capture('buf_opt.lua').keymaps)
+	eq(m.gO and m.gO[1].ft, { 'go' }, 'ft')
+end
+
+T.unreached_keymap_calls_reported = function()
+	eq(ok_capture('unreached.lua').unreached, { 4 }, 'unreached lines')
+end
+
+T.proxy_rhs_is_mapped = function()
+	assert(by_lhs(ok_capture('proxy_rhs.lua').keymaps)[']h'], 'missing')
+end
+
+T.user_event_data_is_a_proxy = function()
+	assert(by_lhs(ok_capture('user_data.lua').keymaps)['<leader>cs'], 'missing')
+end
+
+T.command_stubs_exist_for_loader = function()
+	assert(
+		by_lhs(ok_capture('command_stub.lua').keymaps)['<leader>fi'],
+		'missing'
+	)
+end
+
+T.missing_treesitter_query_is_a_proxy = function()
+	assert(by_lhs(ok_capture('ts_query.lua').keymaps)[']m'], 'missing')
 end
 
 return T

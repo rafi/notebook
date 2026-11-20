@@ -23,6 +23,7 @@ local config_dir, file = _G.arg[1], _G.arg[2]
 ---@field keymaps docs.Keymap[]
 ---@field plugins string[]
 ---@field lang? table
+---@field unreached integer[] Lines setting keymaps that never ran
 
 local plugins, plugin_seen = {}, {}
 -- Recorded keymaps by identity (mode, normalized lhs, buffer filetype),
@@ -30,6 +31,18 @@ local plugins, plugin_seen = {}, {}
 local maps, map_order = {}, {}
 -- Filetype whose FileType autocmds are running, see fire_filetypes().
 local current_ft ---@type string?
+-- LSP server whose LspAttach is firing, see fire_lsp_attach().
+local current_server ---@type string?
+-- Code the config defers (vim.schedule, command stubs' loaders, on_attach
+-- functions handed to plugins), run by flush() after the events.
+local deferred = {} ---@type fun()[]
+
+---Whether keymap opts make a buffer-local map (`buffer` or `buf`).
+---@param opts? table
+local function is_buffer(opts)
+	return opts ~= nil
+		and ((opts.buffer ~= nil and opts.buffer ~= false) or opts.buf ~= nil)
+end
 
 ---@param src string
 local function record_plugin(src)
@@ -51,9 +64,11 @@ end
 ---@param mode string
 ---@param lhs string
 ---@param ft? string[] Filetypes of a buffer-local map
-local function map_key(mode, lhs, ft)
+---@param server? string LSP server of a buffer-local map
+local function map_key(mode, lhs, ft, server)
 	local keys = vim.api.nvim_replace_termcodes(lhs, true, true, true)
-	return table.concat({ mode, keys, ft and table.concat(ft, ',') or '' }, '\0')
+	local ft_key = ft and table.concat(ft, ',') or ''
+	return table.concat({ mode, keys, ft_key, server or '' }, '\0')
 end
 
 ---@param mode string|string[]
@@ -63,10 +78,11 @@ end
 local function record_map(mode, lhs, opts, extra)
 	opts = opts or {}
 	extra = extra or {}
-	local buffer = opts.buffer ~= nil and opts.buffer ~= false
+	local buffer = is_buffer(opts)
 	local ft = extra.ft or (buffer and current_ft and { current_ft }) or nil
+	local server = extra.server or (buffer and current_server) or nil
 	for _, m in ipairs(modes_of(mode)) do
-		local key = map_key(m, lhs, ft)
+		local key = map_key(m, lhs, ft, server)
 		if opts.desc and opts.desc ~= '' then
 			if not maps[key] then
 				table.insert(map_order, key)
@@ -76,7 +92,7 @@ local function record_map(mode, lhs, opts, extra)
 				lhs = lhs,
 				desc = opts.desc,
 				ft = ft,
-				server = extra.server,
+				server = server,
 			}
 		else
 			maps[key] = nil
@@ -89,7 +105,8 @@ end
 ---@param buffer boolean
 local function delete_map(mode, lhs, buffer)
 	for _, m in ipairs(modes_of(mode)) do
-		maps[map_key(m, lhs, buffer and current_ft and { current_ft } or nil)] = nil
+		local ft = buffer and current_ft and { current_ft } or nil
+		maps[map_key(m, lhs, ft, buffer and current_server or nil)] = nil
 	end
 end
 
@@ -108,9 +125,35 @@ proxy_mt.__index = function(t, k)
 	rawset(t, k, p)
 	return p
 end
-proxy_mt.__call = proxy
-proxy_mt.__concat = function()
-	return ''
+-- A plugin's setup gets the config's on_attach functions (gitsigns, LSP
+-- servers): queue them to run with a buffer, as the plugin would.
+---@param ... any
+local function queue_on_attach(...)
+	for i = 1, select('#', ...) do
+		local arg = select(i, ...)
+		if type(arg) == 'table' and getmetatable(arg) ~= proxy_mt then
+			for _, t in ipairs({ arg, rawget(arg, 'server') }) do
+				if
+					type(t) == 'table' and type(rawget(t, 'on_attach')) == 'function'
+				then
+					local on_attach = rawget(t, 'on_attach')
+					table.insert(deferred, function()
+						local buf = vim.api.nvim_create_buf(true, true)
+						on_attach(buf, buf)
+					end)
+				end
+			end
+		end
+	end
+end
+proxy_mt.__call = function(_, ...)
+	queue_on_attach(...)
+	return proxy()
+end
+-- A proxy concatenates as '', keeping the other side ('Status ' .. proxy).
+proxy_mt.__concat = function(a, b)
+	return (type(a) == 'table' and '' or tostring(a))
+		.. (type(b) == 'table' and '' or tostring(b))
 end
 proxy_mt.__tostring = function()
 	return ''
@@ -217,6 +260,19 @@ local function setup_env()
 	vim.g.rafi_json = json
 	vim.g.rafi_extras_dirs = { config_dir .. '/lua/rafi/extras' }
 	require('rafi.config.options')
+	-- Built-in ftplugins set keymaps (markdown's gO, ]] and [[) when the
+	-- capture sets a filetype. They aren't the config's.
+	vim.cmd('filetype plugin indent off')
+	-- Pin what the config checks about the machine, so pages don't depend
+	-- on where they're built: inside tmux, every tool installed.
+	vim.env.TMUX = vim.env.TMUX or 'docs'
+	vim.fn.executable = function()
+		return 1
+	end
+	-- Deferred work runs after the events instead, see flush().
+	vim.schedule = function(f)
+		table.insert(deferred, f)
+	end
 end
 
 local function install_stubs()
@@ -254,7 +310,14 @@ local function install_stubs()
 		})
 		vim.api.nvim_exec_autocmds(event, event_opts(buf))
 	end
-	pack.command = function() end
+	-- Real stub commands, so a loader that deletes its stubs works.
+	pack.command = function(names, load)
+		names = type(names) == 'string' and { names } or names
+		for _, name in ipairs(names) do
+			vim.api.nvim_create_user_command(name, function() end, { nargs = '*' })
+		end
+		table.insert(deferred, load)
+	end
 	pack.build = function() end
 	pack.has = function()
 		return true
@@ -269,13 +332,17 @@ local function install_stubs()
 	local keymap_set, keymap_del = vim.keymap.set, vim.keymap.del
 	vim.keymap.set = function(mode, lhs, rhs, opts)
 		record_map(mode, lhs, opts)
+		-- A plugin's function as rhs (gs.next_hunk) is a proxy here.
+		if type(rhs) == 'table' then
+			rhs = function() end
+		end
 		inside = true
 		local ok, err = pcall(keymap_set, mode, lhs, rhs, opts)
 		inside = false
 		assert(ok, err)
 	end
 	vim.keymap.del = function(mode, lhs, opts)
-		delete_map(mode, lhs, opts ~= nil and opts.buffer ~= nil)
+		delete_map(mode, lhs, is_buffer(opts))
 		inside = true
 		local ok, err = pcall(keymap_del, mode, lhs, opts)
 		inside = false
@@ -310,13 +377,22 @@ local function install_stubs()
 	end
 
 	-- nvim_exec_autocmds only reports errors in Lua callbacks, so wrap each
-	-- callback to fail the capture instead.
+	-- callback to fail the capture instead. Event data fields the capture
+	-- doesn't set (a plugin's User event payload) read as proxies.
+	local data_mt = {
+		__index = function(_, k)
+			return type(k) ~= 'number' and proxy() or nil
+		end,
+	}
 	local create_autocmd = api.nvim_create_autocmd
 	api.nvim_create_autocmd = function(event, opts)
 		local cb = opts.callback
 		if type(cb) == 'function' then
 			opts = vim.tbl_extend('force', opts, {
 				callback = function(ev)
+					if ev.data == nil or type(ev.data) == 'table' then
+						ev.data = setmetatable(ev.data or {}, data_mt)
+					end
 					local ok, ret = xpcall(cb, debug.traceback, ev)
 					if not ok then
 						io.stderr:write(('%s: %s\n'):format(file, ret))
@@ -327,6 +403,12 @@ local function install_stubs()
 			})
 		end
 		return create_autocmd(event, opts)
+	end
+
+	-- Plugins' Tree-sitter queries (textobjects…) aren't installed.
+	local query_get = vim.treesitter.query.get
+	vim.treesitter.query.get = function(lang, name)
+		return query_get(lang, name) or proxy()
 	end
 
 	-- Ex commands of plugins don't exist without the plugins, skip them.
@@ -374,25 +456,94 @@ local function install_stubs()
 	end)
 end
 
+---Run deferred work until none is left (deferred code can defer more).
+local function flush()
+	for _ = 1, 10 do
+		if #deferred == 0 then
+			return
+		end
+		local queue = deferred
+		deferred = {}
+		for _, f in ipairs(queue) do
+			f()
+		end
+	end
+end
+
+-- Filetypes with a parser bundled with Neovim, to fire FileType autocmds
+-- that have no pattern (they often check for a parser first).
+local any_filetypes = { 'c', 'vim', 'query', 'lua', 'markdown' }
+
 ---Set each filetype the file's FileType autocmds match on a scratch buffer,
----so buffer-local maps they set are recorded with that filetype.
+---so buffer-local maps they set are recorded with that filetype. Autocmds
+---without a pattern fire once more on a filetype none of the others match,
+---and their buffer-local maps get no filetype.
 local function fire_filetypes()
-	local fts = {}
+	local fts, any = {}, false
 	for _, au in ipairs(vim.api.nvim_get_autocmds({ event = 'FileType' })) do
-		for _, ft in ipairs(vim.split(au.pattern or '', ',', { trimempty = true })) do
-			if not ft:find('*', 1, true) and not vim.list_contains(fts, ft) then
+		for _, ft in ipairs(vim.split(au.pattern or '*', ',', { trimempty = true })) do
+			if ft == '*' then
+				any = true
+			elseif not ft:find('*', 1, true) and not vim.list_contains(fts, ft) then
 				table.insert(fts, ft)
 			end
 		end
 	end
 	table.sort(fts)
-	for _, ft in ipairs(fts) do
+	local function set(ft, tag)
 		local buf = vim.api.nvim_create_buf(true, true)
-		current_ft = ft
+		current_ft = tag
 		vim.api.nvim_buf_call(buf, function()
 			vim.bo[buf].filetype = ft
 		end)
 		current_ft = nil
+		flush()
+	end
+	for _, ft in ipairs(fts) do
+		set(ft, ft)
+	end
+	if any then
+		for _, ft in ipairs(any_filetypes) do
+			if not vim.list_contains(fts, ft) then
+				set(ft, nil)
+				break
+			end
+		end
+	end
+end
+
+---Fire LspAttach once per server the file registers, with a stand-in
+---client of that name, so callbacks checking `client.name` set their
+---keymaps. Buffer-local maps they set are recorded with the server.
+local function fire_lsp_attach()
+	local lang = package.loaded['rafi.util.lang']
+	if not lang then
+		return
+	end
+	local names =
+		vim.tbl_keys(vim.tbl_extend('force', {}, lang.servers, lang.keys))
+	table.sort(names)
+	local clients = {}
+	vim.lsp.get_client_by_id = function(id)
+		return clients[id]
+	end
+	for i, name in ipairs(names) do
+		local client = proxy()
+		rawset(client, 'id', i)
+		rawset(client, 'name', name)
+		rawset(client, 'supports_method', function()
+			return true
+		end)
+		clients[i] = client
+		local buf = vim.api.nvim_create_buf(true, true)
+		current_server = name
+		vim.api.nvim_exec_autocmds('LspAttach', {
+			buffer = buf,
+			modeline = false,
+			data = { client_id = i },
+		})
+		flush()
+		current_server = nil
 	end
 end
 
@@ -402,7 +553,10 @@ local function fire_events()
 		'VimEnter',
 		'UIEnter',
 		'BufReadPre',
+		'BufReadPost',
 		'BufNewFile',
+		'BufEnter',
+		'BufWinEnter',
 		'InsertEnter',
 		'CmdlineEnter',
 		'LspAttach',
@@ -412,6 +566,20 @@ local function fire_events()
 			event_opts(vim.api.nvim_get_current_buf())
 		)
 	end
+	flush()
+	-- User events plugins fire (MiniFilesBufferCreate…), once each.
+	local fired = { RafiKeymaps = true }
+	for _, au in ipairs(vim.api.nvim_get_autocmds({ event = 'User' })) do
+		if au.pattern and not fired[au.pattern] then
+			fired[au.pattern] = true
+			vim.api.nvim_exec_autocmds('User', {
+				pattern = au.pattern,
+				data = { buf_id = vim.api.nvim_get_current_buf() },
+			})
+			flush()
+		end
+	end
+	fire_lsp_attach()
 	fire_filetypes()
 end
 
@@ -500,6 +668,42 @@ local function record_quoted_repos()
 	end
 end
 
+-- Lines of `file` that ran during the capture, see run_traced().
+local ran = {} ---@type table<integer, true>
+
+---Run f with a line hook that records which lines of `file` run.
+---@param f fun()
+local function run_traced(f)
+	local source = '@' .. file
+	debug.sethook(function(_, line)
+		if debug.getinfo(2, 'S').source == source then
+			ran[line] = true
+		end
+	end, 'l')
+	local ok, err = pcall(f)
+	debug.sethook()
+	if not ok then
+		error(err, 0)
+	end
+end
+
+---Lines of `file` that set a keymap (vim.keymap.set, Snacks.keymap.set, a
+---toggle's :map()) but never ran, so their keymaps aren't on the page.
+---@return integer[]
+local function unreached()
+	local ret = {}
+	for i, line in ipairs(vim.fn.readfile(file)) do
+		if
+			not ran[i]
+			and not line:match('^%s*%-%-')
+			and (line:find('keymap%.set%s*%(') or line:find(':map%s*%('))
+		then
+			table.insert(ret, i)
+		end
+	end
+	return ret
+end
+
 local function main()
 	local first = vim.fn.readfile(file, '', 1)[1] or ''
 	if not first:match('^%-%-') then
@@ -507,8 +711,10 @@ local function main()
 	end
 	setup_env()
 	install_stubs()
-	dofile(file)
-	fire_events()
+	run_traced(function()
+		dofile(file)
+		fire_events()
+	end)
 	record_quoted_repos()
 	local lang = read_lang()
 	---@type docs.Capture
@@ -517,6 +723,7 @@ local function main()
 		keymaps = keymaps(),
 		plugins = plugins,
 		lang = lang,
+		unreached = unreached(),
 	}
 	io.stdout:write(vim.json.encode(ret))
 end
