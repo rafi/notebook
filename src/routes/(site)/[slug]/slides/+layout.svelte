@@ -1,7 +1,7 @@
 <script lang="ts">
 	// Reveal style-sheets
-	import 'reveal.js/dist/reveal.css';
-	import 'reveal.js/dist/theme/league.css';
+	import 'reveal.js/reveal.css';
+	import 'reveal.js/theme/league.css';
 	import 'reveal.js/plugin/highlight/monokai.css';
 
 	import '$styles/reveal.css';

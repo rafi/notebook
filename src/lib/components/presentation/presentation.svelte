@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	import Reveal from 'reveal.js';
-	import Highlight from 'reveal.js/plugin/highlight/highlight';
-	import Markdown from 'reveal.js/plugin/markdown/markdown';
-	import Notes from 'reveal.js/plugin/notes/notes';
+	import Reveal, { type RevealApi } from 'reveal.js';
+	import Highlight from 'reveal.js/plugin/highlight';
+	import Markdown from 'reveal.js/plugin/markdown';
+	import Notes from 'reveal.js/plugin/notes';
 
-	let deckRef: Reveal.Api | null = null;
+	let deckRef: RevealApi | null = null;
 
 	onMount(() => {
 		if (deckRef !== null) {

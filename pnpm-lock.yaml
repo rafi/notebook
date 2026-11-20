@@ -23,9 +23,6 @@ importers:
       '@shikijs/transformers':
         specifier: ^4.6.0
         version: 4.6.0
-      '@types/reveal.js':
-        specifier: ^5.2.2
-        version: 5.2.2
       hastscript:
         specifier: ^9.0.3
         version: 9.0.3
@@ -54,8 +51,8 @@ importers:
         specifier: ^9.0.0
         version: 9.0.0
       reveal.js:
-        specifier: ^5.2.1
-        version: 5.2.1
+        specifier: ^6.0.2
+        version: 6.0.2
       shiki:
         specifier: ^4.6.0
         version: 4.6.0
@@ -978,9 +975,6 @@ packages:
   '@types/node@25.0.3':
     resolution: {integrity: sha512-W609buLVRVmeW693xKfzHeIV6nJGGz98uCPfeXI1ELMLXVeKYZ9m15fAMSaUPBHYLGFsVRcMmSCksQOrZV9BYA==}
 
-  '@types/reveal.js@5.2.2':
-    resolution: {integrity: sha512-U6wdIeFZPR77zjaZCrFNPzKjjfdFr4Dj0WUAZ+UYgXGjwqYCnjpCngeS0hb+28FLL0QzE9jXBikvB7xxAQi5sg==}
-
   '@types/ungap__structured-clone@1.2.0':
     resolution: {integrity: sha512-ZoaihZNLeZSxESbk9PUAPZOlSpcKx81I1+4emtULDVmBLkYutTcMlCj2K9VNlf9EWODxdO6gkAqEaLorXwZQVA==}
 
@@ -1868,9 +1862,8 @@ packages:
     resolution: {integrity: sha512-qYg9KP24dD5qka9J47d0aVky0N+b4fTU89LN9iDnjB5waksiC49rvMB0PrUJQGoTmH50XPiqOvAjDfaijGxYZw==}
     engines: {node: '>=8'}
 
-  reveal.js@5.2.1:
-    resolution: {integrity: sha512-r7//6mIM5p34hFiDMvYfXgyjXqGRta+/psd9YtytsgRlrpRzFv4RbH76TXd2qD+7ZPZEbpBDhdRhJaFgfQ7zNQ==}
-    engines: {node: '>=18.0.0'}
+  reveal.js@6.0.2:
+    resolution: {integrity: sha512-JYIg5D9aoxoaLeb84O+OvAwsKWdIavVgEDScxtYEXFCT6t6TQrhNtSgogcjdCpdLsWglhJn3zyE3fUOwiH5KEg==}
 
   rollup@4.54.0:
     resolution: {integrity: sha512-3nk8Y3a9Ea8szgKhinMlGMhGMw89mqule3KWczxhIzqudyHdCIOHw8WJlj/r329fACjKLEh13ZSk7oE22kyeIw==}
@@ -2844,8 +2837,6 @@ snapshots:
     dependencies:
       undici-types: 7.16.0
 
-  '@types/reveal.js@5.2.2': {}
-
   '@types/ungap__structured-clone@1.2.0': {}
 
   '@types/unist@2.0.11': {}
@@ -3766,7 +3757,7 @@ snapshots:
 
   resolve-from@5.0.0: {}
 
-  reveal.js@5.2.1: {}
+  reveal.js@6.0.2: {}
 
   rollup@4.54.0:
     dependencies:
