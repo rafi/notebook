@@ -94,7 +94,15 @@ so without it the full table shows.
 			{/if}
 			{#each rows as post (post.slug)}
 				<tr>
-					<td class="name"><a href={resolve(post.slug)}>{post.title}</a></td>
+					<!-- <wbr>: on phones, names wrap after the category, not mid-word. -->
+					<td class="name">
+						<a href={resolve(post.slug)}>
+							{#if post.title?.includes('.')}{post.title.split('.')[0]}.<wbr
+								/>{post.title.slice(
+									post.title.indexOf('.') + 1
+								)}{:else}{post.title}{/if}
+						</a>
+					</td>
 					<td>{post.description}</td>
 					{#if showDefault}
 						<td class="default">
@@ -173,6 +181,18 @@ so without it the full table shows.
 	td.default {
 		text-align: center;
 		color: var(--color-theme-1);
+	}
+
+	/* Phones: let names and long tokens wrap, or the table overflows main,
+	   which clips it. */
+	@media (max-width: 600px) {
+		td:not(.name) {
+			overflow-wrap: anywhere;
+		}
+
+		td.name {
+			white-space: normal;
+		}
 	}
 
 	/* Below the fixed site header when linked as #category. */
