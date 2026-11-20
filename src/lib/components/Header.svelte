@@ -13,7 +13,7 @@
 	import { theme, toggleTheme } from '$lib/theme';
 
 	const iconSize = 28;
-	let scrollY: number = $state();
+	let scrollY = $state(0);
 
 	interface Props {
 		url?: string | undefined;
