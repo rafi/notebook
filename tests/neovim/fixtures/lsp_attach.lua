@@ -1,0 +1,9 @@
+-- Fixture: LspAttach callback reading ev.data
+vim.api.nvim_create_autocmd('LspAttach', {
+	callback = function(ev)
+		local client = vim.lsp.get_client_by_id(ev.data.client_id)
+		if not client then
+			return
+		end
+	end,
+})
