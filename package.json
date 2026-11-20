@@ -16,6 +16,7 @@
 	"devDependencies": {
 		"@eslint/js": "^10.0.1",
 		"@mdsvex/plugin-anchors": "^0.1.1",
+		"@mdsvex/plugin-emoji": "^0.1.1",
 		"@melt-ui/svelte": "^0.86.6",
 		"@sveltejs/adapter-vercel": "^7.0.5",
 		"@sveltejs/enhanced-img": "^1.0.1",

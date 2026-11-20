@@ -36,6 +36,9 @@ importers:
       '@mdsvex/plugin-anchors':
         specifier: ^0.1.1
         version: 0.1.1(mdsvex@1.0.1(svelte@5.58.0(@typescript-eslint/types@8.73.0))(vite@8.3.8(@types/node@25.9.9)))
+      '@mdsvex/plugin-emoji':
+        specifier: ^0.1.1
+        version: 0.1.1(mdsvex@1.0.1(svelte@5.58.0(@typescript-eslint/types@8.73.0))(vite@8.3.8(@types/node@25.9.9)))
       '@melt-ui/svelte':
         specifier: ^0.86.6
         version: 0.86.6(svelte@5.58.0(@typescript-eslint/types@8.73.0))
@@ -411,6 +414,11 @@ packages:
 
   '@mdsvex/plugin-anchors@0.1.1':
     resolution: {integrity: sha512-uu2EnxVAnrl1aVHkHeUN5hhfx+F6KMa+zWKO25BTZpwZsbJuvlk/tejNG9EN65baOuUd7OUN5J9Iuz892uXqvg==}
+    peerDependencies:
+      mdsvex: ^1.0.0-next.2
+
+  '@mdsvex/plugin-emoji@0.1.1':
+    resolution: {integrity: sha512-7OA+y09++5+P1DnP4ufGsXuB2gp6l0AjK/B0enxgDi3eDjOLLprvC7AnBEwX/XnGVz7yvzqgdCjwBCmpTVEEsQ==}
     peerDependencies:
       mdsvex: ^1.0.0-next.2
 
@@ -2054,6 +2062,10 @@ snapshots:
   '@mdsvex/parse@1.0.0': {}
 
   '@mdsvex/plugin-anchors@0.1.1(mdsvex@1.0.1(svelte@5.58.0(@typescript-eslint/types@8.73.0))(vite@8.3.8(@types/node@25.9.9)))':
+    dependencies:
+      mdsvex: 1.0.1(svelte@5.58.0(@typescript-eslint/types@8.73.0))(vite@8.3.8(@types/node@25.9.9))
+
+  '@mdsvex/plugin-emoji@0.1.1(mdsvex@1.0.1(svelte@5.58.0(@typescript-eslint/types@8.73.0))(vite@8.3.8(@types/node@25.9.9)))':
     dependencies:
       mdsvex: 1.0.1(svelte@5.58.0(@typescript-eslint/types@8.73.0))(vite@8.3.8(@types/node@25.9.9))
 

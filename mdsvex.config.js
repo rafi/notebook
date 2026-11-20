@@ -1,4 +1,5 @@
 import { anchors } from '@mdsvex/plugin-anchors';
+import { emoji } from '@mdsvex/plugin-emoji';
 import { createHighlighter } from 'shiki';
 import {
 	transformerNotationDiff,
@@ -97,6 +98,9 @@ export default {
 	smart_punctuation: true,
 	heading_ids: true,
 	unwrap_images: true,
-	plugins: [anchors({ position: 'append', attrs: { class: 'hash-link' } })],
+	plugins: [
+		anchors({ position: 'append', attrs: { class: 'hash-link' } }),
+		emoji(),
+	],
 	highlight,
 };
