@@ -8,6 +8,7 @@ node_modules
 .vercel/
 /build
 /.cache/
+/.superpowers/
 /.svelte-kit/
 /package
 vite.config.js.timestamp-*
