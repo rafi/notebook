@@ -1,25 +1,31 @@
 <script lang="ts">
+	// Replaces `pre` in mdsvex-compiled posts: wraps each highlighted code
+	// block with its language or title label and a copy button.
 	import { CopyIcon, CheckIcon } from '@lucide/svelte';
 
 	interface Props {
 		lang?: string;
 		title?: string;
-		// Whether to display copy button
+		// Fence meta flag: hide the copy button
 		nocopy?: boolean;
+		// The code's text as a reader sees it
+		code?: string;
 		children?: import('svelte').Snippet;
 	}
 
-	let { lang = '', title = '', nocopy = false, children }: Props = $props();
+	let {
+		lang = '',
+		title = '',
+		nocopy = false,
+		code = '',
+		children,
+	}: Props = $props();
 
-	let copyButton: HTMLButtonElement | undefined = $state();
 	let copied = $state(false);
 
 	function copy() {
-		const preElement = copyButton?.nextElementSibling;
-		if (preElement instanceof HTMLElement) {
-			navigator.clipboard.writeText(preElement.innerText);
-			copied = true;
-		}
+		navigator.clipboard.writeText(code);
+		copied = true;
 	}
 
 	$effect(() => {
@@ -38,12 +44,7 @@
 	{/if}
 
 	{#if !nocopy}
-		<button
-			class="copy"
-			bind:this={copyButton}
-			onclick={copy}
-			aria-label="copy"
-		>
+		<button class="copy" onclick={copy} aria-label="copy">
 			{#if !copied}
 				<CopyIcon size="18" />
 			{:else}
