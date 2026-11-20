@@ -9,28 +9,10 @@ export const prerender = true
  * @type {import('@sveltejs/kit').RequestHandler}
  */
 export async function GET() {
-	const paths = import.meta.glob(
-		[
-			'../../../content/blog/**/*.md',
-			'../../../content/neovim/**/*.md',
-			// '../../../content/wiki/**/*.md',
-		],
-		{ eager: true }
-	)
+	const paths = import.meta.glob('../../../content/blog/**/*.md', { eager: true })
 	const posts = parseFiles(paths)
 
-	const pages = [
-		'about',
-		'blog',
-		// 'wiki',
-		'neovim',
-		'neovim/config',
-		'neovim/plugins',
-		'neovim/extras',
-		// ...Object.keys(config.categories).map(
-		// 	(category) => `categories/${category}`
-		// ),
-	]
+	const pages = ['about', 'blog']
 
 	function parsePostDate(post: Post) {
 		let date;
