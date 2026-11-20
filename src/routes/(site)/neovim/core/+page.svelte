@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { resolve } from '$app/paths';
 	import { neovimCommit } from '#lib/posts.ts';
+	import ExtrasTable from '#lib/components/neovim/extras-table.svelte';
 	import GeneratedFrom from '#lib/components/neovim/generated-from.svelte';
 
 	let { data } = $props();
@@ -20,15 +20,6 @@
 	</p>
 </div>
 
-<ul class="cards">
-	{#each data.posts as post (post.slug)}
-		<li>
-			<a href={resolve(post.slug)}>
-				{post.title}
-				<span>{post.description}</span>
-			</a>
-		</li>
-	{/each}
-</ul>
+<ExtrasTable posts={data.posts} />
 
 <GeneratedFrom commit={neovimCommit} />
