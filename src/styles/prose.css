@@ -58,6 +58,12 @@
 	margin: 2rem 0;
 }
 
+/* Images carry their pixel size as width/height; keep them in the column. */
+.prose img.post-img {
+	max-width: 100%;
+	height: auto;
+}
+
 .prose figcaption {
 	margin-top: 0.5rem;
 	background-color: var(--color-hover);
