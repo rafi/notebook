@@ -53,7 +53,7 @@ export default defineConfig({
 		rehypeSlug,
 		[rehypeAutolinkHeadings, {
 			behavior: 'append',
-			properties: { className: 'hash-link' },
+			properties: { className: 'hash-link', ariaLabel: 'Link to this section' },
 		}],
 	],
 	highlight: {
