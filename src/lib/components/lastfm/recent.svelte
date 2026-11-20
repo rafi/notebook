@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Hourglass, Music4 } from 'lucide-svelte';
+	import { Hourglass, Music4 } from '@lucide/svelte';
 
 	import type { Track } from './types';
 	import imgNowPlaying from './now-playing.gif';

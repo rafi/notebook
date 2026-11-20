@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { CopyIcon, CheckIcon } from 'lucide-svelte';
+	import { CopyIcon, CheckIcon } from '@lucide/svelte';
 
 	interface Props {
 		lang?: string;

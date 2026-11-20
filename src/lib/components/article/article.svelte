@@ -2,7 +2,7 @@
 	import type { ImportedFile } from '$lib/types';
 	import { formatDate } from '$lib/util/time';
 	import { TableOfContents } from '$lib/components/toc';
-	import { ImagesIcon } from 'lucide-svelte';
+	import { ImagesIcon } from '@lucide/svelte';
 
 	interface Props {
 		data: ImportedFile;

@@ -7,7 +7,7 @@
 		CassetteTape,
 		FolderGit2,
 		ChevronRight,
-	} from 'lucide-svelte';
+	} from '@lucide/svelte';
 
 	import * as config from '$lib/config';
 	import { theme, toggleTheme } from '$lib/theme';

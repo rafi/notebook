@@ -3,7 +3,7 @@
 	import Profile from '$lib/components/profile-card.svelte';
 	import { RecentTracks } from '$lib/components/lastfm';
 
-	import { Mailbox, GitMerge, CassetteTape } from 'lucide-svelte';
+	import { Mailbox, GitMerge, CassetteTape } from '@lucide/svelte';
 </script>
 
 <svelte:head>

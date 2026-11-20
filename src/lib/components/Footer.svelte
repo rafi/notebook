@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { GitMerge, RssIcon, NotebookPen } from 'lucide-svelte';
+	import { GitMerge, RssIcon, NotebookPen } from '@lucide/svelte';
 	import * as config from '$lib/config';
 
 	let dt = $state(new Date());

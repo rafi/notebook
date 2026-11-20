@@ -1,6 +1,6 @@
 import type { PageLoadEvent } from './$types';
 import { error } from '@sveltejs/kit';
-import jsYaml from 'js-yaml';
+import { load as loadYaml, type LoadOptions } from 'js-yaml';
 
 import * as config from '$lib/config';
 import type { Frontmatter } from '$lib/types';
@@ -54,7 +54,7 @@ export async function load({ params }: PageLoadEvent) {
  * @param opts - yaml load options
  * @returns Object
  */
-function parseYAMLMatter(text: string, opts: jsYaml.LoadOptions) {
+function parseYAMLMatter(text: string, opts: LoadOptions) {
 	const re = /^(-{3}(?:\n|\r)([\w\W]+?)(?:\n|\r)-{3})?([\w\W]*)*/
 	let results = re.exec(text)
 
@@ -67,7 +67,7 @@ function parseYAMLMatter(text: string, opts: jsYaml.LoadOptions) {
 		if (str.charAt(0) === '{') {
 			data.meta = JSON.parse(str);
 		} else {
-			data.meta = jsYaml.load(str, opts) as Frontmatter;
+			data.meta = loadYaml(str, opts) as Frontmatter;
 		}
 	}
 	if (results.length > 2 && results[3]) {
