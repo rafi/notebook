@@ -2,7 +2,6 @@
 	// Reveal style-sheets
 	import 'reveal.js/reveal.css';
 	import 'reveal.js/theme/league.css';
-	import 'reveal.js/plugin/highlight/monokai.css';
 
 	import '#styles/reveal.css';
 	interface Props {

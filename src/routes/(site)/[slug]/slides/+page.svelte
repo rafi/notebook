@@ -8,6 +8,6 @@
 	<link rel="canonical" href={data.url.replace(/\/slides$/, '')} />
 </svelte:head>
 
-<Presentation>
-	{data.raw}
+<Presentation title={data.post.meta.title ?? ''}>
+	<data.post.content />
 </Presentation>

@@ -43,7 +43,6 @@
 		"@fontsource/inconsolata": "^5.3.0",
 		"@lucide/svelte": "^1.76.0",
 		"@shikijs/transformers": "^4.6.0",
-		"js-yaml": "^5.5.0",
 		"reveal.js": "^6.0.2",
 		"shiki": "^4.6.0"
 	},
