@@ -24,6 +24,8 @@ Turn it on with `:RafiExtras` (<kbd>Space</kbd><kbd>m</kbd><kbd>x</kbd>), or add
 | <kbd>leader</kbd><kbd>f</kbd><kbd>m</kbd> | Open mini.files (Directory of Current File) | 𝐍 |
 | <kbd>leader</kbd><kbd>f</kbd><kbd>M</kbd> | Open mini.files (cwd) | 𝐍 |
 
+Some keymaps are set by code that only runs later, once its plugin is loaded, and aren't listed here. See lines 54, 72 and 79 of the source below.
+
 ## Plugins
 
 - [mini.files](https://github.com/nvim-mini/mini.files)

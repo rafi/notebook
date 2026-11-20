@@ -22,6 +22,7 @@ Turn it on with `:RafiExtras` (<kbd>Space</kbd><kbd>m</kbd><kbd>x</kbd>), or add
 | Key | Description | Mode |
 | --- | --- | --- |
 | <kbd>leader</kbd><kbd>t</kbd><kbd>a</kbd> | Ansible Run Playbook/Role _(in yaml.ansible buffers)_ | 𝐍 |
+| <kbd>Leader</kbd><kbd>K</kbd> | Ansible Doc _(in yaml.ansible buffers)_ | 𝐍 |
 
 ## Language support
 

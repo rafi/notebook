@@ -17,6 +17,10 @@ Turn it on with `:RafiExtras` (<kbd>Space</kbd><kbd>m</kbd><kbd>x</kbd>), or add
 { "extras": ["lang.rust"] }
 ```
 
+## Keymaps
+
+Some keymaps are set by code that only runs later, once its plugin is loaded, and aren't listed here. See line 24 of the source below.
+
 ## Plugins
 
 - [rustaceanvim](https://github.com/mrcjkb/rustaceanvim)

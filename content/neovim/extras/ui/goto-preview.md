@@ -26,6 +26,8 @@ Turn it on with `:RafiExtras` (<kbd>Space</kbd><kbd>m</kbd><kbd>x</kbd>), or add
 | <kbd>g</kbd><kbd>p</kbd><kbd>c</kbd> | Close previews | 𝐍 |
 | <kbd>g</kbd><kbd>p</kbd><kbd>r</kbd> | Preview references | 𝐍 |
 
+Some keymaps are set by code that only runs later, once its plugin is loaded, and aren't listed here. See line 23 of the source below.
+
 ## Plugins
 
 - [goto-preview](https://github.com/rmagatti/goto-preview)

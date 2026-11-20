@@ -82,6 +82,8 @@ Collection of QoL plugins: picker, explorer, terminal, toggles
 | <kbd>leader</kbd><kbd>s</kbd><kbd>u</kbd> | Undotree | 𝐍 |
 | <kbd>leader</kbd><kbd>u</kbd><kbd>C</kbd> | Colorschemes | 𝐍 |
 
+Some keymaps are set by code that only runs later, once its plugin is loaded, and aren't listed here. See line 68 of the source below.
+
 ## Plugins
 
 - [snacks.nvim](https://github.com/folke/snacks.nvim)

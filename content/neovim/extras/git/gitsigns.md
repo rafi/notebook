@@ -29,6 +29,21 @@ This extra is enabled on a fresh install. Turn it off with `:RafiExtras` (<kbd>S
 | <kbd>leader</kbd><kbd>g</kbd><kbd>h</kbd><kbd>t</kbd><kbd>l</kbd> | Toggle Git line highlight | 𝐍 |
 | <kbd>leader</kbd><kbd>g</kbd><kbd>h</kbd><kbd>t</kbd><kbd>n</kbd> | Toggle Git number highlight | 𝐍 |
 | <kbd>leader</kbd><kbd>g</kbd><kbd>h</kbd><kbd>t</kbd><kbd>s</kbd> | Toggle Git signs | 𝐍 |
+| <kbd>]</kbd><kbd>h</kbd> | Next Hunk | 𝐍 |
+| <kbd>[</kbd><kbd>h</kbd> | Prev Hunk | 𝐍 |
+| <kbd>]</kbd><kbd>H</kbd> | Last Hunk | 𝐍 |
+| <kbd>[</kbd><kbd>H</kbd> | First Hunk | 𝐍 |
+| <kbd>leader</kbd><kbd>g</kbd><kbd>h</kbd><kbd>s</kbd> | Stage Hunk | 𝐍 𝐗 |
+| <kbd>leader</kbd><kbd>g</kbd><kbd>h</kbd><kbd>r</kbd> | Reset Hunk | 𝐍 𝐗 |
+| <kbd>leader</kbd><kbd>g</kbd><kbd>h</kbd><kbd>S</kbd> | Stage Buffer | 𝐍 |
+| <kbd>leader</kbd><kbd>g</kbd><kbd>h</kbd><kbd>u</kbd> | Undo Stage Hunk | 𝐍 |
+| <kbd>leader</kbd><kbd>g</kbd><kbd>h</kbd><kbd>R</kbd> | Reset Buffer | 𝐍 |
+| <kbd>leader</kbd><kbd>g</kbd><kbd>h</kbd><kbd>p</kbd> | Preview Hunk Inline | 𝐍 |
+| <kbd>leader</kbd><kbd>g</kbd><kbd>h</kbd><kbd>b</kbd> | Blame Line | 𝐍 |
+| <kbd>leader</kbd><kbd>g</kbd><kbd>h</kbd><kbd>B</kbd> | Blame Buffer | 𝐍 |
+| <kbd>leader</kbd><kbd>g</kbd><kbd>h</kbd><kbd>d</kbd> | Diff This | 𝐍 |
+| <kbd>leader</kbd><kbd>g</kbd><kbd>h</kbd><kbd>D</kbd> | Diff This ~ | 𝐍 |
+| <kbd>i</kbd><kbd>h</kbd> | GitSigns Select Hunk | 𝐎 𝐗 |
 
 ## Plugins
 

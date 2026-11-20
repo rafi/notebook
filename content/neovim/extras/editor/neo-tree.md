@@ -37,6 +37,7 @@ Turn it on with `:RafiExtras` (<kbd>Space</kbd><kbd>m</kbd><kbd>x</kbd>), or add
 - [plenary.nvim](https://github.com/nvim-lua/plenary.nvim)
 - [nui.nvim](https://github.com/MunifTanjim/nui.nvim)
 - [neo-tree.nvim](https://github.com/nvim-neo-tree/neo-tree.nvim)
+- [nvim-window-picker](https://github.com/s1n7ax/nvim-window-picker)
 
 <details>
 <summary>Source</summary>

@@ -17,14 +17,6 @@ Turn it on with `:RafiExtras` (<kbd>Space</kbd><kbd>m</kbd><kbd>x</kbd>), or add
 { "extras": ["ui.cursorword"] }
 ```
 
-## Keymaps
-
-| Key | Description | Mode |
-| --- | --- | --- |
-| <kbd>g</kbd><kbd>O</kbd> | Show an Outline of the current buffer | 𝐍 |
-| <kbd>]</kbd><kbd>]</kbd> | Jump to next section | 𝐍 |
-| <kbd>[</kbd><kbd>[</kbd> | Jump to previous section | 𝐍 |
-
 ## Plugins
 
 - [vim-cursorword](https://github.com/itchyny/vim-cursorword)

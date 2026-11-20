@@ -14,6 +14,23 @@ Tree-sitter textobject motions
 
 This extra is enabled on a fresh install. Turn it off with `:RafiExtras` (<kbd>Space</kbd><kbd>m</kbd><kbd>x</kbd>), or remove `"treesitter.textobjects"` from `extras` in your `rafi.json`.
 
+## Keymaps
+
+| Key | Description | Mode |
+| --- | --- | --- |
+| <kbd>]</kbd><kbd>f</kbd> | Next Function Start | 𝐍 𝐎 𝐗 |
+| <kbd>]</kbd><kbd>c</kbd> | Next Class Start | 𝐍 𝐎 𝐗 |
+| <kbd>]</kbd><kbd>,</kbd> | Next Parameter Start | 𝐍 𝐎 𝐗 |
+| <kbd>]</kbd><kbd>F</kbd> | Next Function End | 𝐍 𝐎 𝐗 |
+| <kbd>]</kbd><kbd>C</kbd> | Next Class End | 𝐍 𝐎 𝐗 |
+| <kbd>]</kbd><kbd>K</kbd> | Next Parameter End | 𝐍 𝐎 𝐗 |
+| <kbd>[</kbd><kbd>f</kbd> | Prev Function Start | 𝐍 𝐎 𝐗 |
+| <kbd>[</kbd><kbd>c</kbd> | Prev Class Start | 𝐍 𝐎 𝐗 |
+| <kbd>[</kbd><kbd>,</kbd> | Prev Parameter Start | 𝐍 𝐎 𝐗 |
+| <kbd>[</kbd><kbd>F</kbd> | Prev Function End | 𝐍 𝐎 𝐗 |
+| <kbd>[</kbd><kbd>C</kbd> | Prev Class End | 𝐍 𝐎 𝐗 |
+| <kbd>[</kbd><kbd>K</kbd> | Prev Parameter End | 𝐍 𝐎 𝐗 |
+
 ## Plugins
 
 - [nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects)

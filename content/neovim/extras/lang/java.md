@@ -17,6 +17,17 @@ Turn it on with `:RafiExtras` (<kbd>Space</kbd><kbd>m</kbd><kbd>x</kbd>), or add
 { "extras": ["lang.java"] }
 ```
 
+## Keymaps
+
+| Key | Description | Mode |
+| --- | --- | --- |
+| <kbd>leader</kbd><kbd>c</kbd><kbd>x</kbd><kbd>v</kbd> | Extract Variable _(with jdtls)_ | 𝐍 𝐗 |
+| <kbd>leader</kbd><kbd>c</kbd><kbd>x</kbd><kbd>c</kbd> | Extract Constant _(with jdtls)_ | 𝐍 𝐗 |
+| <kbd>leader</kbd><kbd>c</kbd><kbd>g</kbd><kbd>s</kbd> | Goto Super _(with jdtls)_ | 𝐍 |
+| <kbd>leader</kbd><kbd>c</kbd><kbd>g</kbd><kbd>S</kbd> | Goto Subjects _(with jdtls)_ | 𝐍 |
+| <kbd>leader</kbd><kbd>c</kbd><kbd>o</kbd> | Organize Imports _(with jdtls)_ | 𝐍 |
+| <kbd>leader</kbd><kbd>c</kbd><kbd>x</kbd><kbd>m</kbd> | Extract Method _(with jdtls)_ | 𝐗 |
+
 ## Language support
 
 - Tools installed with Mason: `jdtls`

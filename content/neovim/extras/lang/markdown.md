@@ -19,9 +19,6 @@ This extra is enabled on a fresh install. Turn it off with `:RafiExtras` (<kbd>S
 | Key | Description | Mode |
 | --- | --- | --- |
 | <kbd>leader</kbd><kbd>u</kbd><kbd>m</kbd> | Toggle Render Markdown | 𝐍 |
-| <kbd>g</kbd><kbd>O</kbd> | Show an Outline of the current buffer | 𝐍 |
-| <kbd>]</kbd><kbd>]</kbd> | Jump to next section | 𝐍 |
-| <kbd>[</kbd><kbd>[</kbd> | Jump to previous section | 𝐍 |
 | <kbd>leader</kbd><kbd>c</kbd><kbd>p</kbd> | Markdown Preview _(in markdown buffers)_ | 𝐍 |
 | <kbd>leader</kbd><kbd>c</kbd><kbd>p</kbd> | Markdown Preview _(in mermaid buffers)_ | 𝐍 |
 | <kbd>leader</kbd><kbd>c</kbd><kbd>p</kbd> | Markdown Preview _(in rmd buffers)_ | 𝐍 |
