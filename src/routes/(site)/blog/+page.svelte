@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import { formatDate } from '#lib/util/time.ts';
 
 	let { data } = $props();
@@ -15,9 +16,9 @@
 		{#await data.posts}
 			Loading posts...
 		{:then posts}
-			{#each posts as post}
+			{#each posts as post (post.slug)}
 				<li>
-					<a href={post.slug}>
+					<a href={resolve(post.slug)}>
 						{post.title}
 						{#if post.date}
 							<span class="date">{formatDate(post.date)}</span>

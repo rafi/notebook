@@ -1,7 +1,8 @@
 <script lang="ts" module>
 	import type { Writable } from 'svelte/store';
+	import type { Tabs } from '@melt-ui/svelte';
 	export type TabsContext = Writable<{
-		content: any;
+		content: Tabs['elements']['content'];
 		triggers: Map<string, string>;
 	}>;
 </script>
@@ -35,7 +36,7 @@
 <div class="tabs-wrapper" {...$root} use:root>
 	<div class="tabs">
 		<ul class="tabs-list" {...$list} use:list>
-			{#each $ctx.triggers.entries() as [id, title]}
+			{#each $ctx.triggers.entries() as [id, title] (id)}
 				<li class="tabs-item">
 					<button
 						class="tabs-button"

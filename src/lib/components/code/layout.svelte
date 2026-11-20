@@ -1,19 +1,15 @@
 <script module>
-	import codeblock from './block.svelte';
-
-	export { codeblock };
+	export { default as codeblock } from './block.svelte';
 </script>
 
 <script lang="ts">
 	interface Props {
 		children?: import('svelte').Snippet;
-		[key: string]: any;
+		// mdsvex passes each post's frontmatter as props.
+		[key: string]: unknown;
 	}
 
-	let { children, ...rest }: Props = $props();
-	// Use the magic props variable to get frontmatter props we haven't exported,
-	// and since we're not using them here, this will silence warnings:
-	rest;
+	let { children }: Props = $props();
 </script>
 
 {@render children?.()}

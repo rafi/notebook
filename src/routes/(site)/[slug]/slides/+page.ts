@@ -19,10 +19,16 @@ type MarkdownRaw = {
 export async function load({ params }: PageLoadEvent) {
 	// Vite import assset as string
 	// https://vitejs.dev/guide/assets.html#importing-asset-as-string
-	let raw = await import(`../../../../../content/blog/${params.slug}.md?raw`);
+	let source: string;
+	try {
+		source = (await import(`../../../../../content/blog/${params.slug}.md?raw`))
+			.default;
+	} catch {
+		error(404, `Could not find ${params.slug}`);
+	}
 
 	// Prepend base path to images in slides.
-	raw = raw.default.replace(
+	source = source.replace(
 		reMarkdownImage,
 		`![$1](${config.imageBaseURL}/${config.deploy.gitRef}/content/blog/$2)`
 	);
@@ -35,17 +41,12 @@ export async function load({ params }: PageLoadEvent) {
 	// 	.use(remarkParseFrontmatter)
 
 	// Split meta and body
-	const data = parseYAMLMatter(raw, {});
-	raw = `# ${data.meta.title}\n\n---\n\n` + data.body;
+	const data = parseYAMLMatter(source, {});
 
-	try {
-		return {
-			slug: params.slug,
-			raw: raw,
-		};
-	} catch (e) {
-		error(404, `Could not find ${params.slug}`);
-	}
+	return {
+		slug: params.slug,
+		raw: `# ${data.meta.title}\n\n---\n\n` + data.body,
+	};
 }
 
 /**
@@ -56,9 +57,9 @@ export async function load({ params }: PageLoadEvent) {
  */
 function parseYAMLMatter(text: string, opts: LoadOptions) {
 	const re = /^(-{3}(?:\n|\r)([\w\W]+?)(?:\n|\r)-{3})?([\w\W]*)*/;
-	let results = re.exec(text);
+	const results = re.exec(text);
 
-	let data: MarkdownRaw = { meta: {}, body: '' };
+	const data: MarkdownRaw = { meta: {}, body: '' };
 	if (results === null) {
 		return data;
 	}

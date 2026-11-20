@@ -10,7 +10,7 @@
 	<meta name="description" content="About me" />
 </svelte:head>
 
-<Profile href="/blog">thinker, coder, mentor</Profile>
+<Profile href="blog">thinker, coder, mentor</Profile>
 
 <h2>What I do now</h2>
 

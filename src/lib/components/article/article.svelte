@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import type { ImportedFile } from '#lib/types/index.ts';
 	import { formatDate } from '#lib/util/time.ts';
 	import { TableOfContents } from '#lib/components/toc/index.ts';
@@ -30,7 +31,7 @@
 				{/if}
 			{/if}
 			{#if data.meta.presentation && url}
-				<a href="{url.replace(/\/$/, '')}/slides">
+				<a href={resolve(`${data.slug}/slides`)}>
 					<ImagesIcon size="16" />
 					<span>better viewed as a</span> slideshow
 				</a>
@@ -40,7 +41,7 @@
 
 	{#if data.meta.categories}
 		<div class="tags">
-			{#each data.meta.categories as category}
+			{#each data.meta.categories as category (category)}
 				<span>&num;{category}</span>
 			{/each}
 		</div>

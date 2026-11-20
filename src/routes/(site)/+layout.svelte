@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { page } from '$app/state';
 	import { sineIn } from 'svelte/easing';
 	import { fly } from 'svelte/transition';
 
@@ -15,10 +16,7 @@
 	let presenting = $derived(data.url.endsWith('/slides'));
 </script>
 
-<Header
-	nav={!presenting}
-	url={presenting ? data.url.replace(/\/slides$/, '') : ''}
-/>
+<Header nav={!presenting} url={presenting ? page.params.slug : undefined} />
 
 {#key data.url}
 	<main class:presenting in:fly={{ x: 50, duration: 150, easing: sineIn }}>

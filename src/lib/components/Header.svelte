@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/state';
+	import { resolve } from '$app/paths';
+	import type { Path } from '$app/types';
 	import { fly } from 'svelte/transition';
 	import {
 		Moon,
@@ -16,7 +18,7 @@
 	let scrollY = $state(0);
 
 	interface Props {
-		url?: string | undefined;
+		url?: Path | undefined;
 		title?: string | undefined;
 		nav?: boolean;
 	}
@@ -33,9 +35,9 @@
 <div class="wrapper" class:fixed>
 	<div class="lhs">
 		{#if url}
-			<a href={url}>← Back</a>
+			<a href={resolve(url)}>← Back</a>
 		{:else}
-			<a href={config.url}>
+			<a href={resolve('')}>
 				<ChevronRight /> <span>{config.social.github}</span>
 			</a>
 		{/if}
@@ -46,13 +48,13 @@
 			{#if title}{title}{/if}
 			<ul>
 				<li aria-current={pathname === '/' ? 'page' : undefined}>
-					<a href="/">Work</a>
+					<a href={resolve('')}>Work</a>
 				</li>
 				<li aria-current={pathname === '/about' ? 'page' : undefined}>
-					<a href="/about">About</a>
+					<a href={resolve('about')}>About</a>
 				</li>
 				<li aria-current={isBlog ? 'page' : undefined}>
-					<a href="/blog">Blog</a>
+					<a href={resolve('blog')}>Blog</a>
 				</li>
 			</ul>
 		</nav>
@@ -140,9 +142,9 @@
 		margin-right: 1.7rem;
 	}
 
-	body.reveal-viewport .lhs a,
-	body.reveal-viewport .rhs a,
-	body.reveal-viewport .rhs button {
+	:global(body.reveal-viewport) .lhs a,
+	:global(body.reveal-viewport) .rhs a,
+	:global(body.reveal-viewport) .rhs button {
 		color: var(--color-text-light);
 	}
 

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import type { Post } from '#lib/types/index.ts';
 
 	interface Props {
@@ -11,7 +12,7 @@
 
 	let prev = $derived(posts.find((_, i) => posts[i + 1]?.slug === slug));
 	let next = $derived(posts.find((_, i) => posts[i - 1]?.slug === slug));
-	let normalizedPrefix = $derived(prefix ? `/${prefix}/` : '');
+	let normalizedPrefix = $derived(prefix ? `${prefix}/` : '');
 	let gap = $derived(!prev && next);
 </script>
 
@@ -19,12 +20,16 @@
 	<ul class="cards page-nav">
 		{#if prev}
 			<li>
-				<a href={normalizedPrefix + prev.slug}>← {prev.title}</a>
+				<a href={resolve(`${normalizedPrefix}${prev.slug}`)}>
+					← {prev.title}
+				</a>
 			</li>
 		{/if}
 		{#if next}
 			<li class:gap>
-				<a href={normalizedPrefix + next.slug}>{next.title} →</a>
+				<a href={resolve(`${normalizedPrefix}${next.slug}`)}>
+					{next.title} →
+				</a>
 			</li>
 		{/if}
 	</ul>

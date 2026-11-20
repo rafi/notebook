@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { resolve } from '$app/paths';
 	import { GitMerge, RssIcon, NotebookPen } from '@lucide/svelte';
 	import * as config from '#lib/config.js';
 
@@ -63,7 +64,11 @@
 						<GitMerge size="12" />
 					</a>
 				{/if}
-				<a target="_blank" href="/rss.xml" data-sveltekit-preload-code="false">
+				<a
+					target="_blank"
+					href={resolve('rss.xml')}
+					data-sveltekit-preload-code="false"
+				>
 					<RssIcon size="12" />
 				</a>
 			</p>

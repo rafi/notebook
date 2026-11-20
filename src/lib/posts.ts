@@ -1,4 +1,11 @@
+import type { Component } from 'svelte';
 import type { Post, ImportedFile } from '#lib/types/index.ts';
+
+/** Shape of a Markdown module compiled by mdsvex. */
+type MarkdownModule = {
+	default: Component;
+	metadata?: Omit<Post, 'slug'>;
+};
 
 /**
  * Convert content file path to slug.
@@ -19,7 +26,10 @@ export function slugFromPath(path: string): string {
  * @param paths - Imported files from vite's import.meta.glob(...)
  * @param subPath - Optional sub-path to prepend to slug.
  */
-export function parseFiles(paths: Record<string, any>, subPath: string = '') {
+export function parseFiles(
+	paths: Record<string, unknown>,
+	subPath: string = ''
+) {
 	let posts: Post[] = [];
 	for (const path in paths) {
 		const file = paths[path];
@@ -39,7 +49,7 @@ export function parseFiles(paths: Record<string, any>, subPath: string = '') {
 		if (file && typeof file === 'object' && 'metadata' in file && slug) {
 			const metadata = file.metadata as Omit<Post, 'slug'>;
 			const post = { ...metadata, slug } satisfies Post;
-			post.published && posts.push(post);
+			if (post.published) posts.push(post);
 		}
 	}
 
@@ -50,15 +60,15 @@ export function parseFiles(paths: Record<string, any>, subPath: string = '') {
 	return posts;
 }
 
-function asPost(slug: string, post: any): ImportedFile {
+function asPost(slug: string, post: MarkdownModule): ImportedFile {
 	return {
 		slug,
 		content: post.default,
-		meta: (post.metadata as Omit<Post, 'slug'>) || {},
+		meta: post.metadata || {},
 	};
 }
 
 export async function getPost(slug: string) {
-	let post = await import(`../../content/blog/${slug}.md`);
+	const post = await import(`../../content/blog/${slug}.md`);
 	return asPost(slug, post);
 }

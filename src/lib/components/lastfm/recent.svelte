@@ -46,12 +46,15 @@
 			Loading...
 		</li>
 	{:then data}
-		{#each data.tracks.slice(0, 3) as track, i}
+		{#each data.tracks.slice(0, 3) as track, i (i)}
 			{@const now = track['@attr']?.nowplaying}
 			{@const loved = track.loved == 1}
 			<li class:now class:loved>
 				{#if i == 0}
-					<a href={track.artist.url + '/' + track.album['#text']}>
+					<a
+						href={track.artist.url + '/' + track.album['#text']}
+						rel="external"
+					>
 						{#if track.image.length > 1}
 							<img
 								class="track"
@@ -65,10 +68,16 @@
 				{:else}
 					<Music4 size="16" />
 				{/if}
-				<a href={track.url} class="name">{track.name}</a>
-				by <a href={track.artist.url} class="artist">{track.artist.name}</a>
+				<a href={track.url} class="name" rel="external">{track.name}</a>
+				by
+				<a href={track.artist.url} class="artist" rel="external">
+					{track.artist.name}
+				</a>
 				{#if loved}
-					<a href="https://www.last.fm/user/{config.social.lastfm}/loved">
+					<a
+						href="https://www.last.fm/user/{config.social.lastfm}/loved"
+						rel="external"
+					>
 						<img src={imgHeart} alt="love" />
 					</a>
 				{/if}

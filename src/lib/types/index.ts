@@ -1,9 +1,10 @@
+import type { Component } from 'svelte';
 import type * as config from '#lib/config.js';
 
 export type ImportedFile = {
 	slug: string;
 	meta: Omit<Post, 'slug'>;
-	content: any;
+	content: Component;
 };
 
 export type Post = Frontmatter & {

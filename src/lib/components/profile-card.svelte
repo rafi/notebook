@@ -1,8 +1,10 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
+	import type { Path } from '$app/types';
 	import * as config from '#lib/config.js';
 
 	interface Props {
-		href: string;
+		href: Path;
 		children?: import('svelte').Snippet;
 	}
 
@@ -10,7 +12,7 @@
 </script>
 
 <div class="profile">
-	<a {href}><img src={config.image} alt="Me" /></a>
+	<a href={resolve(href)}><img src={config.image} alt="Me" /></a>
 	<div class="info">
 		<h1>{config.name}</h1>
 		<p>{@render children?.()}</p>

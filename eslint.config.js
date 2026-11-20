@@ -20,6 +20,11 @@ export default defineConfig(
 			// TypeScript resolves globals itself; see
 			// https://typescript-eslint.io/troubleshooting/faqs/eslint/#i-get-errors-from-the-no-undef-rule-about-global-variables-not-being-defined-even-though-there-are-no-typescript-errors
 			'no-undef': 'off',
+			// mdsvex.config.js opts out of type checking until the mdsvex 1.0 move.
+			'@typescript-eslint/ban-ts-comment': [
+				'error',
+				{ 'ts-nocheck': 'allow-with-description' },
+			],
 		},
 	},
 	{

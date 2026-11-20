@@ -23,7 +23,7 @@
 	<meta name="twitter:image" content={config.image} />
 </svelte:head>
 
-<Profile href="/about">Senior Software Engineer @ qwilt</Profile>
+<Profile href="about">Senior Software Engineer @ qwilt</Profile>
 
 <h2>Profile</h2>
 <p>

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { untrack } from 'svelte';
 	import { createTableOfContents } from '@melt-ui/svelte';
 	import Tree from './tree.svelte';
 
@@ -13,7 +14,8 @@
 		states: { headingsTree, activeHeadingIdxs },
 		helpers: { isActive },
 	} = createTableOfContents({
-		selector,
+		// The builder reads the selector once; later prop changes don't apply.
+		selector: untrack(() => selector),
 		exclude: ['h1', 'h4', 'h5', 'h6'],
 		activeType: 'all',
 		scrollOffset: 80,

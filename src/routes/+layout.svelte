@@ -12,7 +12,7 @@
 </script>
 
 <svelte:head>
-	{#each links as link}
+	{#each links as link (link)}
 		<link {...link?.attrs || {}} />
 	{/each}
 	<link rel="manifest" href="/manifest.json" />
