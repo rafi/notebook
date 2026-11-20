@@ -15,7 +15,6 @@
 	},
 	"devDependencies": {
 		"@eslint/js": "^10.0.1",
-		"@mdsvex/migrate": "0.2.1",
 		"@mdsvex/plugin-anchors": "^0.1.1",
 		"@melt-ui/svelte": "^0.86.6",
 		"@sveltejs/adapter-vercel": "^7.0.5",

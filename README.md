@@ -19,7 +19,7 @@ It's like [Arch Linux], but for web. :)
 ## Tech Stack
 
 - [SvelteKit] and [TypeScript] languages.
-- [MDsveX], [remark], [rehype], and [Shiki].
+- [MDsveX] and [Shiki].
 - [MeltUI], [Lucide], and [Inconsolata] font.
 - [Custom CSS](./src/styles/).
 
@@ -60,6 +60,4 @@ targets.
 [Lucide]: https://github.com/lucide-icons/lucide
 [Inconsolata]: https://levien.com/type/myfonts/inconsolata.html
 [Shiki]: https://github.com/shikijs/shiki
-[remark]: https://github.com/remarkjs/remark
-[rehype]: https://github.com/rehypejs/rehype
 [Arch Linux]: https://archlinux.org/

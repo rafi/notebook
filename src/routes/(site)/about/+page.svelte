@@ -58,9 +58,7 @@
 		and <a href="https://www.typescriptlang.org/">TypeScript</a> languages.
 	</li>
 	<li>
-		<a href="https://github.com/pngwn/mdsvex">MDsveX</a>,
-		<a href="https://github.com/remarkjs/remark">remark</a>,
-		<a href="https://github.com/rehypejs/rehype">rehype</a>, and
+		<a href="https://github.com/pngwn/mdsvex">MDsveX</a> and
 		<a href="https://github.com/shikijs/shiki">Shiki</a>.
 	</li>
 	<li>
