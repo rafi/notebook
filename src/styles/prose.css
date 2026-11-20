@@ -58,8 +58,9 @@
 	margin: 2rem 0;
 }
 
-/* Images carry their pixel size as width/height; keep them in the column. */
-.prose img.post-img {
+/* Images carry their pixel size as width/height; keep them in the column,
+   and in slides, where reveal.js caps width but not height. */
+img.post-img {
 	max-width: 100%;
 	height: auto;
 }
