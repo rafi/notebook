@@ -14,7 +14,24 @@ export async function GET() {
 	});
 	const posts = parseFiles(paths);
 
-	const pages = ['about', 'blog'];
+	const neovim = parseFiles(
+		import.meta.glob(
+			['/content/neovim/core/*.md', '/content/neovim/extras/*/*.md'],
+			{ eager: true }
+		),
+		'neovim'
+	).map((post) => post.slug);
+
+	const pages = [
+		'about',
+		'blog',
+		'neovim',
+		'neovim/core',
+		'neovim/extras',
+		'neovim/keymaps',
+		'neovim/customize',
+		...neovim,
+	];
 
 	function parsePostDate(post: Post) {
 		let date;

@@ -27,7 +27,8 @@
 
 	let fixed = $derived(scrollY > 0);
 	let pathname = $derived(page.url.pathname);
-	let isBlog = $derived(!['/', '/about'].includes(pathname));
+	let isNeovim = $derived(pathname.startsWith('/neovim'));
+	let isBlog = $derived(!isNeovim && !['/', '/about'].includes(pathname));
 </script>
 
 <svelte:window bind:scrollY />
@@ -55,6 +56,9 @@
 				</li>
 				<li aria-current={isBlog ? 'page' : undefined}>
 					<a href={resolve('blog')}>Blog</a>
+				</li>
+				<li aria-current={isNeovim ? 'page' : undefined}>
+					<a href={resolve('neovim')}>Neovim</a>
 				</li>
 			</ul>
 		</nav>
