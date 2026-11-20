@@ -1,10 +1,13 @@
 import type { Component } from 'svelte';
+import type { TocHeading } from '@mdsvex/plugin-toc';
 import type * as config from '#lib/config.js';
 
 export type ImportedFile = {
 	slug: string;
 	meta: Omit<Post, 'slug'>;
 	content: Component;
+	// h2-h3 headings of the post, from @mdsvex/plugin-toc
+	toc: TocHeading[];
 };
 
 export type Post = Frontmatter & {

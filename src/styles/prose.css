@@ -3,6 +3,19 @@
 /* 	margin-inline: auto; */
 /* } */
 
+/* Land #links just below the fixed header; the TOC highlighter reads this. */
+.prose :is(h1, h2, h3, h4, h5, h6)[id] {
+	scroll-margin-top: 80px;
+}
+
+/* Smooth-scroll only while a TOC link is pointed at or focused, so SvelteKit's
+   scroll-to-top on page navigation stays instant. */
+@media (prefers-reduced-motion: no-preference) {
+	html:has(nav.toc a:is(:hover, :focus-visible)) {
+		scroll-behavior: smooth;
+	}
+}
+
 .prose h1 {
 	text-transform: capitalize;
 }

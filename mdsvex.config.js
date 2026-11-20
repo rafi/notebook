@@ -1,5 +1,7 @@
 import { anchors } from '@mdsvex/plugin-anchors';
 import { emoji } from '@mdsvex/plugin-emoji';
+import { tabs } from '@mdsvex/plugin-tabs';
+import { toc } from '@mdsvex/plugin-toc';
 import { createHighlighter } from 'shiki';
 import {
 	transformerNotationDiff,
@@ -101,6 +103,10 @@ export default {
 	plugins: [
 		anchors({ position: 'append', attrs: { class: 'hash-link' } }),
 		emoji(),
+		// h2-h3 of each post, rendered by the article's TableOfContents
+		toc({ min_depth: 2, max_depth: 3 }),
+		// Stylesheet is imported once by the article component instead.
+		tabs({ css: false }),
 	],
 	highlight,
 };

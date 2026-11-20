@@ -72,6 +72,14 @@
 	span.title {
 		padding: 1rem;
 	}
+	/* In a :::tabs code group the tab already shows the fence's title, so drop
+	   it and give the code the room the title row took. */
+	:global(.tabs-code > .tab-panel) > div > span.title {
+		display: none;
+	}
+	:global(.tabs-code > .tab-panel) > div > :global(pre) {
+		padding-top: 0.8rem;
+	}
 	span.lang {
 		flex-direction: row-reverse;
 		position: relative;

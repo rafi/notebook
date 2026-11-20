@@ -62,8 +62,7 @@
 		<a href="https://github.com/shikijs/shiki">Shiki</a>.
 	</li>
 	<li>
-		<a href="https://github.com/melt-ui/melt-ui">MeltUI</a>,
-		<a href="https://github.com/lucide-icons/lucide">Lucide</a>, and
+		<a href="https://github.com/lucide-icons/lucide">Lucide</a> and
 		<a href="https://levien.com/type/myfonts/inconsolata.html">Inconsolata</a> font.
 	</li>
 	<li><a href="https://github.com/hakimel/reveal.js">reveal.js</a></li>

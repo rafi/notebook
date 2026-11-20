@@ -4,6 +4,12 @@
 	import { formatDate } from '#lib/util/time.ts';
 	import { TableOfContents } from '#lib/components/toc/index.ts';
 	import { ImagesIcon } from '@lucide/svelte';
+	// Posts load by dynamic import, whose CSS SvelteKit can't link into the
+	// server-rendered page. Importing their components (code blocks, figures,
+	// callouts) and the tabs stylesheet here puts that CSS in it, so posts
+	// don't render unstyled until JavaScript runs.
+	import '#lib/markdown/index.js';
+	import '@mdsvex/plugin-tabs/tabs.css';
 
 	interface Props {
 		data: ImportedFile;
@@ -50,7 +56,7 @@
 	<data.content />
 </article>
 
-<TableOfContents />
+<TableOfContents headings={data.toc} />
 
 <style>
 	@media (max-width: 480px) {

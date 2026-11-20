@@ -20,7 +20,7 @@ It's like [Arch Linux], but for web. :)
 
 - [SvelteKit] and [TypeScript] languages.
 - [MDsveX] and [Shiki].
-- [MeltUI], [Lucide], and [Inconsolata] font.
+- [Lucide] and [Inconsolata] font.
 - [Custom CSS](./src/styles/).
 
 ## Deployment
@@ -56,7 +56,6 @@ targets.
 [SvelteKit]: https://kit.svelte.dev/
 [TypeScript]: https://www.typescriptlang.org/
 [MDsveX]: https://github.com/pngwn/mdsvex
-[MeltUI]: https://github.com/melt-ui/melt-ui
 [Lucide]: https://github.com/lucide-icons/lucide
 [Inconsolata]: https://levien.com/type/myfonts/inconsolata.html
 [Shiki]: https://github.com/shikijs/shiki

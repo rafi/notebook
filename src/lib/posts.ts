@@ -1,10 +1,13 @@
 import type { Component } from 'svelte';
+import type { TocHeading } from '@mdsvex/plugin-toc';
 import type { Post, ImportedFile } from '#lib/types/index.ts';
 
 /** Shape of a Markdown module compiled by mdsvex. */
 type MarkdownModule = {
 	default: Component;
 	metadata?: Omit<Post, 'slug'>;
+	// Data mdsvex plugins leave per document; @mdsvex/plugin-toc's headings.
+	plugin_data?: { toc?: { headings: TocHeading[] } };
 };
 
 /**
@@ -65,6 +68,7 @@ function asPost(slug: string, post: MarkdownModule): ImportedFile {
 		slug,
 		content: post.default,
 		meta: post.metadata || {},
+		toc: post.plugin_data?.toc?.headings ?? [],
 	};
 }
 
