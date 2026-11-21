@@ -21,6 +21,10 @@ This extra is enabled on a fresh install. Turn it off with `:RafiExtras` (<kbd>S
 | <kbd>s</kbd><kbd>p</kbd> | Pick window | 𝐍 |
 | <kbd>s</kbd><kbd>w</kbd> | Swap picked window | 𝐍 |
 
+## Plugins
+
+- [nvim-window-picker](https://github.com/s1n7ax/nvim-window-picker)
+
 <details>
 <summary>Source</summary>
 

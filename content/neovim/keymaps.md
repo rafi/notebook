@@ -23,8 +23,8 @@ These are set by `lua/rafi/config/keymaps.lua` on every install. Extras add thei
 | <kbd>C-Right</kbd> | Increase Window Width | 𝐍 |
 | <kbd>A-j</kbd> | Next Tab | 𝐍 |
 | <kbd>A-k</kbd> | Previous Tab | 𝐍 |
-| <kbd>A-j</kbd> | Move Down | 𝐈 𝐕 |
-| <kbd>A-k</kbd> | Move Up | 𝐈 𝐕 |
+| <kbd>A-j</kbd> | Move Down | 𝐕 𝐈 |
+| <kbd>A-k</kbd> | Move Up | 𝐕 𝐈 |
 | <kbd>[</kbd><kbd>b</kbd> | Prev Buffer | 𝐍 |
 | <kbd>]</kbd><kbd>b</kbd> | Next Buffer | 𝐍 |
 | <kbd>leader</kbd><kbd>b</kbd><kbd>b</kbd> | Switch to Other Buffer | 𝐍 |
@@ -33,11 +33,11 @@ These are set by `lua/rafi/config/keymaps.lua` on every install. Extras add thei
 | <kbd>leader</kbd><kbd>b</kbd><kbd>o</kbd> | Delete Other Buffers | 𝐍 |
 | <kbd>leader</kbd><kbd>b</kbd><kbd>i</kbd> | Delete Invisible Buffers | 𝐍 |
 | <kbd>leader</kbd><kbd>b</kbd><kbd>D</kbd> | Delete Buffer and Window | 𝐍 |
-| <kbd>esc</kbd> | Escape and Clear hlsearch | 𝐈 𝐍 𝐒 |
+| <kbd>esc</kbd> | Escape and Clear hlsearch | 𝐍 𝐒 𝐈 |
 | <kbd>leader</kbd><kbd>u</kbd><kbd>r</kbd> | Redraw / Clear hlsearch / Diff Update | 𝐍 |
-| <kbd>n</kbd> | Next Search Result | 𝐍 𝐎 𝐗 |
-| <kbd>N</kbd> | Prev Search Result | 𝐍 𝐎 𝐗 |
-| <kbd>C-s</kbd> | Save File | 𝐈 𝐍 𝐒 𝐗 |
+| <kbd>n</kbd> | Next Search Result | 𝐍 𝐗 𝐎 |
+| <kbd>N</kbd> | Prev Search Result | 𝐍 𝐗 𝐎 |
+| <kbd>C-s</kbd> | Save File | 𝐍 𝐕 𝐈 |
 | <kbd>leader</kbd><kbd>K</kbd> | Keywordprg | 𝐍 |
 | <kbd>g</kbd><kbd>c</kbd><kbd>o</kbd> | Add Comment Below | 𝐍 |
 | <kbd>g</kbd><kbd>c</kbd><kbd>O</kbd> | Add Comment Above | 𝐍 |
@@ -81,7 +81,6 @@ These are set by `lua/rafi/config/keymaps.lua` on every install. Extras add thei
 | <kbd>leader</kbd><kbd>f</kbd><kbd>T</kbd> | Terminal (cwd) | 𝐍 |
 | <kbd>leader</kbd><kbd>f</kbd><kbd>t</kbd> | Terminal (Root Dir) | 𝐍 |
 | <kbd>c-/</kbd> | Terminal (Root Dir) | 𝐍 𝐓 |
-| <kbd>c-_</kbd> | which_key_ignore | 𝐍 𝐓 |
 | <kbd>leader</kbd><kbd>-</kbd> | Split Window Below | 𝐍 |
 | <kbd>leader</kbd><kbd>&#124;</kbd> | Split Window Right | 𝐍 |
 | <kbd>leader</kbd><kbd>u</kbd><kbd>Z</kbd> | Toggle Zoom | 𝐍 |

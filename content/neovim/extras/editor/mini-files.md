@@ -23,8 +23,12 @@ Turn it on with `:RafiExtras` (<kbd>Space</kbd><kbd>m</kbd><kbd>x</kbd>), or add
 | --- | --- | --- |
 | <kbd>leader</kbd><kbd>f</kbd><kbd>m</kbd> | Open mini.files (Directory of Current File) | 𝐍 |
 | <kbd>leader</kbd><kbd>f</kbd><kbd>M</kbd> | Open mini.files (cwd) | 𝐍 |
-
-Some keymaps are set by code that only runs later, once its plugin is loaded, and aren't listed here. See lines 54, 72 and 79 of the source below.
+| <kbd>g</kbd><kbd>.</kbd> | Toggle hidden files | 𝐍 |
+| <kbd>g</kbd><kbd>c</kbd> | Set cwd | 𝐍 |
+| <kbd>C-w</kbd><kbd>s</kbd> | Open in horizontal split | 𝐍 |
+| <kbd>C-w</kbd><kbd>v</kbd> | Open in vertical split | 𝐍 |
+| <kbd>C-w</kbd><kbd>S</kbd> | Open in horizontal split and close | 𝐍 |
+| <kbd>C-w</kbd><kbd>V</kbd> | Open in vertical split and close | 𝐍 |
 
 ## Plugins
 

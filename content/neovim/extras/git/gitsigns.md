@@ -43,7 +43,7 @@ This extra is enabled on a fresh install. Turn it off with `:RafiExtras` (<kbd>S
 | <kbd>leader</kbd><kbd>g</kbd><kbd>h</kbd><kbd>B</kbd> | Blame Buffer | 𝐍 |
 | <kbd>leader</kbd><kbd>g</kbd><kbd>h</kbd><kbd>d</kbd> | Diff This | 𝐍 |
 | <kbd>leader</kbd><kbd>g</kbd><kbd>h</kbd><kbd>D</kbd> | Diff This ~ | 𝐍 |
-| <kbd>i</kbd><kbd>h</kbd> | GitSigns Select Hunk | 𝐎 𝐗 |
+| <kbd>i</kbd><kbd>h</kbd> | GitSigns Select Hunk | 𝐗 𝐎 |
 
 ## Plugins
 

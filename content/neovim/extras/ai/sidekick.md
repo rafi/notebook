@@ -23,7 +23,7 @@ Turn it on with `:RafiExtras` (<kbd>Space</kbd><kbd>m</kbd><kbd>x</kbd>), or add
 | --- | --- | --- |
 | <kbd>leader</kbd><kbd>u</kbd><kbd>N</kbd> | Toggle Sidekick NES | 𝐍 |
 | <kbd>Tab</kbd> | Goto/Apply Next Edit Suggestion | 𝐍 |
-| <kbd>C-.</kbd> | Sidekick Focus | 𝐈 𝐍 𝐓 𝐗 |
+| <kbd>C-.</kbd> | Sidekick Focus | 𝐍 𝐗 𝐈 𝐓 |
 | <kbd>leader</kbd><kbd>a</kbd><kbd>a</kbd> | Sidekick Toggle CLI | 𝐍 |
 | <kbd>leader</kbd><kbd>a</kbd><kbd>s</kbd> | Select CLI | 𝐍 |
 | <kbd>leader</kbd><kbd>a</kbd><kbd>d</kbd> | Detach a CLI Session | 𝐍 |

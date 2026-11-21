@@ -29,10 +29,7 @@ Turn it on with `:RafiExtras` (<kbd>Space</kbd><kbd>m</kbd><kbd>x</kbd>), or add
 | <kbd>leader</kbd><kbd>a</kbd><kbd>s</kbd> | Send to Claude | 𝐕 |
 | <kbd>leader</kbd><kbd>a</kbd><kbd>a</kbd> | Accept diff | 𝐍 |
 | <kbd>leader</kbd><kbd>a</kbd><kbd>d</kbd> | Deny diff | 𝐍 |
-| <kbd>leader</kbd><kbd>a</kbd><kbd>s</kbd> | Add file _(in NvimTree buffers)_ | 𝐍 |
-| <kbd>leader</kbd><kbd>a</kbd><kbd>s</kbd> | Add file _(in neo-tree buffers)_ | 𝐍 |
-| <kbd>leader</kbd><kbd>a</kbd><kbd>s</kbd> | Add file _(in oil buffers)_ | 𝐍 |
-| <kbd>leader</kbd><kbd>a</kbd><kbd>s</kbd> | Add file _(in snacks_picker_list buffers)_ | 𝐍 |
+| <kbd>leader</kbd><kbd>a</kbd><kbd>s</kbd> | Add file _(in NvimTree, neo-tree, oil, snacks_picker_list buffers)_ | 𝐍 |
 
 ## Plugins
 

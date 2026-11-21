@@ -21,8 +21,8 @@ Turn it on with `:RafiExtras` (<kbd>Space</kbd><kbd>m</kbd><kbd>x</kbd>), or add
 
 | Key | Description | Mode |
 | --- | --- | --- |
-| <kbd>M-]</kbd> | Next Copilot Suggestion _(with copilot)_ | 𝐈 𝐍 |
-| <kbd>M-[</kbd> | Prev Copilot Suggestion _(with copilot)_ | 𝐈 𝐍 |
+| <kbd>M-]</kbd> | Next Copilot Suggestion _(with copilot)_ | 𝐍 𝐈 |
+| <kbd>M-[</kbd> | Prev Copilot Suggestion _(with copilot)_ | 𝐍 𝐈 |
 
 ## Language support
 

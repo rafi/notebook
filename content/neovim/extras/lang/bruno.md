@@ -21,10 +21,6 @@ Turn it on with `:RafiExtras` (<kbd>Space</kbd><kbd>m</kbd><kbd>x</kbd>), or add
 
 - Tree-sitter parsers: `bruno`
 
-## Plugins
-
-- [tree-sitter-bruno](https://github.com/Scalamando/tree-sitter-bruno)
-
 <details>
 <summary>Source</summary>
 

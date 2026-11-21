@@ -14,10 +14,6 @@ Pleasant editing on Git commit messages
 
 This extra is enabled on a fresh install. Turn it off with `:RafiExtras` (<kbd>Space</kbd><kbd>m</kbd><kbd>x</kbd>), or remove `"git.committia"` from `extras` in your `rafi.json`.
 
-## Keymaps
-
-Some keymaps are set by code that only runs later, once its plugin is loaded, and aren't listed here. See line 17 of the source below.
-
 ## Plugins
 
 - [committia.vim](https://github.com/rhysd/committia.vim)

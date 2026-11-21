@@ -19,7 +19,9 @@ Turn it on with `:RafiExtras` (<kbd>Space</kbd><kbd>m</kbd><kbd>x</kbd>), or add
 
 ## Keymaps
 
-Some keymaps are set by code that only runs later, once its plugin is loaded, and aren't listed here. See line 24 of the source below.
+| Key | Description | Mode |
+| --- | --- | --- |
+| <kbd>leader</kbd><kbd>c</kbd><kbd>R</kbd> | Code Action | 𝐍 |
 
 ## Plugins
 
