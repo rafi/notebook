@@ -24,6 +24,7 @@ local config_dir, file = _G.arg[1], _G.arg[2]
 ---@field plugins string[]
 ---@field lang? table
 ---@field unreached integer[] Lines setting keymaps that never ran
+---@field warnings? string What the file printed to stderr (set by build)
 
 local plugins, plugin_seen = {}, {}
 -- Recorded keymaps by identity (mode, normalized lhs, buffer filetype),
@@ -33,9 +34,23 @@ local maps, map_order = {}, {}
 local current_ft ---@type string?
 -- LSP server whose LspAttach is firing, see fire_lsp_attach().
 local current_server ---@type string?
--- Code the config defers (vim.schedule, command stubs' loaders, on_attach
--- functions handed to plugins), run by flush() after the events.
+-- Code the config defers (vim.schedule, command stubs' loaders), run by
+-- flush() after the events.
 local deferred = {} ---@type fun()[]
+-- Code that may set keymaps but runs only on demand: loaders a keymap
+-- calls, hooks a plugin calls with a buffer. run_probes() tries each once
+-- after the events, ignoring errors, since it runs with made-up arguments.
+-- Keymap functions themselves never run: they do real user actions.
+local probes, probe_seen = {}, {} ---@type fun()[], table<function, true>
+local probing = false
+
+---@param f function
+local function add_probe(f)
+	if not probe_seen[f] then
+		probe_seen[f] = true
+		table.insert(probes, f)
+	end
+end
 
 ---Whether keymap opts make a buffer-local map (`buffer` or `buf`).
 ---@param opts? table
@@ -52,13 +67,21 @@ local function record_plugin(src)
 	end
 end
 
----@param mode string|string[]
+-- Modes that stand for several: '' is n, v, o; v is x and s; ! is i, c.
+local mode_parts = {
+	[''] = { 'n', 'x', 's', 'o' },
+	v = { 'x', 's' },
+	['!'] = { 'i', 'c' },
+}
+
+---@param mode? string|string[]
 ---@return string[]
 local function modes_of(mode)
-	if mode == '' or mode == nil then
-		return { 'n', 'v', 'o' }
+	local ret = {}
+	for _, m in ipairs(type(mode) == 'table' and mode or { mode or '' }) do
+		vim.list_extend(ret, mode_parts[m] or { m })
 	end
-	return type(mode) == 'string' and { mode } or mode
+	return ret
 end
 
 ---@param mode string
@@ -125,29 +148,59 @@ proxy_mt.__index = function(t, k)
 	rawset(t, k, p)
 	return p
 end
--- A plugin's setup gets the config's on_attach functions (gitsigns, LSP
--- servers): queue them to run with a buffer, as the plugin would.
----@param ... any
-local function queue_on_attach(...)
-	for i = 1, select('#', ...) do
-		local arg = select(i, ...)
-		if type(arg) == 'table' and getmetatable(arg) ~= proxy_mt then
-			for _, t in ipairs({ arg, rawget(arg, 'server') }) do
-				if
-					type(t) == 'table' and type(rawget(t, 'on_attach')) == 'function'
-				then
-					local on_attach = rawget(t, 'on_attach')
-					table.insert(deferred, function()
-						local buf = vim.api.nvim_create_buf(true, true)
-						on_attach(buf, buf)
-					end)
+---Whether a function in plugin options is a hook the plugin calls with a
+---buffer: on_attach and other on_*, *hook*, or any function in a *hooks
+---table (committia_hooks.edit_open).
+---@param key string
+---@param parent? string
+local function is_hook(key, parent)
+	return key:match('^on_') ~= nil
+		or key:lower():find('hook', 1, true) ~= nil
+		or (parent ~= nil and parent:lower():find('hooks', 1, true) ~= nil)
+end
+
+---Probe the hooks in options a plugin gets (setup) or in vim.g. Hooks take
+---(client, buf), (buf) or (buf, win): try (buf, buf), then (buf, win).
+---@param value any
+---@param parent? string Key of the table holding `value`
+---@param depth integer
+local function collect_hooks(value, parent, depth)
+	if type(value) ~= 'table' or getmetatable(value) == proxy_mt or depth > 3 then
+		return
+	end
+	for k, v in pairs(value) do
+		if type(k) == 'string' and type(v) == 'function' and is_hook(k, parent) then
+			add_probe(function()
+				local buf = vim.api.nvim_create_buf(true, true)
+				if not pcall(v, buf, buf) then
+					v(buf, vim.api.nvim_get_current_win())
 				end
-			end
+			end)
+		elseif type(v) == 'table' then
+			collect_hooks(v, type(k) == 'string' and k or parent, depth + 1)
 		end
 	end
 end
+
+---Probe the loaders a keymap function calls: its upvalues named load*
+---(`local function load()` in an extra, or a helper's `.load`).
+---@param rhs function
+local function collect_loaders(rhs)
+	for i = 1, math.huge do
+		local name, value = debug.getupvalue(rhs, i)
+		if not name then
+			return
+		end
+		if type(value) == 'function' and name:match('^load') then
+			add_probe(value)
+		end
+	end
+end
+
 proxy_mt.__call = function(_, ...)
-	queue_on_attach(...)
+	for i = 1, select('#', ...) do
+		collect_hooks(select(i, ...), nil, 1)
+	end
 	return proxy()
 end
 -- A proxy concatenates as '', keeping the other side ('Status ' .. proxy).
@@ -238,6 +291,19 @@ local function make_snacks()
 		vim.keymap.set(mode, lhs, rhs, opts)
 	end)
 	rawset(snacks, 'keymap', keymap)
+	-- Snacks.setup: its toggle.map option is the hook Snacks maps toggles
+	-- with. Probe it once with a map that isn't recorded (no desc).
+	rawset(snacks, 'setup', function(opts)
+		collect_hooks(opts, nil, 1)
+		local map = type(opts) == 'table'
+			and type(opts.toggle) == 'table'
+			and opts.toggle.map
+		if type(map) == 'function' then
+			add_probe(function()
+				map('n', '<Plug>(docs-probe)', function() end, {})
+			end)
+		end
+	end)
 	return snacks
 end
 
@@ -273,6 +339,18 @@ local function setup_env()
 	vim.schedule = function(f)
 		table.insert(deferred, f)
 	end
+	-- Hooks set in vim.g (committia_hooks.edit_open, rustaceanvim's
+	-- server.on_attach) are probed like hooks in plugin options.
+	local g = vim.g
+	vim.g = setmetatable({}, {
+		__index = function(_, k)
+			return g[k]
+		end,
+		__newindex = function(_, k, v)
+			collect_hooks(v, type(k) == 'string' and k or nil, 1)
+			g[k] = v
+		end,
+	})
 end
 
 local function install_stubs()
@@ -335,6 +413,8 @@ local function install_stubs()
 		-- A plugin's function as rhs (gs.next_hunk) is a proxy here.
 		if type(rhs) == 'table' then
 			rhs = function() end
+		elseif type(rhs) == 'function' then
+			collect_loaders(rhs)
 		end
 		inside = true
 		local ok, err = pcall(keymap_set, mode, lhs, rhs, opts)
@@ -395,6 +475,10 @@ local function install_stubs()
 					end
 					local ok, ret = xpcall(cb, debug.traceback, ev)
 					if not ok then
+						-- A probe's error is the probe's: let run_probes() drop it.
+						if probing then
+							error(ret, 0)
+						end
 						io.stderr:write(('%s: %s\n'):format(file, ret))
 						os.exit(1)
 					end
@@ -547,6 +631,43 @@ local function fire_lsp_attach()
 	end
 end
 
+-- User events already fired, see fire_user_events().
+local fired_user = { RafiKeymaps = true }
+
+---Fire each User event the config listens for (MiniFilesBufferCreate…)
+---once, as the plugin would.
+local function fire_user_events()
+	for _, au in ipairs(vim.api.nvim_get_autocmds({ event = 'User' })) do
+		if au.pattern and not fired_user[au.pattern] then
+			fired_user[au.pattern] = true
+			vim.api.nvim_exec_autocmds('User', {
+				pattern = au.pattern,
+				data = { buf_id = vim.api.nvim_get_current_buf() },
+			})
+			flush()
+		end
+	end
+end
+
+---Try each probe once (see `probes`), then fire User events and run work
+---their code registered. Probes can add probes, so repeat a few rounds.
+local function run_probes()
+	local tried = 0
+	for _ = 1, 3 do
+		if tried == #probes then
+			return
+		end
+		probing = true
+		for i = tried + 1, #probes do
+			pcall(probes[i])
+			pcall(flush)
+		end
+		tried = #probes
+		pcall(fire_user_events)
+		probing = false
+	end
+end
+
 local function fire_events()
 	vim.api.nvim_exec_autocmds('User', { pattern = 'RafiKeymaps' })
 	for _, event in ipairs({
@@ -567,20 +688,10 @@ local function fire_events()
 		)
 	end
 	flush()
-	-- User events plugins fire (MiniFilesBufferCreate…), once each.
-	local fired = { RafiKeymaps = true }
-	for _, au in ipairs(vim.api.nvim_get_autocmds({ event = 'User' })) do
-		if au.pattern and not fired[au.pattern] then
-			fired[au.pattern] = true
-			vim.api.nvim_exec_autocmds('User', {
-				pattern = au.pattern,
-				data = { buf_id = vim.api.nvim_get_current_buf() },
-			})
-			flush()
-		end
-	end
+	fire_user_events()
 	fire_lsp_attach()
 	fire_filetypes()
+	run_probes()
 end
 
 ---What the file registered with rafi.util.lang, if anything.
@@ -627,23 +738,23 @@ local function read_lang()
 	return ret
 end
 
----Recorded maps, one row per lhs/desc/ft/server with their modes merged.
+---Recorded maps, one row per lhs/desc/server with their modes and buffer
+---filetypes merged. which-key's `which_key_ignore` marks hidden maps.
 ---@return docs.Keymap[]
 local function keymaps()
 	local rows, by_id = {}, {}
 	for _, key in ipairs(map_order) do
 		local m = maps[key]
-		if m then
+		if m and m.desc ~= 'which_key_ignore' then
 			local id = table.concat({
 				m.lhs,
 				m.desc,
-				m.ft and m.ft[1] or '',
+				m.ft and 'ft' or '',
 				m.server or '',
 			}, '\0')
 			local row = by_id[id]
 			if not row then
-				row = { lhs = m.lhs, desc = m.desc, ft = m.ft, server = m.server }
-				row.mode = {}
+				row = { lhs = m.lhs, desc = m.desc, server = m.server, mode = {} }
 				by_id[id] = row
 				table.insert(rows, row)
 			end
@@ -651,20 +762,41 @@ local function keymaps()
 				table.insert(row.mode, m.mode)
 				table.sort(row.mode)
 			end
+			for _, ft in ipairs(m.ft or {}) do
+				row.ft = row.ft or {}
+				if not vim.list_contains(row.ft, ft) then
+					table.insert(row.ft, ft)
+					table.sort(row.ft)
+				end
+			end
 		end
 	end
 	return rows
 end
 
----Record repository URLs quoted in the file, in source order. Plugins a
----file adds inside a function that runs on first use (a keymap, a command)
----are never added during the capture. A quoted URL of exactly
----host/owner/repo is a plugin source; longer URLs and comments are not.
+---Record repository URLs quoted inside vim.pack.add() and pack.dev() calls,
+---in source order, comments left out. Plugins a file adds inside a function
+---that runs on first use (a keymap, a command) are never added during the
+---capture. A quoted URL of exactly host/owner/repo is a plugin source.
 local function record_quoted_repos()
-	local text = table.concat(vim.fn.readfile(file), '\n')
-	local pattern = '[\'"](https://[%w%.%-]+/[%w%._%-]+/[%w%._%-]+)[\'"]'
-	for url in text:gmatch(pattern) do
-		record_plugin(url)
+	local lines = vim.tbl_map(function(line)
+		return (line:gsub('%-%-.*$', ''))
+	end, vim.fn.readfile(file))
+	local text = table.concat(lines, '\n')
+	local url = '[\'"](https://[%w%.%-]+/[%w%._%-]+/[%w%._%-]+)[\'"]'
+	local calls = {} ---@type { pos: integer, args: string }[]
+	for _, call in ipairs({ 'pack%.add%s*()(%b())', '%.dev%s*()(%b())' }) do
+		for pos, args in text:gmatch(call) do
+			table.insert(calls, { pos = pos, args = args })
+		end
+	end
+	table.sort(calls, function(a, b)
+		return a.pos < b.pos
+	end)
+	for _, call in ipairs(calls) do
+		for src in call.args:gmatch(url) do
+			record_plugin(src)
+		end
 	end
 end
 
@@ -688,17 +820,26 @@ local function run_traced(f)
 end
 
 ---Lines of `file` that set a keymap (vim.keymap.set, Snacks.keymap.set, a
----toggle's :map()) but never ran, so their keymaps aren't on the page.
+---toggle's :map()) but never ran, so their keymaps aren't on the page. A
+---call whose options are a table without `desc` is skipped: that keymap
+---wouldn't be listed anyway.
 ---@return integer[]
 local function unreached()
+	local lines = vim.fn.readfile(file)
 	local ret = {}
-	for i, line in ipairs(vim.fn.readfile(file)) do
+	for i, line in ipairs(lines) do
 		if
 			not ran[i]
 			and not line:match('^%s*%-%-')
 			and (line:find('keymap%.set%s*%(') or line:find(':map%s*%('))
 		then
-			table.insert(ret, i)
+			local rest = table.concat(lines, '\n', i)
+			local args = rest:match('keymap%.set%s*(%b())')
+				or rest:match(':map%s*(%b())')
+				or ''
+			if not (args:find('{', 1, true) and not args:find('desc', 1, true)) then
+				table.insert(ret, i)
+			end
 		end
 	end
 	return ret

@@ -11,16 +11,44 @@ local M = {}
 ---@field default_enabled boolean Extra enabled on a fresh install
 ---@field required boolean Core file that can't be disabled
 
+-- Mode column letters, in display order. Visual and select together show
+-- as 𝐕 (a 'v' map), alone as 𝐗 or 𝐒.
 local mode_letters = {
-	n = '𝐍',
-	v = '𝐕',
-	x = '𝐗',
-	s = '𝐒',
-	i = '𝐈',
-	o = '𝐎',
-	c = '𝐂',
-	t = '𝐓',
+	{ 'n', '𝐍' },
+	{ 'v', '𝐕' },
+	{ 'x', '𝐗' },
+	{ 's', '𝐒' },
+	{ 'o', '𝐎' },
+	{ 'i', '𝐈' },
+	{ 'c', '𝐂' },
+	{ 't', '𝐓' },
 }
+
+---@param modes string[] Captured modes (v is already split into x and s)
+---@return string
+local function mode_cell(modes)
+	local set = {}
+	for _, m in ipairs(modes) do
+		set[m] = true
+	end
+	if set.x and set.s then
+		set.x, set.s, set.v = nil, nil, true
+	end
+	local out = {}
+	for _, pair in ipairs(mode_letters) do
+		if set[pair[1]] then
+			table.insert(out, pair[2])
+			set[pair[1]] = nil
+		end
+	end
+	-- Anything else (abbreviations: ia, ca) as code.
+	for _, m in ipairs(modes) do
+		if set[m] then
+			table.insert(out, '`' .. m .. '`')
+		end
+	end
+	return table.concat(out, ' ')
+end
 
 local specials = {
 	['|'] = '&#124;',
@@ -97,13 +125,10 @@ end
 function M.keymap_table(maps)
 	local lines = { '| Key | Description | Mode |', '| --- | --- | --- |' }
 	for _, map in ipairs(maps) do
-		local modes = vim.tbl_map(function(m)
-			return mode_letters[m] or m
-		end, map.mode)
 		lines[#lines + 1] = ('| %s | %s | %s |'):format(
 			M.kbd(map.lhs),
 			describe(map),
-			table.concat(modes, ' ')
+			mode_cell(map.mode)
 		)
 	end
 	return lines

@@ -11,7 +11,7 @@ local M = {}
 local root = vim.fn.fnamemodify(debug.getinfo(1, 'S').source:sub(2), ':p:h:h')
 
 -- Seconds before a capture counts as hung.
-local timeout = 30
+M.timeout = 30
 
 ---@param path string
 ---@return string
@@ -61,9 +61,11 @@ function M.list(config_dir)
 	return vim.list_extend(core, extras)
 end
 
----Run lua/capture.lua for each file, a few at a time in parallel.
+---Run lua/capture.lua for each file, a few at a time in parallel, with the
+---Neovim running the build. A successful capture's stderr (warnings the
+---file printed) is kept as `warnings`.
 ---@param config_dir string
----@param infos { path: string }[]
+---@param infos { path: string }[] Paths relative to config_dir, or absolute
 ---@return table<string, docs.Capture> by path, {path: string, err: string}[] failures
 function M.capture_all(config_dir, infos)
 	local results, failures, raw = {}, {}, {}
@@ -74,15 +76,17 @@ function M.capture_all(config_dir, infos)
 			local info = infos[next_i]
 			next_i = next_i + 1
 			running = running + 1
+			local path = info.path:sub(1, 1) == '/' and info.path
+				or config_dir .. '/' .. info.path
 			vim.system({
-				'nvim',
+				vim.v.progpath,
 				'--headless',
 				'--clean',
 				'-l',
 				root .. '/lua/capture.lua',
 				config_dir,
-				config_dir .. '/' .. info.path,
-			}, { text = true, timeout = timeout * 1000 }, function(res)
+				path,
+			}, { text = true, timeout = M.timeout * 1000 }, function(res)
 				raw[info.path] = res
 				running = running - 1
 			end)
@@ -102,11 +106,13 @@ function M.capture_all(config_dir, infos)
 			ok, data = pcall(vim.json.decode, res.stdout)
 		end
 		if ok then
+			local warnings = vim.trim(res.stderr or '')
+			data.warnings = warnings ~= '' and warnings or nil
 			results[info.path] = data
 		else
 			local err = vim.trim(res.stderr or '')
 			if res.signal ~= 0 then
-				err = ('timed out after %ds\n%s'):format(timeout, err)
+				err = ('timed out after %ds\n%s'):format(M.timeout, err)
 			elseif res.code == 0 then
 				err = 'invalid JSON on stdout: ' .. tostring(data)
 			end
@@ -245,7 +251,8 @@ function M.update(opts)
 	pages['generated.json'] = vim.json.encode({ commit = src.sha }) .. '\n'
 	M.write(out_dir, pages)
 	for _, info in ipairs(infos) do
-		local lines = caps[info.path].unreached or {}
+		local cap = caps[info.path]
+		local lines = cap.unreached or {}
 		if #lines > 0 then
 			print(
 				('note: %s: keymaps on lines %s never ran, page says so'):format(
@@ -253,6 +260,9 @@ function M.update(opts)
 					table.concat(lines, ', ')
 				)
 			)
+		end
+		if cap.warnings then
+			print(('warning: %s: %s'):format(info.path, cap.warnings))
 		end
 	end
 	print(('%d pages from vim-config@%s'):format(vim.tbl_count(pages), src.sha))

@@ -242,4 +242,58 @@ T.missing_treesitter_query_is_a_proxy = function()
 	assert(by_lhs(ok_capture('ts_query.lua').keymaps)[']m'], 'missing')
 end
 
+-- Deferred minors of the first review.
+
+T.which_key_ignore_omitted = function()
+	local m = by_lhs(ok_capture('which_key_ignore.lua').keymaps)
+	eq(m['<c-_>'], nil, 'which_key_ignore row')
+	assert(m['<leader>k'], 'other map missing')
+end
+
+T.filetype_rows_merged = function()
+	local m = by_lhs(ok_capture('ft_rows.lua').keymaps)
+	eq(#(m['<leader>cj'] or {}), 1, 'rows')
+	eq(m['<leader>cj'][1].ft, { 'go', 'templ' }, 'filetypes')
+end
+
+T.visual_and_default_modes_split = function()
+	local m = by_lhs(ok_capture('modes.lua').keymaps)
+	eq(m['<leader>v'] and m['<leader>v'][1].mode, { 's' }, 'v minus x')
+	eq(m['<leader>e'] and m['<leader>e'][1].mode, { 'n', 'o', 's', 'x' }, "''")
+	eq(m['<C-x>'] and m['<C-x>'][1].mode, { 'c', 'i' }, '!')
+end
+
+T.plugins_only_from_pack_calls = function()
+	eq(
+		ok_capture('plugin_scan.lua').plugins,
+		{ 'https://github.com/c/real' },
+		'plugins'
+	)
+end
+
+T.keymap_loaders_run = function()
+	local m = by_lhs(ok_capture('rhs_loader.lua').keymaps)
+	assert(m['<leader>xr'], 'map set after a keymap-run loader missing')
+	assert(m['<leader>q'], 'quitting rhs ended the capture')
+end
+
+T.hooks_are_called = function()
+	local c = ok_capture('hooks.lua')
+	local m = by_lhs(c.keymaps)
+	assert(m['<leader>eo'], 'vim.g hook map missing')
+	assert(m['<leader>cR'], 'vim.g server.on_attach map missing')
+	assert(m['<Esc>'], 'setup hook map missing')
+	eq(c.unreached, {}, 'unreached')
+end
+
+T.snacks_toggle_map_hook_runs = function()
+	local c = ok_capture('snacks_hook.lua')
+	eq(c.unreached, {}, 'unreached')
+	eq(c.keymaps, {}, 'probe recorded as a keymap')
+end
+
+T.unreached_ignores_maps_without_desc = function()
+	eq(ok_capture('unreached_no_desc.lua').unreached, { 5, 6 }, 'unreached')
+end
+
 return T

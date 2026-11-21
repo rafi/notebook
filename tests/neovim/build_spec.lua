@@ -101,4 +101,31 @@ T.customize_has_tabs = function()
 	assert(not page:lower():find('lazy.nvim', 1, true), 'lazy.nvim mention')
 end
 
+---@param name string
+local function fixture(name)
+	return { path = root .. '/tests/neovim/fixtures/' .. name }
+end
+
+T.timeout_is_a_failure = function()
+	local saved = build.timeout
+	build.timeout = 2
+	local ok, results, failures =
+		pcall(build.capture_all, vim.env.VIM_CONFIG_DIR, {
+			fixture('hang.lua'),
+		})
+	build.timeout = saved
+	assert(ok, results)
+	eq(vim.tbl_count(results), 0, 'results')
+	eq(#failures, 1, 'failures')
+	assert(failures[1].err:find('timed out after 2s', 1, true), failures[1].err)
+end
+
+T.warnings_of_successful_captures_kept = function()
+	local info = fixture('notify.lua')
+	local results, failures = build.capture_all(vim.env.VIM_CONFIG_DIR, { info })
+	eq(#failures, 0, 'failures')
+	local warnings = results[info.path].warnings or ''
+	assert(warnings:find('skipped, other extra is enabled', 1, true), warnings)
+end
+
 return T

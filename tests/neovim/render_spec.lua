@@ -61,6 +61,25 @@ T.backslash_and_code_span_pipe = function()
 	eq(render.escape('Run `a|b` now'), 'Run `a\\|b` now', '| in code span')
 end
 
+T.mode_column = function()
+	local function mode_cell(mode)
+		local row =
+			render.keymap_table({ { mode = mode, lhs = 'x', desc = 'D' } })[3]
+		return vim.trim(row:match('|([^|]*)|$'))
+	end
+	eq(mode_cell({ 's', 'x' }), '𝐕', 'x+s is visual')
+	eq(mode_cell({ 'n', 'o', 's', 'x' }), '𝐍 𝐕 𝐎', 'n, v, o')
+	eq(mode_cell({ 'x' }), '𝐗', 'x alone')
+	eq(mode_cell({ 'ia' }), '`ia`', 'unknown mode as code')
+end
+
+T.multi_filetype_note = function()
+	local rows = render.keymap_table({
+		{ mode = { 'n' }, lhs = 'x', desc = 'J', ft = { 'go', 'templ' } },
+	})
+	assert(rows[3]:find('J _(in go, templ buffers)_', 1, true), rows[3])
+end
+
 T.tabs_syntax = function()
 	eq(
 		render.tabs({ { label = 'A', lang = 'lua', code = 'x' } }),

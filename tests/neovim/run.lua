@@ -8,11 +8,14 @@ local root = vim.uv.cwd()
 package.path = ('%s/lua/?.lua;%s'):format(root, package.path)
 
 -- Specs read the vim-config checkout from $VIM_CONFIG_DIR, and child
--- Neovims they start inherit it.
+-- Neovims they start inherit it. An existing .nvim/vim-config is used as
+-- is (no network); it's cloned only when missing.
 if not vim.env.VIM_CONFIG_DIR then
-	local ok, source = pcall(require, 'source')
-	if ok then
-		vim.env.VIM_CONFIG_DIR = source.ensure().dir
+	local checkout = root .. '/.nvim/vim-config'
+	if vim.uv.fs_stat(checkout) then
+		vim.env.VIM_CONFIG_DIR = checkout
+	else
+		vim.env.VIM_CONFIG_DIR = require('source').ensure().dir
 	end
 end
 
