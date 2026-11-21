@@ -128,4 +128,14 @@ T.warnings_of_successful_captures_kept = function()
 	assert(warnings:find('skipped, other extra is enabled', 1, true), warnings)
 end
 
+T.captures_run_outside_the_repo = function()
+	local leaked = root .. '/docs-cwd-probe.txt'
+	local _, failures =
+		build.capture_all(vim.env.VIM_CONFIG_DIR, { fixture('cwd_write.lua') })
+	local found = vim.uv.fs_stat(leaked) ~= nil
+	vim.fn.delete(leaked)
+	eq(#failures, 0, 'failures')
+	eq(found, false, 'capture wrote into the repo')
+end
+
 return T

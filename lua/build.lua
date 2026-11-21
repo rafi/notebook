@@ -71,6 +71,10 @@ function M.capture_all(config_dir, infos)
 	local results, failures, raw = {}, {}, {}
 	local max = #vim.uv.cpu_info()
 	local next_i, running = 1, 0
+	-- Captures run config code: keep anything it writes out of the repo.
+	config_dir = vim.fn.fnamemodify(config_dir, ':p'):gsub('/$', '')
+	local cwd = vim.fn.tempname()
+	vim.fn.mkdir(cwd, 'p')
 	local function start()
 		while running < max and next_i <= #infos do
 			local info = infos[next_i]
@@ -86,7 +90,11 @@ function M.capture_all(config_dir, infos)
 				root .. '/lua/capture.lua',
 				config_dir,
 				path,
-			}, { text = true, timeout = M.timeout * 1000 }, function(res)
+			}, {
+				text = true,
+				timeout = M.timeout * 1000,
+				cwd = cwd,
+			}, function(res)
 				raw[info.path] = res
 				running = running - 1
 			end)

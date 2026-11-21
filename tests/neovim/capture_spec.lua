@@ -296,4 +296,17 @@ T.unreached_ignores_maps_without_desc = function()
 	eq(ok_capture('unreached_no_desc.lua').unreached, { 5, 6 }, 'unreached')
 end
 
+T.unreached_keeps_mode_lists_and_toggles = function()
+	eq(ok_capture('unreached_shapes.lua').unreached, { 5, 6 }, 'unreached')
+end
+
+T.probes_skip_user_action_callbacks = function()
+	local dir = vim.fn.tempname()
+	vim.fn.mkdir(dir, 'p')
+	ok_capture('probe_safety.lua', { cwd = dir })
+	local written = vim.fn.readdir(dir)
+	vim.fn.delete(dir, 'rf')
+	eq(written, {}, 'files written by probes')
+end
+
 return T

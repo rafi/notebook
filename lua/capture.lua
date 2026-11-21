@@ -149,12 +149,13 @@ proxy_mt.__index = function(t, k)
 	return p
 end
 ---Whether a function in plugin options is a hook the plugin calls with a
----buffer: on_attach and other on_*, *hook*, or any function in a *hooks
----table (committia_hooks.edit_open).
+---buffer: on_attach, *hook*, or any function in a *hooks table
+---(committia_hooks.edit_open). Other on_* callbacks (on_click,
+---on_confirm) are user actions and never run.
 ---@param key string
 ---@param parent? string
 local function is_hook(key, parent)
-	return key:match('^on_') ~= nil
+	return key == 'on_attach'
 		or key:lower():find('hook', 1, true) ~= nil
 		or (parent ~= nil and parent:lower():find('hooks', 1, true) ~= nil)
 end
@@ -182,8 +183,9 @@ local function collect_hooks(value, parent, depth)
 	end
 end
 
----Probe the loaders a keymap function calls: its upvalues named load*
----(`local function load()` in an extra, or a helper's `.load`).
+---Probe the loader a keymap function calls: its upvalue named `load`
+---(`local function load()` in an extra, or a helper's `.load`). Other
+---names (load_session) can be user actions and never run.
 ---@param rhs function
 local function collect_loaders(rhs)
 	for i = 1, math.huge do
@@ -191,7 +193,7 @@ local function collect_loaders(rhs)
 		if not name then
 			return
 		end
-		if type(value) == 'function' and name:match('^load') then
+		if type(value) == 'function' and name == 'load' then
 			add_probe(value)
 		end
 	end
@@ -833,11 +835,13 @@ local function unreached()
 			and not line:match('^%s*%-%-')
 			and (line:find('keymap%.set%s*%(') or line:find(':map%s*%('))
 		then
-			local rest = table.concat(lines, '\n', i)
-			local args = rest:match('keymap%.set%s*(%b())')
-				or rest:match(':map%s*(%b())')
-				or ''
-			if not (args:find('{', 1, true) and not args:find('desc', 1, true)) then
+			-- Only a keymap.set call on this line whose last argument is a
+			-- table without desc is skipped. A toggle's :map() always has one.
+			local s = line:find('keymap%.set%s*%(')
+			local args = s
+				and table.concat(lines, '\n', i):sub(s):match('^keymap%.set%s*(%b())')
+			local opts = args and args:match('(%b{})%s*,?%s*%)$')
+			if not (opts and not opts:find('desc', 1, true)) then
 				table.insert(ret, i)
 			end
 		end
